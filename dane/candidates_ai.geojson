@@ -1,0 +1,365 @@
+{
+"type": "FeatureCollection",
+"features": [
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+17.0282053,
+51.1504743
+]
+},
+"properties": {
+"id": "AI-001",
+"lat": 51.1504743,
+"lon": 17.0282053,
+"sources": [
+"ortho_ai"
+],
+"ai_score": 0.9999,
+"ai_round": 1,
+"ai_rank": 1,
+"verified_label": "real",
+"verified_note": "worn paths meet the track from both sides; OSM railway=crossing (pedestrian) 53 m east, so this may be a shortcut next to an official crossing",
+"tile_id": "scan_02890",
+"rail_line_no": "292",
+"pop_500m": 211.0,
+"nearest_official_m": 52.7,
+"nearest_t1_candidate_m": 681.2,
+"ortho_date": "03.06.2023",
+"geoportal_url": "https://mapy.geoportal.gov.pl/imap/Imgp_2.html?gpmap=gp0&bbox=361985,366556,362285,366856&variant=ORTOFOTOMAPA"
+}
+},
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+17.0983366,
+51.1934287
+]
+},
+"properties": {
+"id": "AI-002",
+"lat": 51.1934287,
+"lon": 17.0983366,
+"sources": [
+"ortho_ai"
+],
+"ai_score": 0.9814,
+"ai_round": 1,
+"ai_rank": 6,
+"verified_label": "real",
+"verified_note": "path from the west ends at the track opposite a halt platform",
+"tile_id": "scan_01596",
+"rail_line_no": "326",
+"pop_500m": 136.0,
+"nearest_official_m": 615.3,
+"nearest_t1_candidate_m": 573.6,
+"ortho_date": "03.06.2023",
+"geoportal_url": "https://mapy.geoportal.gov.pl/imap/Imgp_2.html?gpmap=gp0&bbox=367012,371201,367312,371501&variant=ORTOFOTOMAPA"
+}
+},
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+16.9542176,
+51.099276
+]
+},
+"properties": {
+"id": "AI-003",
+"lat": 51.099276,
+"lon": 16.9542176,
+"sources": [
+"ortho_ai"
+],
+"ai_score": 0.9704,
+"ai_round": 1,
+"ai_rank": 8,
+"verified_label": "unsure",
+"verified_note": "dirt path from east ends at track",
+"tile_id": "scan_02242",
+"rail_line_no": "751",
+"pop_500m": 4736.0,
+"nearest_official_m": 173.3,
+"nearest_t1_candidate_m": 468.7,
+"ortho_date": "03.06.2023",
+"geoportal_url": "https://mapy.geoportal.gov.pl/imap/Imgp_2.html?gpmap=gp0&bbox=356654,361006,356954,361306&variant=ORTOFOTOMAPA"
+}
+},
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+17.0300137,
+51.0686467
+]
+},
+"properties": {
+"id": "AI-004",
+"lat": 51.0686467,
+"lon": 17.0300137,
+"sources": [
+"ortho_ai"
+],
+"ai_score": 0.9329,
+"ai_round": 1,
+"ai_rank": 15,
+"verified_label": "unsure",
+"verified_note": "sandy area south reaches track, concrete slabs ~30 m away",
+"tile_id": "scan_03866",
+"rail_line_no": "285",
+"pop_500m": 1524.0,
+"nearest_official_m": 152.3,
+"nearest_t1_candidate_m": 188.0,
+"ortho_date": "03.06.2023",
+"geoportal_url": "https://mapy.geoportal.gov.pl/imap/Imgp_2.html?gpmap=gp0&bbox=361868,357456,362168,357756&variant=ORTOFOTOMAPA"
+}
+},
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+16.7826805,
+51.0483481
+]
+},
+"properties": {
+"id": "AI-005",
+"lat": 51.0483481,
+"lon": 16.7826805,
+"sources": [
+"ortho_ai"
+],
+"ai_score": 0.9177,
+"ai_round": 1,
+"ai_rank": 18,
+"verified_label": "unsure",
+"verified_note": "worn tracks SE side only",
+"tile_id": "scan_00030",
+"rail_line_no": "274",
+"pop_500m": 95.0,
+"nearest_official_m": 170.1,
+"nearest_t1_candidate_m": 7854.9,
+"ortho_date": "21.06.2025",
+"geoportal_url": "https://mapy.geoportal.gov.pl/imap/Imgp_2.html?gpmap=gp0&bbox=344478,355693,344778,355993&variant=ORTOFOTOMAPA"
+}
+},
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+16.9325942,
+51.240842
+]
+},
+"properties": {
+"id": "AI-006",
+"lat": 51.240842,
+"lon": 16.9325942,
+"sources": [
+"ortho_ai"
+],
+"ai_score": 0.9117,
+"ai_round": 1,
+"ai_rank": 20,
+"verified_label": "unsure",
+"verified_note": "worn path east side ~25 m from centre",
+"tile_id": "scan_04186",
+"rail_line_no": "271",
+"pop_500m": 365.0,
+"nearest_official_m": 795.8,
+"nearest_t1_candidate_m": 3996.3,
+"ortho_date": "03.06.2023",
+"geoportal_url": "https://mapy.geoportal.gov.pl/imap/Imgp_2.html?gpmap=gp0&bbox=355583,376784,355883,377084&variant=ORTOFOTOMAPA"
+}
+},
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+17.1312318,
+51.0247537
+]
+},
+"properties": {
+"id": "AI-007",
+"lat": 51.0247537,
+"lon": 17.1312318,
+"sources": [
+"ortho_ai"
+],
+"ai_score": 0.8571,
+"ai_round": 1,
+"ai_rank": 28,
+"verified_label": "unsure",
+"verified_note": "field track and ditch, possibly culvert",
+"tile_id": "scan_03191",
+"rail_line_no": "132",
+"pop_500m": 59.0,
+"nearest_official_m": 932.7,
+"nearest_t1_candidate_m": 2709.7,
+"ortho_date": "21.06.2025",
+"geoportal_url": "https://mapy.geoportal.gov.pl/imap/Imgp_2.html?gpmap=gp0&bbox=368833,352392,369133,352692&variant=ORTOFOTOMAPA"
+}
+},
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+17.1545185,
+51.1052219
+]
+},
+"properties": {
+"id": "AI-008",
+"lat": 51.1052219,
+"lon": 17.1545185,
+"sources": [
+"ortho_ai"
+],
+"ai_score": 0.8265,
+"ai_round": 1,
+"ai_rank": 32,
+"verified_label": "unsure",
+"verified_note": "worn path from NE ends at track, SW side field",
+"tile_id": "scan_02495",
+"rail_line_no": "292",
+"pop_500m": 1292.0,
+"nearest_official_m": 53.1,
+"nearest_t1_candidate_m": 3651.3,
+"ortho_date": "03.06.2023",
+"geoportal_url": "https://mapy.geoportal.gov.pl/imap/Imgp_2.html?gpmap=gp0&bbox=370690,361296,370990,361596&variant=ORTOFOTOMAPA"
+}
+},
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+17.2145618,
+51.0822002
+]
+},
+"properties": {
+"id": "AI-009",
+"lat": 51.0822002,
+"lon": 17.2145618,
+"sources": [
+"ortho_ai"
+],
+"ai_score": 0.8183,
+"ai_round": 1,
+"ai_rank": 33,
+"verified_label": "unsure",
+"verified_note": "field track south side",
+"tile_id": "scan_03610",
+"rail_line_no": "292",
+"pop_500m": 137.0,
+"nearest_official_m": 397.1,
+"nearest_t1_candidate_m": 693.0,
+"ortho_date": "03.06.2023",
+"geoportal_url": "https://mapy.geoportal.gov.pl/imap/Imgp_2.html?gpmap=gp0&bbox=374830,358633,375130,358933&variant=ORTOFOTOMAPA"
+}
+},
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+17.1180231,
+51.2353848
+]
+},
+"properties": {
+"id": "AI-010",
+"lat": 51.2353848,
+"lon": 17.1180231,
+"sources": [
+"ortho_ai"
+],
+"ai_score": 0.8082,
+"ai_round": 1,
+"ai_rank": 35,
+"verified_label": "unsure",
+"verified_note": "worn path from SW ends at track, industrial yard east",
+"tile_id": "scan_04010",
+"rail_line_no": "326",
+"pop_500m": 331.0,
+"nearest_official_m": 278.5,
+"nearest_t1_candidate_m": 3759.1,
+"ortho_date": "01.10.2021",
+"geoportal_url": "https://mapy.geoportal.gov.pl/imap/Imgp_2.html?gpmap=gp0&bbox=368506,375830,368806,376130&variant=ORTOFOTOMAPA"
+}
+},
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+17.1126779,
+51.2128642
+]
+},
+"properties": {
+"id": "AI-011",
+"lat": 51.2128642,
+"lon": 17.1126779,
+"sources": [
+"ortho_ai"
+],
+"ai_score": 0.7738,
+"ai_round": 1,
+"ai_rank": 40,
+"verified_label": "unsure",
+"verified_note": "faint tracks east side, field boundary west",
+"tile_id": "scan_01636",
+"rail_line_no": "326",
+"pop_500m": 280.0,
+"nearest_official_m": 157.9,
+"nearest_t1_candidate_m": 2929.1,
+"ortho_date": "01.10.2021",
+"geoportal_url": "https://mapy.geoportal.gov.pl/imap/Imgp_2.html?gpmap=gp0&bbox=368069,373336,368369,373636&variant=ORTOFOTOMAPA"
+}
+},
+{
+"type": "Feature",
+"geometry": {
+"type": "Point",
+"coordinates": [
+17.2179588,
+51.0819167
+]
+},
+"properties": {
+"id": "AI-012",
+"lat": 51.0819167,
+"lon": 17.2179588,
+"sources": [
+"ortho_ai"
+],
+"ai_score": 0.5883,
+"ai_round": 2,
+"ai_rank": 10,
+"verified_label": "unsure",
+"verified_note": "vehicle tracks in field south, sandy patch at the track about 20 m east of centre",
+"tile_id": "scan_03606",
+"rail_line_no": "292",
+"pop_500m": 166.0,
+"nearest_official_m": 157.1,
+"nearest_t1_candidate_m": 453.0,
+"ortho_date": "03.06.2023",
+"geoportal_url": "https://mapy.geoportal.gov.pl/imap/Imgp_2.html?gpmap=gp0&bbox=375067,358596,375367,358896&variant=ORTOFOTOMAPA"
+}
+}
+]
+}

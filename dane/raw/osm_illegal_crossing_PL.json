@@ -1,0 +1,1282 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-14T12:47:35Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 364047585,
+  "lat": 50.2575706,
+  "lon": 19.0556455,
+  "tags": {
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 426811980,
+  "lat": 50.2614343,
+  "lon": 14.3022196,
+  "tags": {
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 617316864,
+  "lat": 50.4307622,
+  "lon": 22.2575059,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 617316883,
+  "lat": 50.4347728,
+  "lon": 22.2508374,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 617316898,
+  "lat": 50.4347450,
+  "lon": 22.2508222,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 1669395223,
+  "lat": 51.1096478,
+  "lon": 16.9952301,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing",
+    "note": "przejście nielegalne"
+  }
+},
+{
+  "type": "node",
+  "id": 2207187470,
+  "lat": 50.2614284,
+  "lon": 14.3022785,
+  "tags": {
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 2357111499,
+  "lat": 51.2272297,
+  "lon": 22.6727316,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 2357111500,
+  "lat": 51.2273228,
+  "lon": 22.6727669,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 2357111501,
+  "lat": 51.2273623,
+  "lon": 22.6727819,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 2410083014,
+  "lat": 50.2092831,
+  "lon": 18.4184770,
+  "tags": {
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 2410083017,
+  "lat": 50.2093131,
+  "lon": 18.4185083,
+  "tags": {
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 2433973914,
+  "lat": 50.5888673,
+  "lon": 14.3453318,
+  "tags": {
+    "crossing": "unmarked",
+    "crossing:island": "no",
+    "crossing:markings": "no",
+    "hazard": "illegal_crossing",
+    "highway": "crossing",
+    "tactile_paving": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2901198547,
+  "lat": 52.4046726,
+  "lon": 17.0831237,
+  "tags": {
+    "barrier": "sign",
+    "hazard": "illegal_crossing",
+    "note": "znak zabraniający przejścia przez tory"
+  }
+},
+{
+  "type": "node",
+  "id": 3299470750,
+  "lat": 53.5977868,
+  "lon": 21.3767448,
+  "tags": {
+    "crossing": "no",
+    "crossing:barrier": "closed",
+    "crossing:bell": "no",
+    "crossing:light": "no",
+    "hazard": "illegal_crossing",
+    "ref": "219 071 366",
+    "source:ref": "#ŻółtaNaklejkaPLK",
+    "supervised": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 3407689169,
+  "lat": 51.2272748,
+  "lon": 22.6727487,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 3509912880,
+  "lat": 50.4347965,
+  "lon": 22.2508362,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 3509912883,
+  "lat": 50.4347267,
+  "lon": 22.2508567,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 3509912890,
+  "lat": 50.4347042,
+  "lon": 22.2507948,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 3509913102,
+  "lat": 50.4346611,
+  "lon": 22.2508759,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 3509925218,
+  "lat": 50.4307383,
+  "lon": 22.2574533,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 3985036505,
+  "lat": 49.3750796,
+  "lon": 16.6370201,
+  "tags": {
+    "hazard": "illegal_crossing",
+    "name": "nebezpečný přechod přes koleje"
+  }
+},
+{
+  "type": "node",
+  "id": 4239239618,
+  "lat": 51.1156206,
+  "lon": 16.9877950,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 4239239620,
+  "lat": 51.1156591,
+  "lon": 16.9877765,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 4239239635,
+  "lat": 51.1162487,
+  "lon": 16.9895291,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 4239239636,
+  "lat": 51.1162795,
+  "lon": 16.9894870,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 4563457572,
+  "lat": 50.0410628,
+  "lon": 18.4931374,
+  "tags": {
+    "crossing": "uncontrolled",
+    "crossing:barrier": "no",
+    "crossing:bell": "no",
+    "crossing:light": "no",
+    "hazard": "illegal_crossing",
+    "railway": "crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 4683770546,
+  "lat": 53.1383838,
+  "lon": 17.9419267,
+  "tags": {
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 5077577789,
+  "lat": 51.1207612,
+  "lon": 16.9526030,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 6835207883,
+  "lat": 50.1289182,
+  "lon": 14.4820060,
+  "tags": {
+    "crossing": "no",
+    "crossing:markings": "no",
+    "hazard": "illegal_crossing",
+    "informal": "yes",
+    "tactile_paving": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 8568631227,
+  "lat": 51.1334333,
+  "lon": 16.9452154,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 8568631228,
+  "lat": 51.1335032,
+  "lon": 16.9452332,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 9497810842,
+  "lat": 51.7243584,
+  "lon": 19.5024382,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 9497810843,
+  "lat": 51.7243977,
+  "lon": 19.5024117,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 9498448041,
+  "lat": 51.1173728,
+  "lon": 16.9685727,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 9498448042,
+  "lat": 51.1174132,
+  "lon": 16.9685895,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 9498448043,
+  "lat": 51.1174503,
+  "lon": 16.9686049,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 9498448044,
+  "lat": 51.1174696,
+  "lon": 16.9686130,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 9498448045,
+  "lat": 51.1174745,
+  "lon": 16.9686150,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 9498448046,
+  "lat": 51.1174997,
+  "lon": 16.9686255,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 9498448047,
+  "lat": 51.1175421,
+  "lon": 16.9686431,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 9718720893,
+  "lat": 51.1052374,
+  "lon": 17.0059218,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 9938126230,
+  "lat": 49.5774001,
+  "lon": 17.2853095,
+  "tags": {
+    "crossing": "unmarked",
+    "crossing:barrier": "no",
+    "crossing:bell": "no",
+    "crossing:light": "no",
+    "description": "Nebezpečný přechod přes železniční koridor!!!",
+    "hazard": "illegal_crossing",
+    "railway": "crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 9938126231,
+  "lat": 49.5773937,
+  "lon": 17.2853716,
+  "tags": {
+    "crossing": "unmarked",
+    "crossing:barrier": "no",
+    "crossing:bell": "no",
+    "crossing:light": "no",
+    "description": "Nebezpečný přechod přes železniční koridor!!!",
+    "hazard": "illegal_crossing",
+    "railway": "crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 10172031220,
+  "lat": 50.1292041,
+  "lon": 14.4821631,
+  "tags": {
+    "crossing": "no",
+    "crossing:markings": "no",
+    "hazard": "illegal_crossing",
+    "informal": "yes",
+    "tactile_paving": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 10835681401,
+  "lat": 50.3069783,
+  "lon": 18.9070721,
+  "tags": {
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 12572823204,
+  "lat": 50.3570437,
+  "lon": 18.5616387,
+  "tags": {
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 12572823205,
+  "lat": 50.3570079,
+  "lon": 18.5616190,
+  "tags": {
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 12576946943,
+  "lat": 51.0645342,
+  "lon": 17.0118731,
+  "tags": {
+    "check_date": "2026-09",
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 12618366975,
+  "lat": 53.1376805,
+  "lon": 17.9439356,
+  "tags": {
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 12618366976,
+  "lat": 53.1377120,
+  "lon": 17.9439689,
+  "tags": {
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 13942301978,
+  "lat": 51.7652042,
+  "lon": 19.5303426,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 13942301981,
+  "lat": 51.7651685,
+  "lon": 19.5303212,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 13942301982,
+  "lat": 51.7651138,
+  "lon": 19.5302844,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 13942301988,
+  "lat": 51.7650784,
+  "lon": 19.5302627,
+  "tags": {
+    "crossing": "no",
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "node",
+  "id": 13948426405,
+  "lat": 52.4241583,
+  "lon": 20.9662361,
+  "tags": {
+    "hazard": "illegal_crossing"
+  }
+},
+{
+  "type": "way",
+  "id": 1292285707,
+  "center": {
+    "lat": 52.0162572,
+    "lon": 23.0958205
+  },
+  "tags": {
+    "access": "no",
+    "description": "Nielegalne, ale bardzo popularne przejście przez tory. Częste patrole SOK-istów.",
+    "hazard": "illegal_crossing",
+    "highway": "path",
+    "surface": "dirt"
+  }
+},
+{
+  "type": "way",
+  "id": 1355627503,
+  "center": {
+    "lat": 51.9961368,
+    "lon": 23.2848478
+  },
+  "tags": {
+    "access": "no",
+    "bridge": "yes",
+    "description": "Nielegalne, ale bardzo popularne przejście przejscie mostem kolejowym",
+    "hazard": "illegal_crossing",
+    "highway": "path",
+    "informal": "yes",
+    "layer": "1"
+  }
+},
+{
+  "type": "way",
+  "id": 1421414650,
+  "center": {
+    "lat": 51.9747219,
+    "lon": 22.7681964
+  },
+  "tags": {
+    "access": "no",
+    "bridge": "yes",
+    "description": "Nielegalne, ale bardzo popularne przejście przez tory. Częste patrole SOK-istów.",
+    "hazard": "illegal_crossing",
+    "highway": "path",
+    "layer": "1",
+    "surface": "dirt"
+  }
+},
+{
+  "type": "way",
+  "id": 1421414651,
+  "center": {
+    "lat": 51.9747524,
+    "lon": 22.7684456
+  },
+  "tags": {
+    "access": "no",
+    "description": "Nielegalne, ale bardzo popularne przejście przez tory. Częste patrole SOK-istów.",
+    "hazard": "illegal_crossing",
+    "highway": "path",
+    "surface": "dirt"
+  }
+},
+{
+  "type": "way",
+  "id": 1421414653,
+  "center": {
+    "lat": 51.9746641,
+    "lon": 22.7679666
+  },
+  "tags": {
+    "access": "no",
+    "description": "Nielegalne, ale bardzo popularne przejście przez tory. Częste patrole SOK-istów.",
+    "hazard": "illegal_crossing",
+    "highway": "path",
+    "surface": "dirt"
+  }
+},
+{
+  "type": "r",
+  "id": 1,
+  "tags": {
+    "id": "3985036505",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 2,
+  "tags": {
+    "id": "9938126230",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 3,
+  "tags": {
+    "id": "9938126231",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 4,
+  "tags": {
+    "id": "6835207883",
+    "t": "node",
+    "rail": "",
+    "n": "0"
+  }
+},
+{
+  "type": "r",
+  "id": 5,
+  "tags": {
+    "id": "10172031220",
+    "t": "node",
+    "rail": "",
+    "n": "0"
+  }
+},
+{
+  "type": "r",
+  "id": 6,
+  "tags": {
+    "id": "426811980",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 7,
+  "tags": {
+    "id": "2207187470",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 8,
+  "tags": {
+    "id": "2433973914",
+    "t": "node",
+    "rail": "",
+    "n": "0"
+  }
+},
+{
+  "type": "r",
+  "id": 9,
+  "tags": {
+    "id": "2410083014",
+    "t": "node",
+    "rail": "abandoned;rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 10,
+  "tags": {
+    "id": "2410083017",
+    "t": "node",
+    "rail": "abandoned;rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 11,
+  "tags": {
+    "id": "5077577789",
+    "t": "node",
+    "rail": "rail",
+    "n": "1"
+  }
+},
+{
+  "type": "r",
+  "id": 12,
+  "tags": {
+    "id": "8568631227",
+    "t": "node",
+    "rail": "rail",
+    "n": "4"
+  }
+},
+{
+  "type": "r",
+  "id": 13,
+  "tags": {
+    "id": "8568631228",
+    "t": "node",
+    "rail": "rail",
+    "n": "4"
+  }
+},
+{
+  "type": "r",
+  "id": 14,
+  "tags": {
+    "id": "9498448041",
+    "t": "node",
+    "rail": "rail",
+    "n": "7"
+  }
+},
+{
+  "type": "r",
+  "id": 15,
+  "tags": {
+    "id": "9498448042",
+    "t": "node",
+    "rail": "rail",
+    "n": "7"
+  }
+},
+{
+  "type": "r",
+  "id": 16,
+  "tags": {
+    "id": "9498448043",
+    "t": "node",
+    "rail": "rail",
+    "n": "7"
+  }
+},
+{
+  "type": "r",
+  "id": 17,
+  "tags": {
+    "id": "9498448044",
+    "t": "node",
+    "rail": "rail",
+    "n": "7"
+  }
+},
+{
+  "type": "r",
+  "id": 18,
+  "tags": {
+    "id": "9498448045",
+    "t": "node",
+    "rail": "rail",
+    "n": "7"
+  }
+},
+{
+  "type": "r",
+  "id": 19,
+  "tags": {
+    "id": "9498448046",
+    "t": "node",
+    "rail": "rail",
+    "n": "7"
+  }
+},
+{
+  "type": "r",
+  "id": 20,
+  "tags": {
+    "id": "9498448047",
+    "t": "node",
+    "rail": "rail",
+    "n": "7"
+  }
+},
+{
+  "type": "r",
+  "id": 21,
+  "tags": {
+    "id": "12576946943",
+    "t": "node",
+    "rail": "abandoned;rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 22,
+  "tags": {
+    "id": "9718720893",
+    "t": "node",
+    "rail": "disused;rail",
+    "n": "4"
+  }
+},
+{
+  "type": "r",
+  "id": 23,
+  "tags": {
+    "id": "1669395223",
+    "t": "node",
+    "rail": "rail",
+    "n": "1"
+  }
+},
+{
+  "type": "r",
+  "id": 24,
+  "tags": {
+    "id": "4239239618",
+    "t": "node",
+    "rail": "abandoned;rail",
+    "n": "3"
+  }
+},
+{
+  "type": "r",
+  "id": 25,
+  "tags": {
+    "id": "4239239620",
+    "t": "node",
+    "rail": "abandoned;rail",
+    "n": "3"
+  }
+},
+{
+  "type": "r",
+  "id": 26,
+  "tags": {
+    "id": "4239239635",
+    "t": "node",
+    "rail": "abandoned;rail",
+    "n": "3"
+  }
+},
+{
+  "type": "r",
+  "id": 27,
+  "tags": {
+    "id": "4239239636",
+    "t": "node",
+    "rail": "abandoned;rail",
+    "n": "3"
+  }
+},
+{
+  "type": "r",
+  "id": 28,
+  "tags": {
+    "id": "4563457572",
+    "t": "node",
+    "rail": "rail",
+    "n": "1"
+  }
+},
+{
+  "type": "r",
+  "id": 29,
+  "tags": {
+    "id": "10835681401",
+    "t": "node",
+    "rail": "rail;tram",
+    "n": "7"
+  }
+},
+{
+  "type": "r",
+  "id": 30,
+  "tags": {
+    "id": "364047585",
+    "t": "node",
+    "rail": "abandoned;disused;rail",
+    "n": "4"
+  }
+},
+{
+  "type": "r",
+  "id": 31,
+  "tags": {
+    "id": "12572823204",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 32,
+  "tags": {
+    "id": "12572823205",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 33,
+  "tags": {
+    "id": "2901198547",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 34,
+  "tags": {
+    "id": "4683770546",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 35,
+  "tags": {
+    "id": "12618366975",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 36,
+  "tags": {
+    "id": "12618366976",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 37,
+  "tags": {
+    "id": "9497810842",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 38,
+  "tags": {
+    "id": "9497810843",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 39,
+  "tags": {
+    "id": "13942301978",
+    "t": "node",
+    "rail": "rail",
+    "n": "6"
+  }
+},
+{
+  "type": "r",
+  "id": 40,
+  "tags": {
+    "id": "13942301981",
+    "t": "node",
+    "rail": "rail",
+    "n": "6"
+  }
+},
+{
+  "type": "r",
+  "id": 41,
+  "tags": {
+    "id": "13942301982",
+    "t": "node",
+    "rail": "rail",
+    "n": "6"
+  }
+},
+{
+  "type": "r",
+  "id": 42,
+  "tags": {
+    "id": "13942301988",
+    "t": "node",
+    "rail": "rail",
+    "n": "6"
+  }
+},
+{
+  "type": "r",
+  "id": 43,
+  "tags": {
+    "id": "617316883",
+    "t": "node",
+    "rail": "disused;rail",
+    "n": "7"
+  }
+},
+{
+  "type": "r",
+  "id": 44,
+  "tags": {
+    "id": "617316898",
+    "t": "node",
+    "rail": "disused;rail",
+    "n": "5"
+  }
+},
+{
+  "type": "r",
+  "id": 45,
+  "tags": {
+    "id": "3509912880",
+    "t": "node",
+    "rail": "disused;rail",
+    "n": "7"
+  }
+},
+{
+  "type": "r",
+  "id": 46,
+  "tags": {
+    "id": "3509912883",
+    "t": "node",
+    "rail": "disused;rail",
+    "n": "5"
+  }
+},
+{
+  "type": "r",
+  "id": 47,
+  "tags": {
+    "id": "3509912890",
+    "t": "node",
+    "rail": "disused;rail",
+    "n": "4"
+  }
+},
+{
+  "type": "r",
+  "id": 48,
+  "tags": {
+    "id": "3509913102",
+    "t": "node",
+    "rail": "disused;rail",
+    "n": "4"
+  }
+},
+{
+  "type": "r",
+  "id": 49,
+  "tags": {
+    "id": "617316864",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 50,
+  "tags": {
+    "id": "3509925218",
+    "t": "node",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 51,
+  "tags": {
+    "id": "2357111499",
+    "t": "node",
+    "rail": "rail",
+    "n": "4"
+  }
+},
+{
+  "type": "r",
+  "id": 52,
+  "tags": {
+    "id": "2357111500",
+    "t": "node",
+    "rail": "disused;rail",
+    "n": "5"
+  }
+},
+{
+  "type": "r",
+  "id": 53,
+  "tags": {
+    "id": "2357111501",
+    "t": "node",
+    "rail": "disused;rail",
+    "n": "5"
+  }
+},
+{
+  "type": "r",
+  "id": 54,
+  "tags": {
+    "id": "3407689169",
+    "t": "node",
+    "rail": "disused;rail",
+    "n": "5"
+  }
+},
+{
+  "type": "r",
+  "id": 55,
+  "tags": {
+    "id": "13948426405",
+    "t": "node",
+    "rail": "disused;rail",
+    "n": "3"
+  }
+},
+{
+  "type": "r",
+  "id": 56,
+  "tags": {
+    "id": "3299470750",
+    "t": "node",
+    "rail": "rail",
+    "n": "1"
+  }
+},
+{
+  "type": "r",
+  "id": 57,
+  "tags": {
+    "id": "1421414650",
+    "t": "way",
+    "rail": "rail",
+    "n": "6"
+  }
+},
+{
+  "type": "r",
+  "id": 58,
+  "tags": {
+    "id": "1421414651",
+    "t": "way",
+    "rail": "rail",
+    "n": "4"
+  }
+},
+{
+  "type": "r",
+  "id": 59,
+  "tags": {
+    "id": "1421414653",
+    "t": "way",
+    "rail": "rail",
+    "n": "4"
+  }
+},
+{
+  "type": "r",
+  "id": 60,
+  "tags": {
+    "id": "1292285707",
+    "t": "way",
+    "rail": "rail",
+    "n": "2"
+  }
+},
+{
+  "type": "r",
+  "id": 61,
+  "tags": {
+    "id": "1355627503",
+    "t": "way",
+    "rail": "rail",
+    "n": "6"
+  }
+}
+
+  ]
+}

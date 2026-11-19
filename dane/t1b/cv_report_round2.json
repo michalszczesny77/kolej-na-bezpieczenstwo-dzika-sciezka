@@ -1,0 +1,118 @@
+{
+ "round": 2,
+ "C": 0.05,
+ "cv": {
+  "roc_auc_per_seed": [
+   0.936,
+   0.902,
+   0.913,
+   0.925,
+   0.913
+  ],
+  "avg_precision_per_seed": [
+   0.574,
+   0.515,
+   0.55,
+   0.554,
+   0.495
+  ],
+  "p_at_20_per_seed": [
+   0.7,
+   0.7,
+   0.8,
+   0.7,
+   0.55
+  ],
+  "all": {
+   "roc_auc": 0.926,
+   "avg_precision": 0.561,
+   "p_at_10": 0.9,
+   "p_at_20": 0.75,
+   "p_at_40": 0.57,
+   "n_pos": 51,
+   "n_neg": 876
+  },
+  "wroclaw_only": {
+   "roc_auc": 0.886,
+   "avg_precision": 0.247,
+   "p_at_10": 0.3,
+   "p_at_20": 0.3,
+   "p_at_40": 0.25,
+   "n_pos": 26,
+   "n_neg": 876
+  },
+  "pos_vs_random_neg": {
+   "roc_auc": 0.936,
+   "avg_precision": 0.713,
+   "p_at_10": 1.0,
+   "p_at_20": 0.85,
+   "p_at_40": 0.75,
+   "n_pos": 51,
+   "n_neg": 599
+  },
+  "pos_vs_hard_neg": {
+   "roc_auc": 0.905,
+   "avg_precision": 0.658,
+   "p_at_10": 0.9,
+   "p_at_20": 0.8,
+   "p_at_40": 0.57,
+   "n_pos": 51,
+   "n_neg": 277
+  }
+ },
+ "baseline_line_filter": {
+  "all": {
+   "roc_auc": 0.555,
+   "avg_precision": 0.083,
+   "p_at_10": 0.2,
+   "p_at_20": 0.15,
+   "p_at_40": 0.1,
+   "n_pos": 51,
+   "n_neg": 876
+  },
+  "wroclaw_only": {
+   "roc_auc": 0.511,
+   "avg_precision": 0.056,
+   "p_at_10": 0.1,
+   "p_at_20": 0.1,
+   "p_at_40": 0.05,
+   "n_pos": 26,
+   "n_neg": 876
+  },
+  "pos_vs_random_neg": {
+   "roc_auc": 0.604,
+   "avg_precision": 0.158,
+   "p_at_10": 0.3,
+   "p_at_20": 0.2,
+   "p_at_40": 0.23,
+   "n_pos": 51,
+   "n_neg": 599
+  },
+  "pos_vs_hard_neg": {
+   "roc_auc": 0.449,
+   "avg_precision": 0.155,
+   "p_at_10": 0.2,
+   "p_at_20": 0.15,
+   "p_at_40": 0.12,
+   "n_pos": 51,
+   "n_neg": 277
+  }
+ },
+ "C_sensitivity_roc_auc_seed0": {
+  "0.005": 0.932,
+  "0.05": 0.936,
+  "0.5": 0.932
+ },
+ "scan": {
+  "n_tiles": 3143,
+  "n_new_eligible": 2484,
+  "mean_score_within_50m_official": 0.106,
+  "mean_score_new_eligible": 0.032,
+  "share_ge_0_5_new_eligible": 0.007,
+  "top40_score_range": [
+   0.3503,
+   0.896
+  ]
+ },
+ "runtime_s": 13.5
+}

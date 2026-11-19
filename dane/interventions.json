@@ -1,0 +1,362 @@
+[
+  {
+    "id": "I1_ogrodzenie_standard",
+    "name_pl": "Ogrodzenie standardowe odcinka (siatka/panel 1,5-2 m)",
+    "cost_pln_min": 130,
+    "cost_pln_max": 670,
+    "unit": "zł/mb",
+    "cost_source": "ceny rynkowe PL [SNIPPET] https://kamasystem.eu/ogrodzenie-panelowe-cena-za-mb/ ; FDOT 2020 pełny koszt 97352,53 USD/1904 LF = 668 zł/m [OPENED] https://fdotwww.blob.core.windows.net/sitefinity/docs/default-source/rail/publications/studies/safety/fdot-cfrc-final-trespass-report-01202020.pdf",
+    "effect_min_pct": 20,
+    "effect_max_pct": 94.6,
+    "effect_source": "Silla & Luoma 2011 (Finlandia, -94,6%, legalna trasa <= 300 m) [OPENED via FRA] https://trespasstoolkit.fra.dot.gov/eLib/Details/L00033 ; FDOT 2020 założenie AKK 20% [OPENED] https://fdotwww.blob.core.windows.net/sitefinity/docs/default-source/rail/publications/studies/safety/fdot-cfrc-final-trespass-report-01202020.pdf",
+    "conditions": {
+      "detour_m": {
+        "lte": 300
+      },
+      "fence_length_m": {
+        "gte": 100
+      }
+    },
+    "deploy_time": "2-3 miesiące (przetarg PKP SKM 2021)",
+    "decides_pays": "ZLK PKP PLK (grunt PLK); gmina przez porozumienie",
+    "side_effects": "przesunięcie na sąsiednie odcinki; przecinanie/dewastacja; odcięcie mieszkańców bez legalnej alternatywy",
+    "evidence_tag": "OPENED"
+  },
+  {
+    "id": "I2_ogrodzenie_antyprzelazowe",
+    "name_pl": "Ogrodzenie antyprzełazowe/wzmocnione (2,4 m)",
+    "cost_pln_min": 990,
+    "cost_pln_max": 1890,
+    "unit": "zł/mb",
+    "cost_source": "FDOT 2020 Tuf-Grid Hardened Fence 75,41 USD/LF = 986 zł/m; pełny koszt 158858,14 USD/1100 LF = 1888 zł/m [OPENED] https://fdotwww.blob.core.windows.net/sitefinity/docs/default-source/rail/publications/studies/safety/fdot-cfrc-final-trespass-report-01202020.pdf",
+    "effect_min_pct": 20,
+    "effect_max_pct": 94.6,
+    "effect_source": "brak osobnego pomiaru; przyjęto jak I1 [OPINIA]; FRA: expanded metal trudny do przecięcia [OPENED] https://trespasstoolkit.fra.dot.gov/eLib/Details/L00033",
+    "conditions": {
+      "detour_m": {
+        "lte": 300
+      },
+      "vandalism_history": true
+    },
+    "deploy_time": "2-3 miesiące",
+    "decides_pays": "ZLK PKP PLK",
+    "side_effects": "koszt ok. 3x wyższy niż I1; przesunięcie; odcięcie",
+    "evidence_tag": "OPINIA"
+  },
+  {
+    "id": "I3_domkniecie_koncow_sciezki",
+    "name_pl": "Domknięcie końców ścieżki pragnień (krótkie ogrodzenie + tablica)",
+    "cost_pln_min": 33150,
+    "cost_pln_max": 87215,
+    "unit": "zł/lokalizacja (netto)",
+    "cost_source": "przetarg PKP SKM SKMMU.086.38.21 (2021), oferty dla 2 lokalizacji linii 250 [OPENED] https://www.skm.pkp.pl/files/user-uploads/przetargi/07.09.2021-inf._z_otwarcia_ofert_ogrodzenie.pdf",
+    "effect_min_pct": 20,
+    "effect_max_pct": 94.6,
+    "effect_source": "jak I1; skuteczne tylko przy objeździe <= ok. 300 m (Silla & Luoma) i długości >= 100 m (Clapperton 2023) [OPENED]",
+    "conditions": {
+      "detour_m": {
+        "lte": 300
+      }
+    },
+    "deploy_time": "2-3 miesiące",
+    "decides_pays": "ZLK PKP PLK",
+    "side_effects": "przy dużym objeździe przesunięcie lub przecięcie ogrodzenia (Letnica 2025)",
+    "evidence_tag": "POCHODNA"
+  },
+  {
+    "id": "I4_maty_antywtargnieciowe",
+    "name_pl": "Maty/panele antywtargnięciowe",
+    "cost_pln_min": null,
+    "cost_pln_max": null,
+    "unit": "zł/lokalizacja",
+    "cost_source": "brak wiarygodnej ceny [UNVERIFIED]; 800 000 EUR w RESTRAIL dotyczy kampanii, nie paneli [OPENED] https://www.restrail.eu/IMG/pdf/restrail_book.pdf",
+    "effect_min_pct": -4,
+    "effect_max_pct": 51,
+    "effect_source": "Fayetteville -38% (FRA/Volpe 2019) [OPENED] https://trespasstoolkit.fra.dot.gov/eLib/Details/L00031 ; Szwecja -51%/-29%/+4% [SNIPPET]; w zestawie z ogrodzeniem Wavre -78%, Aydin -87% [OPENED] https://www.restrail.eu/IMG/pdf/restrail_book.pdf",
+    "conditions": {
+      "near_level_crossing_or_platform_end": true,
+      "combine_with_fence_m": {
+        "gte": 500
+      }
+    },
+    "deploy_time": "tygodnie (prosty montaż)",
+    "decides_pays": "ZLK PKP PLK",
+    "side_effects": "obchodzenie bokiem bez ogrodzenia; utrudniony dostęp służb i ewakuacja",
+    "evidence_tag": "OPENED"
+  },
+  {
+    "id": "I5_przejscie_kat_E",
+    "name_pl": "Legalne przejście kat. E z labiryntem/barierkami",
+    "cost_pln_min": 14000,
+    "cost_pln_max": 1500000,
+    "unit": "zł/przejście",
+    "cost_source": "Legionowo 2012 ok. 14 tys. zł [OPENED] https://legionowo.pl/a/4208-piaski-bezpieczne-przejscie-przez-tory ; BO Warszawa 2019 ok. 80 tys. zł + 5 tys. zł/rok [OPENED] https://bo.um.warszawa.pl/projekt/14230 ; Warszawa Wileńska 2025 1,5 mln zł netto [OPENED] https://www.rynek-kolejowy.pl/wiadomosci/pkp-plk-otworzyly-przejscie-dla-pieszych-przy-dworcu-wilenskim-142338.html",
+    "effect_min_pct": 28,
+    "effect_max_pct": 43,
+    "effect_source": "brak bezpośredniego badania; analogia Lobb i in. 2001 (Auckland, bariery + edukacja + legalna kładka: 65%->37% dorośli, 47%->34% dzieci) [OPENED via RESTRAIL] https://www.restrail.eu/IMG/pdf/restrail_book.pdf",
+    "conditions": {
+      "detour_m": {
+        "gt": 300
+      },
+      "exposure_level": {
+        "in": [
+          "high"
+        ]
+      },
+      "vmax_kmh": {
+        "lte": 160
+      },
+      "tracks": {
+        "lte": 3
+      },
+      "sight_ok": true
+    },
+    "deploy_time": "6 miesięcy budowy (Wileńska) do lat (zgody)",
+    "decides_pays": "PKP PLK (decyzja, teren) + gmina (porozumienie, finansowanie); MI przy stacji",
+    "side_effects": "ryzyko w poziomie szyn pozostaje; wymóg L2 = 3 x Vr lub ograniczenie prędkości; bez domknięcia ścieżek obok ludzie idą najkrótszą drogą",
+    "legal": "Dz.U. 2025 poz. 1105 § 5, § 11, zał. 3 cz. C [OPENED] https://api.sejm.gov.pl/eli/acts/DU/2025/1105/text.pdf",
+    "evidence_tag": "OPINIA"
+  },
+  {
+    "id": "I6_kladka",
+    "name_pl": "Kładka dla pieszych",
+    "cost_pln_min": 3500000,
+    "cost_pln_max": 11000000,
+    "unit": "zł/obiekt",
+    "cost_source": "Lubartów >7 mln netto, Łódź Henrykowska 7,5 mln netto, Sosnowiec ok. 5 mln [OPENED]; Częstochowa 3,5 mln, Gdańsk >11 mln [SNIPPET]",
+    "effect_min_pct": -72,
+    "effect_max_pct": 84.3,
+    "effect_source": "Ngamdung 2019 (Birmingham AL): udział przechodzących przez tory +72%, przejścia przy obecności pociągu -84,3% [OPENED] https://trespasstoolkit.fra.dot.gov/eLib/Details/L00062",
+    "conditions": {
+      "detour_m": {
+        "gt": 300
+      },
+      "exposure_level": {
+        "in": [
+          "high"
+        ]
+      },
+      "any_of": {
+        "vmax_kmh": {
+          "gt": 160
+        },
+        "tracks": {
+          "gt": 3
+        },
+        "station_between_switches": true
+      }
+    },
+    "deploy_time": "ok. 2 lata (Łódź: przetarg 12.2025, oddanie IV kw. 2027)",
+    "decides_pays": "PKP PLK (modernizacje, UE/budżet państwa) + gmina",
+    "side_effects": "niewygodna trasa (schody) obniża użycie; trzeba zamknąć i ogrodzić starą ścieżkę",
+    "evidence_tag": "OPENED"
+  },
+  {
+    "id": "I7_tunel_pieszy",
+    "name_pl": "Przejście podziemne dla pieszych",
+    "cost_pln_min": 3500000,
+    "cost_pln_max": 25000000,
+    "unit": "zł/obiekt",
+    "cost_source": "Jasienica Mazowiecka 3 496 742,28 zł netto [OPENED] https://nbi.com.pl/wiadomosci/otwarto-nowe-przejscie-pod-torami-w-jasienicy-mazowieckiej/ ; Buk 5,5 mln, Władysławowo >24 mln [SNIPPET]",
+    "effect_min_pct": -72,
+    "effect_max_pct": 84.3,
+    "effect_source": "jak I6 (grade separation, FRA L00062) [OPENED]",
+    "conditions": {
+      "detour_m": {
+        "gt": 300
+      },
+      "exposure_level": {
+        "in": [
+          "high"
+        ]
+      },
+      "any_of": {
+        "vmax_kmh": {
+          "gt": 160
+        },
+        "tracks": {
+          "gt": 3
+        },
+        "station_between_switches": true
+      }
+    },
+    "deploy_time": "lata (dokumentacja + budowa)",
+    "decides_pays": "PKP PLK + gmina",
+    "side_effects": "jak I6; poczucie bezpieczeństwa w tunelu",
+    "evidence_tag": "OPENED"
+  },
+  {
+    "id": "I8_oswietlenie",
+    "name_pl": "Oświetlenie legalnej trasy/dojścia",
+    "cost_pln_min": 8000,
+    "cost_pln_max": 15500,
+    "unit": "zł/punkt świetlny (+10-18,5 tys. dokumentacja, 3 tys. przyłącze)",
+    "cost_source": "cennik BO Koszalin: lampa LED 12-13 tys., solarna 15-15,5 tys. [OPENED] https://koszalin.budzetobywatelski.pl/wszystko-o-budzecie/cennik-miejski ; inne cenniki BO 8-14 tys. [SNIPPET]",
+    "effect_min_pct": null,
+    "effect_max_pct": null,
+    "effect_source": "brak ilościowego dowodu (FRA L00046 [SNIPPET]; RESTRAIL tylko ocena ekspercka [OPENED] https://cordis.europa.eu/project/id/285153/reporting); pilotaż reflektora z czujnikiem NL: -30/-80/-100/+31% [SNIPPET]",
+    "conditions": {
+      "lit": false,
+      "exposure_level": {
+        "in": [
+          "mid",
+          "high"
+        ]
+      },
+      "apply_to": "legal_route_only"
+    },
+    "deploy_time": "tygodnie-miesiące [OPINIA]",
+    "decides_pays": "gmina (grunt gminy) / PLK (teren kolejowy)",
+    "side_effects": "olśnienie maszynisty (zakaz § 85); może oświetlać i utrwalać dziki skrót",
+    "evidence_tag": "SNIPPET"
+  },
+  {
+    "id": "I9_tablice",
+    "name_pl": "Tablice ostrzegawcze/zakazu z informacją o mandacie",
+    "cost_pln_min": 300,
+    "cost_pln_max": 2000,
+    "unit": "zł/szt.",
+    "cost_source": "cennik BO Koszalin: tablica 300-700 zł, wolnostojąca 1200-2000 zł [OPENED] https://koszalin.budzetobywatelski.pl/wszystko-o-budzecie/cennik-miejski",
+    "effect_min_pct": 30.7,
+    "effect_max_pct": 39.8,
+    "effect_source": "Silla & Luoma 2011 -30,7% [OPENED via FRA] https://trespasstoolkit.fra.dot.gov/eLib/Details/L00037 ; RESTRAIL Valladolid 128->77 (-39,8%) [OPENED] https://www.restrail.eu/IMG/pdf/restrail_book.pdf",
+    "conditions": {
+      "always": true
+    },
+    "deploy_time": "dni-tygodnie [OPINIA]",
+    "decides_pays": "ZLK PKP PLK",
+    "side_effects": "dewastacja, efekt nowości, nieczytelne nocą bez światła",
+    "evidence_tag": "OPENED"
+  },
+  {
+    "id": "I10_cctv_komunikat",
+    "name_pl": "Kamera/IR z detekcją + komunikat głosowy (alarm do SOK)",
+    "cost_pln_min": 28300,
+    "cost_pln_max": 295000,
+    "unit": "zł/punkt",
+    "cost_source": "BO Koszalin kamera 28 300 zł + 350 zł/mb kabla [OPENED] https://koszalin.budzetobywatelski.pl/wszystko-o-budzecie/cennik-miejski ; FDOT 5 kamer ITS 369 651,56 USD => ok. 295 tys. zł/punkt [OPENED] https://fdotwww.blob.core.windows.net/sitefinity/docs/default-source/rail/publications/studies/safety/fdot-cfrc-final-trespass-report-01202020.pdf ; moduł głosowy brak ceny [UNVERIFIED]",
+    "effect_min_pct": 10,
+    "effect_max_pct": 44,
+    "effect_source": "Kallberg & Silla 2017 (Finlandia) -18% i -44%; RESTRAIL zaleca planować 10-30% [OPENED] https://cordis.europa.eu/project/id/285153/reporting ; FRA L00040 [OPENED]",
+    "conditions": {
+      "concentrated_path": true,
+      "fence_feasible": false
+    },
+    "deploy_time": "tygodnie-miesiące [OPINIA]",
+    "decides_pays": "PKP PLK (teren, łączność) + SOK (reakcja)",
+    "side_effects": "fałszywe alarmy; baterie wymieniane co tydzień w pilotażu; spadek efektu w czasie",
+    "evidence_tag": "OPENED"
+  },
+  {
+    "id": "I11_patrol_sok",
+    "name_pl": "Ukierunkowany patrol SOK 18-23 (wrzesień-grudzień)",
+    "cost_pln_min": 14850,
+    "cost_pln_max": 14850,
+    "unit": "zł/rok (52 wieczory x 2 funkc. x 3 h, same płace)",
+    "cost_source": "[POCHODNA/ZAŁOŻENIE] 7 996,46 zł brutto/mies. (SOK, [SNIPPET] https://www.rmf24.pl/fakty/polska/news-sok-szuka-pracownikow-atrakcyjne-wynagrodzenie-to-dopiero-po,nId,8054324) / 168 h = 47,60 zł/h x 312 h",
+    "effect_min_pct": 0,
+    "effect_max_pct": 40,
+    "effect_source": "Thompson i in. 2012 patrole po cywilnemu -40%; efekt znika kilka miesięcy po zakończeniu [OPENED] https://www.restrail.eu/IMG/pdf/restrail_book.pdf ; Letnica 2025 ruch wrócił po odjeździe patrolu [OPENED]",
+    "conditions": {
+      "lit": false,
+      "exposure_level": {
+        "in": [
+          "mid",
+          "high"
+        ]
+      },
+      "time_window": "18-23",
+      "months": [
+        9,
+        10,
+        11,
+        12
+      ]
+    },
+    "deploy_time": "natychmiast",
+    "decides_pays": "SOK (PKP PLK)",
+    "side_effects": "efekt tylko w czasie obecności; przesunięcie w czasie",
+    "evidence_tag": "OPENED"
+  },
+  {
+    "id": "I12_edukacja",
+    "name_pl": "Edukacja w szkole i społeczności (uzupełnienie, nie samodzielnie)",
+    "cost_pln_min": 1497,
+    "cost_pln_max": 1497,
+    "unit": "zł/dziecko (średni koszt kampanii UTK Kolejowe ABC III)",
+    "cost_source": "[POCHODNA] 77,82 mln zł / 52 000 dzieci (RWSB25 s. 23-24, karta T5)",
+    "effect_min_pct": 0,
+    "effect_max_pct": 27.7,
+    "effect_source": "Lobb 2003: sama komunikacja bez efektu; Lobb 2001 z barierami dzieci 47%->34% [OPENED] https://www.restrail.eu/IMG/pdf/restrail_book.pdf ; FRA L00053 [OPENED]",
+    "conditions": {
+      "school_within_m": {
+        "lte": 1000
+      },
+      "combine_with_physical": true
+    },
+    "deploy_time": "semestr",
+    "decides_pays": "UTK, PKP PLK (Bezpieczny piątek), SOK, szkoły/gmina",
+    "side_effects": "brak efektu bez zmiany fizycznej",
+    "evidence_tag": "OPENED"
+  },
+  {
+    "id": "I13_przelozenie_dojscia_peron",
+    "name_pl": "Przełożenie dojścia do peronu (koniec jednostronnego dojścia) + wygrodzenie końców peronu",
+    "cost_pln_min": 82000,
+    "cost_pln_max": 1500000,
+    "unit": "zł/dojście",
+    "cost_source": "[ZAŁOŻENIE] chodnik 100 m x 2 m po 410-730 zł/m2 (BO Koszalin [OPENED]) = 82-146 tys.; Wileńska 1,5 mln zł netto [OPENED]",
+    "effect_min_pct": 90,
+    "effect_max_pct": 90,
+    "effect_source": "Fredin-Knutzén i in. 2024 (Sztokholm), wygrodzenie końców peronów: ok. -90% (IRR 0,10) [OPENED via FRA] https://trespasstoolkit.fra.dot.gov/eLib/Details/L00026",
+    "conditions": {
+      "dist_platform_m": {
+        "lte": 150
+      }
+    },
+    "deploy_time": "miesiące",
+    "decides_pays": "PKP PLK (perony) + gmina/PKP SA (dojścia)",
+    "side_effects": "bez dojścia z drugiej strony ruch przenosi się dalej od stacji",
+    "evidence_tag": "OPENED"
+  },
+  {
+    "id": "I14_wycinka_widocznosc",
+    "name_pl": "Wycinka roślinności w trójkącie widoczności (tylko przy przejściu, które zostaje)",
+    "cost_pln_min": null,
+    "cost_pln_max": null,
+    "unit": "zł/lokalizacja",
+    "cost_source": "brak jednostkowej stawki publicznej [UNVERIFIED]; zwykle utrzymanie ZLK",
+    "effect_min_pct": null,
+    "effect_max_pct": null,
+    "effect_source": "brak pomiaru wpływu na liczbę przejść; RESTRAIL tylko ocena ekspercka [OPENED] https://cordis.europa.eu/project/id/285153/reporting ; działa na ryzyko jednostkowe (L2 = 3 x Vr, Dz.U. 2025 poz. 1105 zał. 3) [OPENED]",
+    "conditions": {
+      "sight_ok": false,
+      "site_kept": true
+    },
+    "deploy_time": "dni-tygodnie [OPINIA]",
+    "decides_pays": "ZLK PKP PLK",
+    "side_effects": "usunięcie zieleni może otworzyć nowe ścieżki (konflikt z I15)",
+    "evidence_tag": "UNVERIFIED"
+  },
+  {
+    "id": "I15_bariera_zielen",
+    "name_pl": "Bariera z zieleni / prowadzenie ścieżki do legalnego przejścia (nudge)",
+    "cost_pln_min": 220,
+    "cost_pln_max": 480,
+    "unit": "zł/mb",
+    "cost_source": "[ZAŁOŻENIE] 2-4 krzewy/mb x 110-120 zł/krzew (BO Koszalin [OPENED] https://koszalin.budzetobywatelski.pl/wszystko-o-budzecie/cennik-miejski); Tom XIV: żywopłot w 2 rzędach [OPENED]",
+    "effect_min_pct": null,
+    "effect_max_pct": 91.3,
+    "effect_source": "Silla & Luoma 2011 -91,3% (jedyne badanie, objazd <= 300 m) [OPENED via FRA] https://trespasstoolkit.fra.dot.gov/eLib/Details/L00034",
+    "conditions": {
+      "detour_m": {
+        "lte": 300
+      },
+      "site_kept": false
+    },
+    "deploy_time": "sadzenie dni, szczelność po sezonach wzrostu [OPINIA]",
+    "decides_pays": "ZLK PKP PLK lub gmina",
+    "side_effects": "zasłanianie widoczności; pielęgnacja; słabiej działa na wiek 12-20 lat",
+    "evidence_tag": "OPENED"
+  }
+]

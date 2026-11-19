@@ -1,0 +1,385 @@
+{
+ "variants": [
+  {
+   "variant": "w_exposure x0.5",
+   "top20_overlap": 14,
+   "top20_places_overlap": 18,
+   "spearman": 0.915
+  },
+  {
+   "variant": "w_exposure x1.5",
+   "top20_overlap": 17,
+   "top20_places_overlap": 17,
+   "spearman": 0.977
+  },
+  {
+   "variant": "w_detour x0.5",
+   "top20_overlap": 18,
+   "top20_places_overlap": 17,
+   "spearman": 0.966
+  },
+  {
+   "variant": "w_detour x1.5",
+   "top20_overlap": 16,
+   "top20_places_overlap": 20,
+   "spearman": 0.974
+  },
+  {
+   "variant": "w_hazard x0.5",
+   "top20_overlap": 15,
+   "top20_places_overlap": 17,
+   "spearman": 0.966
+  },
+  {
+   "variant": "w_hazard x1.5",
+   "top20_overlap": 18,
+   "top20_places_overlap": 19,
+   "spearman": 0.983
+  },
+  {
+   "variant": "detour_lo_m x0.5",
+   "top20_overlap": 20,
+   "top20_places_overlap": 19,
+   "spearman": 0.997
+  },
+  {
+   "variant": "detour_lo_m x1.5",
+   "top20_overlap": 19,
+   "top20_places_overlap": 20,
+   "spearman": 0.997
+  },
+  {
+   "variant": "detour_hi_m x0.5",
+   "top20_overlap": 17,
+   "top20_places_overlap": 16,
+   "spearman": 0.967
+  },
+  {
+   "variant": "detour_hi_m x1.5",
+   "top20_overlap": 19,
+   "top20_places_overlap": 20,
+   "spearman": 0.991
+  },
+  {
+   "variant": "vmax_ref_kmh x0.5",
+   "top20_overlap": 19,
+   "top20_places_overlap": 19,
+   "spearman": 0.993
+  },
+  {
+   "variant": "vmax_ref_kmh x1.5",
+   "top20_overlap": 20,
+   "top20_places_overlap": 19,
+   "spearman": 0.999
+  },
+  {
+   "variant": "exposure_ref x0.5",
+   "top20_overlap": 17,
+   "top20_places_overlap": 20,
+   "spearman": 0.995
+  },
+  {
+   "variant": "exposure_ref x1.5",
+   "top20_overlap": 20,
+   "top20_places_overlap": 20,
+   "spearman": 1.0
+  },
+  {
+   "variant": "trains_ref x0.5",
+   "top20_overlap": 19,
+   "top20_places_overlap": 20,
+   "spearman": 0.997
+  },
+  {
+   "variant": "trains_ref x1.5",
+   "top20_overlap": 20,
+   "top20_places_overlap": 19,
+   "spearman": 0.999
+  },
+  {
+   "variant": "hz_speed x0.5",
+   "top20_overlap": 20,
+   "top20_places_overlap": 19,
+   "spearman": 0.997
+  },
+  {
+   "variant": "hz_speed x1.5",
+   "top20_overlap": 19,
+   "top20_places_overlap": 20,
+   "spearman": 0.998
+  },
+  {
+   "variant": "hz_trains x0.5",
+   "top20_overlap": 19,
+   "top20_places_overlap": 19,
+   "spearman": 0.998
+  },
+  {
+   "variant": "hz_trains x1.5",
+   "top20_overlap": 19,
+   "top20_places_overlap": 20,
+   "spearman": 0.997
+  },
+  {
+   "variant": "hz_tracks x0.5",
+   "top20_overlap": 19,
+   "top20_places_overlap": 20,
+   "spearman": 0.991
+  },
+  {
+   "variant": "hz_tracks x1.5",
+   "top20_overlap": 20,
+   "top20_places_overlap": 19,
+   "spearman": 0.997
+  },
+  {
+   "variant": "yard_detour_cap x0.5",
+   "top20_overlap": 17,
+   "top20_places_overlap": 19,
+   "spearman": 0.983
+  },
+  {
+   "variant": "yard_detour_cap x1.5",
+   "top20_overlap": 20,
+   "top20_places_overlap": 19,
+   "spearman": 0.997
+  },
+  {
+   "variant": "tracks_cap=2",
+   "top20_overlap": 19,
+   "top20_places_overlap": 20,
+   "spearman": 0.997
+  },
+  {
+   "variant": "tracks_cap=4",
+   "top20_overlap": 20,
+   "top20_places_overlap": 20,
+   "spearman": 0.997
+  },
+  {
+   "variant": "yard cap off",
+   "top20_overlap": 20,
+   "top20_places_overlap": 19,
+   "spearman": 0.993
+  },
+  {
+   "variant": "yard cap from 3 tracks",
+   "top20_overlap": 19,
+   "top20_places_overlap": 20,
+   "spearman": 0.992
+  },
+  {
+   "variant": "exposure transform log",
+   "top20_overlap": 13,
+   "top20_places_overlap": 15,
+   "spearman": 0.835
+  },
+  {
+   "variant": "exposure transform linear",
+   "top20_overlap": 15,
+   "top20_places_overlap": 15,
+   "spearman": 0.941
+  }
+ ],
+ "n_variants": 30,
+ "stable_top_all_variants": [
+  "T1-0012",
+  "T1-0030",
+  "T1-0060",
+  "T1-0061",
+  "T1-0079",
+  "T1-0081"
+ ],
+ "top20_share_one_at_a_time": {
+  "T1-0012": 1.0,
+  "T1-0013": 0.967,
+  "T1-0014": 0.333,
+  "T1-0016": 0.967,
+  "T1-0017": 0.933,
+  "T1-0018": 0.9,
+  "T1-0019": 0.333,
+  "T1-0020": 0.1,
+  "T1-0021": 0.067,
+  "T1-0023": 0.2,
+  "T1-0024": 0.133,
+  "T1-0025": 0.833,
+  "T1-0026": 0.1,
+  "T1-0027": 0.033,
+  "T1-0030": 1.0,
+  "T1-0031": 0.067,
+  "T1-0032": 0.067,
+  "T1-0037": 0.967,
+  "T1-0038": 0.933,
+  "T1-0041": 0.1,
+  "T1-0042": 0.833,
+  "T1-0044": 0.8,
+  "T1-0045": 0.933,
+  "T1-0046": 0.767,
+  "T1-0055": 0.1,
+  "T1-0056": 0.033,
+  "T1-0060": 1.0,
+  "T1-0061": 1.0,
+  "T1-0065": 0.067,
+  "T1-0066": 0.033,
+  "T1-0079": 1.0,
+  "T1-0081": 1.0,
+  "T1-0083": 0.867
+ },
+ "top20_places_stability": {
+  "T1-0012": {
+   "one_at_a_time": 1.0,
+   "monte_carlo": 1.0
+  },
+  "T1-0013": {
+   "one_at_a_time": 1.0,
+   "monte_carlo": 1.0
+  },
+  "T1-0014": {
+   "one_at_a_time": 1.0,
+   "monte_carlo": 0.986
+  },
+  "T1-0016": {
+   "one_at_a_time": 1.0,
+   "monte_carlo": 0.994
+  },
+  "T1-0020": {
+   "one_at_a_time": 0.833,
+   "monte_carlo": 0.568
+  },
+  "T1-0022": {
+   "one_at_a_time": 0.933,
+   "monte_carlo": 0.822
+  },
+  "T1-0023": {
+   "one_at_a_time": 0.867,
+   "monte_carlo": 0.747
+  },
+  "T1-0024": {
+   "one_at_a_time": 0.9,
+   "monte_carlo": 0.691
+  },
+  "T1-0025": {
+   "one_at_a_time": 0.933,
+   "monte_carlo": 0.899
+  },
+  "T1-0026": {
+   "one_at_a_time": 0.933,
+   "monte_carlo": 0.644
+  },
+  "T1-0030": {
+   "one_at_a_time": 1.0,
+   "monte_carlo": 0.976
+  },
+  "T1-0031": {
+   "one_at_a_time": 0.533,
+   "monte_carlo": 0.42
+  },
+  "T1-0037": {
+   "one_at_a_time": 1.0,
+   "monte_carlo": 0.987
+  },
+  "T1-0042": {
+   "one_at_a_time": 0.967,
+   "monte_carlo": 0.886
+  },
+  "T1-0044": {
+   "one_at_a_time": 0.933,
+   "monte_carlo": 0.835
+  },
+  "T1-0045": {
+   "one_at_a_time": 1.0,
+   "monte_carlo": 0.988
+  },
+  "T1-0060": {
+   "one_at_a_time": 1.0,
+   "monte_carlo": 1.0
+  },
+  "T1-0061": {
+   "one_at_a_time": 1.0,
+   "monte_carlo": 1.0
+  },
+  "T1-0079": {
+   "one_at_a_time": 1.0,
+   "monte_carlo": 1.0
+  },
+  "T1-0083": {
+   "one_at_a_time": 0.967,
+   "monte_carlo": 0.964
+  }
+ },
+ "monte_carlo": {
+  "n": 2000,
+  "rule": "all numeric parameters drawn independently from U(0.5, 1.5) x base",
+  "top20_overlap_median": 17.0,
+  "top20_overlap_p05": 13.0,
+  "top20_places_overlap_median": 17.0,
+  "top20_places_overlap_p05": 15.0,
+  "spearman_median": 0.964,
+  "spearman_p05": 0.886,
+  "top20_share": {
+   "T1-0005": 0.008,
+   "T1-0012": 1.0,
+   "T1-0013": 0.99,
+   "T1-0014": 0.515,
+   "T1-0016": 0.86,
+   "T1-0017": 0.829,
+   "T1-0018": 0.678,
+   "T1-0019": 0.319,
+   "T1-0020": 0.214,
+   "T1-0021": 0.195,
+   "T1-0022": 0.159,
+   "T1-0023": 0.424,
+   "T1-0024": 0.346,
+   "T1-0025": 0.629,
+   "T1-0026": 0.235,
+   "T1-0027": 0.033,
+   "T1-0030": 0.916,
+   "T1-0031": 0.172,
+   "T1-0032": 0.134,
+   "T1-0037": 0.865,
+   "T1-0038": 0.821,
+   "T1-0040": 0.001,
+   "T1-0041": 0.213,
+   "T1-0042": 0.634,
+   "T1-0044": 0.61,
+   "T1-0045": 0.934,
+   "T1-0046": 0.637,
+   "T1-0047": 0.025,
+   "T1-0048": 0.004,
+   "T1-0055": 0.105,
+   "T1-0056": 0.113,
+   "T1-0057": 0.032,
+   "T1-0060": 1.0,
+   "T1-0061": 1.0,
+   "T1-0065": 0.097,
+   "T1-0066": 0.059,
+   "T1-0073": 0.029,
+   "T1-0077": 0.098,
+   "T1-0079": 1.0,
+   "T1-0080": 0.002,
+   "T1-0081": 1.0,
+   "T1-0083": 0.768,
+   "T1-0086": 0.001
+  }
+ },
+ "base_params": {
+  "w_exposure": 1.0,
+  "w_detour": 1.0,
+  "w_hazard": 1.0,
+  "detour_lo_m": 100.0,
+  "detour_hi_m": 1500.0,
+  "vmax_ref_kmh": 160.0,
+  "exposure_ref_pct": 95.0,
+  "trains_ref_pct": 95.0,
+  "hz_speed": 0.4,
+  "hz_trains": 0.4,
+  "hz_tracks": 0.2,
+  "tracks_cap": 3,
+  "yard_min_tracks": 5,
+  "yard_detour_cap": 0.5,
+  "exposure_transform": "sqrt"
+ },
+ "exposure_ref": 30090.7,
+ "trains_ref": 146.0,
+ "note_dropped": "geometric_intersection-only candidates dropped after the run (drop_geometric.py); variant and Monte Carlo overlaps were computed on 86 candidates"
+}

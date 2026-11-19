@@ -1,0 +1,108 @@
+{
+ "n_candidates": 82,
+ "osm_hazard_tag_ranks": {
+  "note": "score does not use the source field; these places are also a candidate source",
+  "ids": [
+   "T1-0044",
+   "T1-0032",
+   "T1-0077",
+   "T1-0047",
+   "T1-0048",
+   "T1-0049",
+   "T1-0056",
+   "T1-0051"
+  ],
+  "ranks": [
+   11,
+   29,
+   30,
+   34,
+   35,
+   38,
+   39,
+   43
+  ],
+  "in_top20": 1,
+  "test": {
+   "n": 8,
+   "mean_rank": 32.4,
+   "median_rank": 34.5,
+   "random_mean_rank": 41.6,
+   "p_value_better_than_random": 0.1267
+  }
+ },
+ "accidents": {
+  "filter": "kind=accident, use_for_validation, precision exact|approx, geometry present, in WRO bbox",
+  "n_events": 23,
+  "radius_rule": "uncertainty_m per event, min 100 m",
+  "no_candidate_in_radius": 16,
+  "no_candidate_in_300m": 16,
+  "candidates_matched_by_event_radius": 9,
+  "top20_places": {
+   "n_points": 31,
+   "event_radius": {
+    "observed": 0.174,
+    "random_mean": 0.057,
+    "random_p95": 0.13,
+    "p_value": 0.0407
+   },
+   "flat_300m": {
+    "observed": 0.174,
+    "random_mean": 0.072,
+    "random_p95": 0.174,
+    "p_value": 0.0807
+   },
+   "event_radius_baseline_near_candidates": {
+    "observed": 0.174,
+    "random_mean": 0.123,
+    "random_p95": 0.261,
+    "p_value": 0.311
+   }
+  },
+  "top20_candidates": {
+   "event_radius": {
+    "observed": 0.13,
+    "random_mean": 0.047,
+    "random_p95": 0.13,
+    "p_value": 0.0916
+   },
+   "flat_300m": {
+    "observed": 0.087,
+    "random_mean": 0.06,
+    "random_p95": 0.13,
+    "p_value": 0.4076
+   }
+  },
+  "all_candidates": {
+   "event_radius": {
+    "observed": 0.304,
+    "random_mean": 0.137,
+    "random_p95": 0.261,
+    "p_value": 0.0282
+   },
+   "flat_300m": {
+    "observed": 0.304,
+    "random_mean": 0.175,
+    "random_p95": 0.304,
+    "p_value": 0.0914
+   }
+  },
+  "rank_of_matched_candidates": {
+   "event_radius": {
+    "n": 9,
+    "mean_rank": 27.6,
+    "median_rank": 24.0,
+    "random_mean_rank": 41.6,
+    "p_value_better_than_random": 0.0295
+   },
+   "flat_300m": {
+    "n": 7,
+    "mean_rank": 29.1,
+    "median_rank": 24.0,
+    "random_mean_rank": 41.5,
+    "p_value_better_than_random": 0.0791
+   }
+  },
+  "baseline": "10000 draws of 23 uniform points on T2 running track (all in bbox, and only within 1000 m of any candidate), same radii as the events"
+ }
+}

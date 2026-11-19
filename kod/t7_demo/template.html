@@ -1,0 +1,1683 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dzika Ścieżka - rejestr dzikich przejść</title>
+<style>
+/*__FONTS__*/
+/*__LEAFLET_CSS__*/
+:root {
+  --navy: #00457c; --navy-h: #00355f; --navy-a: #002a4a; --navy-t: #e6eef6;
+  --g10: #f4f4f4; --g20: #e0e0e0; --g30: #c6c6c6; --g40: #a8a8a8; --g50: #8d8d8d; --g60: #6f6f6f; --g70: #525252; --g80: #393939; --g90: #262626; --g100: #161616;
+  --red: #da1e28; --red-t: #fff1f1; --green: #198038; --green-t: #defbe6; --yellow: #f1c21b; --warn-t: #fcf4d6; --info-t: #edf5ff; --focus: #0f62fe;
+  --font: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'IBM Plex Mono', Menlo, Consolas, monospace;
+  --side: clamp(420px, 33vw, 520px);
+  --hdr: 48px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: #fff; color: var(--g100); font-family: var(--font); font-size: 14px; line-height: 18px; letter-spacing: .16px; }
+body { display: grid; grid-template-columns: var(--side) 1fr; grid-template-rows: var(--hdr) minmax(0, 1fr); overflow: hidden; }
+a { color: var(--navy); }
+button, input, select, textarea { font: inherit; letter-spacing: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.num { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--mono); font-size: 13px; letter-spacing: 0; }
+svg.ic { flex: none; fill: currentColor; display: block; }
+[hidden] { display: none !important; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ---------- shell header ---------- */
+#hdr { grid-column: 1 / -1; background: var(--g100); color: #f4f4f4; display: flex; align-items: stretch; height: var(--hdr); border-bottom: 1px solid #393939; position: relative; z-index: 1500; }
+#hdr .logo { width: var(--hdr); background: var(--navy); display: grid; place-items: center; flex: none; }
+#hdr .pname { display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 14px; white-space: nowrap; }
+#hdr .pname b { font-weight: 600; font-size: 15px; }
+#hdr .pname span { color: #c6c6c6; }
+#hdr .htag { align-self: center; margin-left: 4px; }
+.hsp { flex: 1; }
+.hmenu { position: relative; display: flex; }
+.hbtn { display: flex; align-items: center; gap: 8px; padding: 0 16px; border: 0; border-left: 1px solid #393939; background: transparent; color: #f4f4f4; font-size: 14px; }
+.hbtn:hover, .hbtn[aria-expanded=true] { background: #2c2c2c; }
+.hbtn:focus-visible { outline-color: #fff; }
+.hpop { position: absolute; top: 100%; right: 0; width: 340px; background: #262626; box-shadow: 0 4px 12px rgba(0,0,0,.4); }
+.hpop button { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: #f4f4f4; padding: 10px 16px; border-top: 1px solid #393939; }
+.hpop button:first-child { border-top: 0; }
+.hpop button:hover { background: #353535; }
+.hpop button b { display: block; font-weight: 400; font-size: 14px; }
+.hpop button span { display: block; font-size: 12px; color: #a8a8a8; margin-top: 2px; line-height: 16px; }
+.hpop button:focus-visible { outline-color: #fff; }
+
+/* tags */
+.tag { display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 8px; border-radius: 10px; font-size: 12px; line-height: 16px; letter-spacing: .32px; white-space: nowrap; background: var(--g20); color: var(--g100); font-weight: 400; }
+.tag.gray { background: var(--g20); color: var(--g100); }
+.tag.red { background: #ffd7d9; color: #a2191f; }
+.tag.blue { background: #d0e2ff; color: #0043ce; }
+.tag.navy { background: var(--navy-t); color: var(--navy); }
+.tag.green { background: #a7f0ba; color: #0e6027; }
+.tag.yellow { background: #fddc69; color: #483700; }
+.tag.teal { background: #9ef0f0; color: #004144; }
+.tag.outline { background: transparent; box-shadow: inset 0 0 0 1px currentColor; color: #c6c6c6; }
+.tag.outline.dk { color: var(--g70); }
+.tag.dark { background: var(--g100); color: #fff; }
+
+/* buttons (Carbon) */
+.btn { appearance: none; display: inline-flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 40px; padding: 0 16px; border: 1px solid transparent; border-radius: 0; background: var(--navy); color: #fff; font-size: 14px; line-height: 18px; text-align: left; text-decoration: none; }
+.btn:hover { background: var(--navy-h); }
+.btn:active { background: var(--navy-a); }
+.btn:focus-visible { outline: 2px solid var(--focus); outline-offset: -3px; box-shadow: inset 0 0 0 3px #fff; }
+.btn.sec { background: var(--g80); }
+.btn.sec:hover { background: #4c4c4c; }
+.btn.ter { background: transparent; color: var(--navy); border-color: var(--navy); }
+.btn.ter:hover { background: var(--navy); color: #fff; }
+.btn.ghost { background: transparent; color: var(--navy); padding: 0 12px; }
+.btn.ghost:hover { background: var(--navy-t); }
+.btn.danger { background: var(--red); }
+.btn.danger:hover { background: #ba1b23; }
+.btn.danger.ter { background: transparent; color: var(--red); border-color: var(--red); }
+.btn.danger.ter:hover { background: var(--red); color: #fff; }
+.btn.sm { min-height: 32px; padding: 0 12px; }
+.btn.lg { min-height: 48px; }
+.btn.on { box-shadow: inset 0 0 0 2px var(--g100); }
+.btn[disabled] { background: var(--g20); color: var(--g50); cursor: not-allowed; }
+.ibtn { width: 32px; height: 32px; display: grid; place-items: center; border: 0; background: transparent; color: var(--g100); padding: 0; }
+.ibtn:hover { background: var(--g20); }
+
+/* ---------- left panel ---------- */
+#side { grid-row: 2; display: flex; flex-direction: column; min-height: 0; background: #fff; border-right: 1px solid var(--g20); z-index: 5; }
+.tabs { display: flex; flex: none; border-bottom: 1px solid var(--g20); background: #fff; }
+.tabs button { flex: 1; height: 48px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--g70); font-size: 14px; padding: 0 8px; margin-bottom: -1px; }
+.tabs button:hover { background: var(--g10); color: var(--g100); border-bottom-color: var(--g30); }
+.tabs button[aria-selected=true] { color: var(--g100); font-weight: 600; border-bottom-color: var(--navy); }
+.tabs .tag { height: 18px; padding: 0 7px; font-weight: 400; }
+.pane { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.pane[hidden] { display: none; }
+.ptool { flex: none; padding: 12px 16px 8px; display: grid; gap: 8px; }
+.prow { display: flex; gap: 8px; align-items: center; }
+.search { position: relative; flex: 1; min-width: 0; }
+.search .ic { position: absolute; left: 10px; top: 8px; color: var(--g70); pointer-events: none; }
+.search input { width: 100%; height: 32px; border: 0; border-bottom: 1px solid var(--g50); background: var(--g10); padding: 0 32px 0 34px; font-size: 14px; border-radius: 0; }
+.search input::placeholder { color: var(--g60); }
+.search input::-webkit-search-cancel-button { display: none; }
+.search input:focus { outline: 2px solid var(--focus); outline-offset: -2px; border-bottom-color: transparent; }
+.search .clr { position: absolute; right: 0; top: 0; width: 32px; height: 32px; border: 0; background: transparent; display: grid; place-items: center; color: var(--g70); }
+.search .clr:hover { background: var(--g20); }
+.switch { display: inline-flex; flex: none; height: 32px; background: var(--g10); }
+.switch button { border: 0; border-bottom: 1px solid var(--g50); background: var(--g10); color: var(--g70); padding: 0 14px; font-size: 14px; min-width: 64px; }
+.switch button + button { border-left: 1px solid var(--g30); }
+.switch button:hover { background: var(--g20); }
+.switch button.on { background: var(--g100); color: #fff; border-bottom-color: var(--g100); }
+.switch button:focus-visible { outline-offset: -3px; }
+.pinfo { font-size: 12px; line-height: 16px; color: var(--g60); display: flex; justify-content: space-between; gap: 12px; }
+.tscroll { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; border-top: 1px solid var(--g20); }
+table.dt { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.dt th { position: sticky; top: 0; z-index: 2; background: var(--g20); text-align: left; font-weight: 600; font-size: 12px; line-height: 16px; height: 32px; padding: 0; color: var(--g100); letter-spacing: .32px; }
+.dt th > span, .dt th > button { display: flex; align-items: center; gap: 4px; width: 100%; height: 32px; padding: 0 8px; border: 0; background: transparent; text-align: left; font-weight: 600; }
+.dt th > button:hover { background: #d1d1d1; }
+.dt th > button .ic { color: var(--g60); }
+.dt th[aria-sort] > button .ic { color: var(--g100); }
+.dt th.r > button, .dt th.r > span { justify-content: flex-end; }
+.dt td { padding: 6px 8px; border-bottom: 1px solid var(--g20); vertical-align: middle; height: 52px; overflow: hidden; }
+.dt tbody tr { cursor: pointer; background: #fff; }
+.dt tbody tr:hover, .dt tbody tr.hov { background: #e8e8e8; }
+.dt tbody tr.on { background: var(--navy-t); }
+.dt tbody tr.on td:first-child { box-shadow: inset 3px 0 0 var(--navy); }
+.dt tbody tr:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.dt tbody tr.done { color: var(--g70); }
+.dt .c1 { font-weight: 600; font-size: 14px; line-height: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dt .c2 { font-size: 12px; line-height: 16px; color: var(--g60); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+.dt .rec { font-size: 12px; line-height: 16px; color: var(--g80); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.dt td.r { text-align: right; }
+.sc { font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 18px; }
+.scbar { height: 3px; background: var(--g20); margin: 5px 0 0 auto; width: 44px; }
+.scbar i { display: block; height: 100%; }
+.rk { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; color: #fff; }
+.rk.plain { color: var(--g70); font-weight: 400; background: none; }
+.gsq { display: inline-block; width: 12px; height: 12px; border-radius: 2px; background: #005d5d; vertical-align: -1px; margin-right: 6px; }
+.gsq.u { background: #fff; box-shadow: inset 0 0 0 2px #005d5d; }
+.gsq.u2 { background: #fff; border: 2px dashed #005d5d; }
+.gsq.rm { background: var(--g40); }
+.empty { padding: 32px 24px; text-align: left; }
+.empty h3 { margin: 0 0 8px; font-size: 16px; line-height: 22px; font-weight: 600; }
+.empty p { margin: 0 0 16px; color: var(--g70); font-size: 14px; line-height: 20px; max-width: 34em; }
+.lfoot { flex: none; border-top: 1px solid var(--g20); padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 12px; line-height: 16px; color: var(--g60); background: var(--g10); }
+.link { border: 0; background: none; padding: 0; color: var(--navy); font-size: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.link:hover { color: var(--navy-h); }
+
+/* ---------- map ---------- */
+main { grid-row: 2; position: relative; min-width: 0; min-height: 0; }
+#mbar { position: absolute; left: 0; right: 0; top: 0; height: 48px; z-index: 900; background: #fff; border-bottom: 1px solid var(--g20); display: flex; align-items: center; gap: 12px; padding-left: 12px; }
+#mbar .lwrap { position: relative; }
+.tbtn { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 12px; border: 0; border-bottom: 1px solid var(--g50); background: var(--g10); font-size: 14px; }
+.tbtn:hover, .tbtn[aria-expanded=true] { background: var(--g20); }
+.grow { flex: 1; }
+#mbar .btn { height: 48px; padding: 0 16px 0 20px; }
+#layPop { position: absolute; top: 40px; left: 0; width: 320px; background: #fff; box-shadow: 0 4px 16px rgba(0,0,0,.24); border: 1px solid var(--g20); max-height: calc(100vh - 140px); overflow-y: auto; }
+#layPop h3 { margin: 0; padding: 12px 16px 4px; font-size: 12px; line-height: 16px; font-weight: 600; color: var(--g70); text-transform: none; letter-spacing: .32px; }
+.layer { display: grid; grid-template-columns: 16px 1fr; gap: 0 12px; padding: 8px 16px; cursor: pointer; }
+.layer:hover { background: var(--g10); }
+.layer .lt { display: flex; align-items: center; gap: 8px; font-size: 14px; line-height: 18px; }
+.layer .ld { grid-column: 2; font-size: 12px; line-height: 16px; color: var(--g60); margin-top: 2px; }
+.layer input, form input[type=checkbox] { appearance: none; margin: 1px 0 0; width: 16px; height: 16px; border: 1px solid var(--g100); border-radius: 0; background: #fff; display: grid; place-items: center; flex: none; }
+.layer input:checked, form input[type=checkbox]:checked { background: var(--g100); }
+.layer input:checked::after, form input[type=checkbox]:checked::after { content: ""; width: 9px; height: 5px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: translateY(-1px) rotate(-45deg); }
+.layer input:focus-visible, form input[type=checkbox]:focus-visible, form input[type=radio]:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+.bars { grid-column: 2; display: flex; gap: 2px; margin-top: 6px; }
+.bars div { flex: 1; text-align: center; font-size: 11px; color: var(--g60); white-space: nowrap; }
+.bars div i { display: block; height: 5px; margin-bottom: 2px; }
+.xhint { grid-column: 2; font-size: 12px; color: var(--g60); }
+.glyph { display: inline-block; flex: none; }
+.glyph.acc { width: 9px; height: 9px; background: #0d0f12; border: 1.5px solid #fff; box-shadow: 0 0 0 1px #888; transform: rotate(45deg); margin: 0 2px; }
+.glyph.sq { width: 12px; height: 12px; border-radius: 2px; background: #005d5d; }
+.glyph.sq.u { background: #fff; border: 2px dashed #005d5d; }
+.glyph.xing { width: 18px; height: 8px; border-radius: 4px; background: rgba(1,109,183,.4); }
+.glyph.drop { width: 12px; height: 12px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--red); margin: 0 2px; }
+.glyph.dot { width: 8px; height: 8px; border-radius: 50%; background: #8d8d8d; margin: 0 2px; }
+.glyph.line { width: 18px; height: 3px; background: #6f6f6f; }
+
+#modeBar { position: absolute; left: 64px; right: 12px; top: 60px; z-index: 850; display: flex; align-items: center; gap: 12px; background: var(--info-t); border-left: 3px solid #0043ce; box-shadow: 0 2px 8px rgba(0,0,0,.18); padding: 0 0 0 12px; min-height: 40px; color: var(--g100); }
+#modeBar .ic { color: #0043ce; }
+#modeBar span { flex: 1; padding: 11px 0; }
+#modeBar kbd { font-family: var(--mono); font-size: 12px; background: #fff; border: 1px solid var(--g30); padding: 0 4px; }
+.adding #map { cursor: crosshair; }
+.adding #map .leaflet-interactive { cursor: crosshair; }
+
+#tileNote { position: absolute; left: 64px; right: 12px; top: 60px; z-index: 840; background: var(--warn-t); border-left: 3px solid var(--yellow); box-shadow: 0 2px 8px rgba(0,0,0,.18); padding: 10px 12px; font-size: 13px; line-height: 18px; }
+#modeBar:not([hidden]) ~ #tileNote { top: 108px; }
+.tscroll { scroll-padding-top: 36px; }
+.dl dd { overflow-wrap: anywhere; }
+#legend { position: absolute; left: 12px; bottom: 54px; z-index: 600; background: #fff; border: 1px solid var(--g20); box-shadow: 0 1px 4px rgba(0,0,0,.15); padding: 8px 12px 10px; font-size: 12px; line-height: 16px; width: 276px; }
+#legend .lh { font-weight: 600; margin-bottom: 6px; display: flex; justify-content: space-between; }
+#legend .lh span { font-weight: 400; color: var(--g60); }
+#legend .ramp { display: flex; }
+#legend .ramp div { flex: 1; text-align: center; color: var(--g70); font-size: 11px; }
+#legend .ramp i { display: block; height: 8px; margin-bottom: 2px; }
+#legend .lk { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 8px; color: var(--g80); }
+#legend .lk span { display: inline-flex; align-items: center; gap: 5px; }
+.leaflet-container { font-family: var(--font); background: #e8e8e8; }
+.leaflet-control-attribution { font-size: 10.5px; }
+.leaflet-bar { box-shadow: 0 1px 4px rgba(0,0,0,.2) !important; border: 0 !important; border-radius: 0 !important; }
+.leaflet-bar a { color: var(--g100); width: 32px !important; height: 32px !important; line-height: 32px !important; border-radius: 0 !important; display: grid !important; place-items: center; }
+.leaflet-bar a:hover { background: var(--g10); }
+.leaflet-top.leaflet-left { top: 56px; }
+
+/* markers */
+.pin { position: relative; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 2px solid #fff; font-weight: 600; font-size: 12px; color: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.5); font-variant-numeric: tabular-nums; letter-spacing: 0; transition: transform .1s; }
+.pin.light { color: var(--g100); }
+.pin.hov { transform: scale(1.18); box-shadow: 0 0 0 2px var(--g100), 0 1px 4px rgba(0,0,0,.5); }
+.pin.sel { transform: scale(1.18); box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--g100); }
+.acc-pin { width: 11px; height: 11px; margin: 2px; transform: rotate(45deg); border: 2px solid #fff; background: #0d0f12; box-shadow: 0 1px 3px rgba(0,0,0,.5); }
+.acc-pin.inj { background: #6f6f6f; }
+.acc-pin.user { border-color: var(--red); }
+.ai-mk { position: relative; width: 18px; height: 18px; border-radius: 3px; background: #005d5d; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.5); display: grid; place-items: center; color: #fff; font-size: 11px; font-weight: 600; line-height: 1; }
+.ai-mk.u { background: rgba(255,255,255,.92); border: 2px dashed #005d5d; }
+.ai-mk.ok { width: 20px; height: 20px; background: var(--green); }
+.ai-mk.fix { border: 2px solid var(--yellow); }
+.ai-mk.plan::before { content: ""; position: absolute; right: -6px; top: -6px; width: 9px; height: 9px; border-radius: 50%; background: var(--yellow); border: 1.5px solid #483700; }
+.ai-mk.rm { background: #c6c6c6; border: 2px solid #fff; opacity: .75; }
+.ai-mk.sel { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--g100); }
+.ai-mk.hov { box-shadow: 0 0 0 2px var(--g100); }
+.ai-mk.drag { cursor: move; box-shadow: 0 0 0 4px var(--yellow), 0 2px 8px rgba(0,0,0,.5); }
+.drop { position: relative; width: 24px; height: 24px; }
+.drop i { position: absolute; inset: 0; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: var(--red); border: 2px solid #fff; box-shadow: -1px 1px 4px rgba(0,0,0,.4); }
+.drop i::after { content: ""; position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%; background: #fff; }
+.drop.sel i { box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--g100); }
+.drop.tmp i { background: var(--navy); }
+.leaflet-tooltip.tip { background: var(--g100); color: #fff; border: 0; border-radius: 0; padding: 6px 10px; font-size: 12px; line-height: 16px; box-shadow: 0 2px 6px rgba(0,0,0,.3); }
+.leaflet-tooltip.tip::before { display: none; }
+.leaflet-popup-content-wrapper { border-radius: 0; box-shadow: 0 4px 16px rgba(0,0,0,.28); padding: 0; }
+.leaflet-popup-content { margin: 16px; font-size: 14px; line-height: 18px; color: var(--g100); width: 268px !important; }
+.leaflet-popup-tip { box-shadow: none; }
+.pop .k { font-size: 12px; line-height: 16px; color: var(--g60); }
+.pop h3 { margin: 4px 0 4px; font-size: 16px; font-weight: 600; line-height: 22px; }
+.pop .sm { font-size: 12px; line-height: 16px; color: var(--g70); }
+.pop .acts { display: grid; gap: 1px; margin: 16px -16px -16px; }
+
+/* ---------- right panel ---------- */
+#card { position: absolute; top: 48px; right: 0; bottom: 0; width: 448px; max-width: 100%; z-index: 700; background: #fff; color: var(--g100); border-left: 1px solid var(--g20); box-shadow: -6px 0 18px rgba(0,0,0,.14); display: flex; flex-direction: column; overflow: hidden; transform: translateX(calc(100% + 30px)); transition: transform .2s ease-out; }
+#card.open { transform: none; }
+.ch { padding: 16px 16px 0; position: relative; flex: none; background: #fff; border-bottom: 1px solid var(--g20); }
+.ch .top { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 32px; margin: -4px -8px 0 0; }
+.ch .kicker { font-size: 12px; line-height: 16px; color: var(--g60); letter-spacing: .32px; }
+.ch h2 { margin: 4px 0 4px; font-size: 20px; font-weight: 600; line-height: 28px; letter-spacing: 0; }
+.ch .sub { font-size: 14px; line-height: 20px; color: var(--g70); padding-bottom: 12px; }
+.ch .tags { display: flex; gap: 6px; flex-wrap: wrap; padding-bottom: 12px; }
+.stat { display: grid; grid-template-columns: 1.1fr 1fr 1.2fr; margin: 0 -16px; border-top: 1px solid var(--g20); background: var(--g10); }
+.stat > div { padding: 10px 16px 12px; border-left: 1px solid var(--g20); min-width: 0; }
+.stat > div:first-child { border-left: 0; }
+.stat .l { font-size: 12px; line-height: 16px; color: var(--g60); }
+.stat .v { font-size: 28px; line-height: 34px; font-weight: 400; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.stat .v small { font-size: 12px; color: var(--g60); margin-left: 3px; }
+.stat .v.s { font-size: 14px; line-height: 20px; margin-top: 8px; font-weight: 600; }
+.stat .bar { height: 4px; background: var(--g20); margin-top: 4px; }
+.stat .bar i { display: block; height: 100%; }
+.cb { overflow-y: auto; flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.cb > .grow2 { flex: 1; }
+.cbody { padding: 0 16px; }
+.sec { margin: 0; border-bottom: 1px solid var(--g20); }
+.sec > summary, .sec > h3 { margin: 0; font-size: 14px; line-height: 18px; font-weight: 600; min-height: 40px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; }
+.sec > summary { list-style: none; cursor: pointer; font-weight: 400; }
+.sec > summary::-webkit-details-marker { display: none; }
+.sec > summary:hover { background: var(--g10); }
+.sec > summary .ic { transition: transform .15s; color: var(--g70); }
+.sec[open] > summary .ic { transform: rotate(180deg); }
+.sec > summary b { font-weight: 600; }
+.sec > summary .cnt { margin-left: 8px; }
+.sec .sbody { padding: 4px 16px 16px; }
+.sec.pl > .sbody { padding-top: 0; }
+.sec.flat > h3 { background: transparent; }
+.crit { display: grid; grid-template-columns: 24px 1fr 44px; gap: 0 12px; align-items: start; padding: 10px 0; border-top: 1px solid var(--g20); }
+.crit:first-child { border-top: 0; padding-top: 4px; }
+.crit .k { width: 24px; height: 24px; display: grid; place-items: center; background: var(--g100); color: #fff; font-size: 12px; font-weight: 600; border-radius: 0; margin-top: 1px; }
+.crit .n { font-size: 14px; line-height: 18px; font-weight: 600; }
+.crit .t { font-size: 13px; line-height: 18px; color: var(--g70); margin-top: 2px; }
+.crit .val { text-align: right; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.crit .meter { grid-column: 2 / 4; height: 4px; background: var(--g20); margin-top: 6px; }
+.crit .meter i { display: block; height: 100%; background: var(--navy); }
+.crit .det { grid-column: 2 / 4; font-size: 12px; line-height: 16px; color: var(--g60); margin-top: 6px; }
+.reco { margin: 0; padding: 16px; background: var(--g10); border-bottom: 1px solid var(--g20); }
+.reco .l { font-size: 12px; line-height: 16px; color: var(--g60); letter-spacing: .32px; }
+.reco .main { margin: 6px 0 0; padding-left: 12px; border-left: 3px solid var(--navy); }
+.reco .main b { display: block; font-size: 16px; line-height: 22px; font-weight: 600; letter-spacing: 0; }
+.reco .cost { display: block; margin-top: 4px; font-size: 14px; line-height: 18px; font-variant-numeric: tabular-nums; }
+.cnote { display: block; font-size: 12px; line-height: 16px; color: var(--g60); margin-top: 2px; }
+.steps { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 0; }
+.steps li { display: grid; grid-template-columns: 76px 1fr; gap: 8px; padding: 8px 0; border-top: 1px solid var(--g30); font-size: 13px; line-height: 18px; }
+.steps li .tg { font-size: 12px; line-height: 18px; color: var(--g60); }
+.steps li .cost { margin: 0; font-size: 12px; line-height: 16px; color: var(--g70); display: block; }
+.dl { display: grid; grid-template-columns: 124px 1fr; gap: 8px 12px; margin: 0; font-size: 14px; line-height: 18px; }
+.dl dt { color: var(--g60); font-size: 13px; }
+.dl dd { margin: 0; }
+.evs { list-style: none; margin: 0; padding: 0; }
+.evs li { display: grid; grid-template-columns: 16px 1fr auto; gap: 8px; align-items: center; padding: 6px 0; font-size: 13px; line-height: 18px; border-top: 1px solid var(--g20); }
+.evs li:first-child { border-top: 0; }
+.evs .d { color: var(--g60); font-variant-numeric: tabular-nums; font-size: 12px; }
+.mute { font-size: 13px; line-height: 18px; color: var(--g60); margin: 0; }
+.crop { margin: 0; }
+.crop img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; background: var(--g10); }
+.crop figcaption { font-size: 12px; line-height: 16px; color: var(--g60); margin-top: 6px; }
+.hist { list-style: none; margin: 0; padding: 0; font-size: 13px; line-height: 18px; }
+.hist li { padding: 8px 0; border-top: 1px solid var(--g20); }
+.hist li:first-child { border-top: 0; padding-top: 0; }
+.hist time { display: block; color: var(--g60); font-size: 12px; font-variant-numeric: tabular-nums; }
+.meta { font-size: 12px; line-height: 16px; color: var(--g60); padding: 12px 16px; font-family: var(--mono); letter-spacing: 0; word-break: break-all; }
+.abar { flex: none; display: flex; border-top: 1px solid var(--g20); background: #fff; }
+.abar .btn { flex: 1; min-height: 48px; }
+.abar .btn:first-child { flex: 1.6; }
+.note { display: flex; gap: 12px; padding: 12px; font-size: 13px; line-height: 18px; border-left: 3px solid; margin: 0 0 4px; }
+.note .ic { margin-top: 1px; }
+.note.info { background: var(--info-t); border-color: #0043ce; } .note.info .ic { color: #0043ce; }
+.note.warn { background: var(--warn-t); border-color: var(--yellow); } .note.warn .ic { color: #8e6a00; }
+.note.err { background: var(--red-t); border-color: var(--red); } .note.err .ic { color: var(--red); }
+.note b { font-weight: 600; }
+.stepno { display: flex; gap: 12px; align-items: center; margin: 0 0 8px; font-size: 14px; font-weight: 600; }
+.stepno i { width: 20px; height: 20px; border-radius: 50%; background: var(--g100); color: #fff; font-style: normal; font-size: 12px; display: grid; place-items: center; font-weight: 600; }
+.stepdesc { margin: 0 0 12px; font-size: 13px; line-height: 18px; color: var(--g70); }
+.choice { display: grid; gap: 1px; }
+.choice.c3 { grid-template-columns: 1fr 1fr 1fr; }
+.choice.c2 { grid-template-columns: 1fr 1fr; }
+.choice .btn { padding: 0 12px; }
+
+/* forms (Carbon text input) */
+form .f { display: grid; gap: 6px; margin-top: 16px; align-content: start; }
+form .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+form .f2 > .f { margin-top: 16px; }
+form label, form .lbl { font-size: 12px; line-height: 16px; color: var(--g70); letter-spacing: .32px; }
+form label .req { color: var(--g60); }
+form small.h { font-size: 12px; line-height: 16px; color: var(--g60); }
+form input[type=text], form input[type=date], form input[type=number], form select, form textarea { width: 100%; border: 0; border-bottom: 1px solid var(--g50); border-radius: 0; padding: 0 16px 0 16px; background: var(--g10); font-size: 14px; height: 40px; color: var(--g100); }
+form input[type=file] { font-size: 13px; padding: 8px 0; width: 100%; }
+form select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6l.7-.7L8 9.6l4.3-4.3.7.7z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; padding-right: 40px; }
+form input[type=date] { padding-right: 8px; }
+form input[readonly] { background: transparent; border-bottom-color: var(--g30); color: var(--g70); padding-left: 0; }
+form textarea { height: auto; min-height: 88px; padding: 11px 16px; resize: vertical; line-height: 20px; }
+form input::placeholder, form textarea::placeholder { color: var(--g50); }
+form input:focus, form select:focus, form textarea:focus { outline: 2px solid var(--focus); outline-offset: -2px; border-bottom-color: transparent; }
+form .f.bad input, form .f.bad select, form .f.bad textarea { outline: 2px solid var(--red); outline-offset: -2px; border-bottom-color: transparent; }
+form .ierr { display: flex; gap: 6px; align-items: center; font-size: 12px; line-height: 16px; color: var(--red); }
+form .radios { display: flex; gap: 16px; flex-wrap: wrap; }
+form .radios label, form .chk { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; line-height: 18px; color: var(--g100); letter-spacing: .16px; }
+form .chk { margin-top: 16px; }
+form input[type=radio] { appearance: none; width: 16px; height: 16px; border: 1px solid var(--g100); border-radius: 50%; margin: 1px 0 0; display: grid; place-items: center; background: #fff; }
+form input[type=radio]:checked::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--g100); }
+form .err { margin: 16px 0 0; }
+form .err:empty { display: none; }
+form .err .note { margin: 0; }
+form .acts { display: flex; gap: 1px; margin: 24px -16px 0; position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--g20); }
+form .acts .btn { flex: 1; min-height: 48px; }
+.adno { font-variant-numeric: tabular-nums; font-family: var(--mono); font-size: 13px; }
+form .fh { margin: 0; padding: 16px 0 0; font-size: 14px; line-height: 18px; font-weight: 600; border-top: 1px solid var(--g20); margin-top: 24px; }
+form .fh.first { border-top: 0; margin-top: 0; padding-top: 4px; }
+
+/* modal */
+#modal, #confirm { position: fixed; inset: 0; z-index: 2000; background: rgba(22,22,22,.6); display: none; align-items: center; justify-content: center; padding: 24px; }
+#modal.open, #confirm.open { display: flex; }
+.mbox { background: #fff; color: var(--g100); width: min(1000px, 100%); max-height: calc(100vh - 48px); display: flex; flex-direction: column; box-shadow: 0 8px 32px rgba(0,0,0,.4); }
+.mbox.sm { width: min(480px, 100%); }
+.mh { padding: 16px 64px 16px 32px; position: relative; flex: none; }
+.mh .k { font-size: 12px; line-height: 16px; color: var(--g60); }
+.mh h2 { margin: 4px 0 4px; font-size: 24px; line-height: 32px; font-weight: 400; letter-spacing: 0; }
+.mh p { margin: 0; color: var(--g70); font-size: 14px; line-height: 20px; }
+.mh .ibtn { position: absolute; top: 0; right: 0; width: 48px; height: 48px; }
+.mbody { overflow-y: auto; flex: 1; min-height: 0; }
+.mfoot { flex: none; display: flex; border-top: 1px solid var(--g20); }
+.mfoot .btn { flex: 1; min-height: 64px; align-items: flex-start; padding-top: 14px; }
+.mgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; padding: 0 32px 24px; }
+.mgrid h3 { margin: 20px 0 6px; font-size: 14px; font-weight: 600; line-height: 18px; }
+.mgrid p, .mgrid li { font-size: 14px; line-height: 20px; }
+.mgrid p { margin: 0 0 8px; }
+.mgrid ul, .mgrid ol { margin: 0 0 8px; padding-left: 20px; }
+.mgrid li { margin-bottom: 4px; }
+.formula { grid-column: 1 / -1; margin-top: 8px; padding: 16px 20px; background: var(--g10); border-left: 3px solid var(--navy); display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+.formula .fx { font-size: 22px; line-height: 28px; font-weight: 600; color: var(--navy); letter-spacing: 0; }
+.formula p { margin: 0; flex: 1; min-width: 240px; }
+.full { grid-column: 1 / -1; }
+.tablewrap { overflow-x: auto; }
+table.src { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 18px; }
+table.src th, table.src td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--g20); vertical-align: top; }
+table.src th { font-weight: 600; background: var(--g20); }
+table.src a { word-break: break-word; }
+.cbody2 { padding: 0 32px 24px; font-size: 14px; line-height: 20px; color: var(--g70); }
+
+/* toast */
+#toast { position: fixed; left: calc(var(--side) + 12px); bottom: 28px; z-index: 3000; width: 380px; max-width: calc(100% - 24px); display: grid; gap: 8px; pointer-events: none; }
+.toast { pointer-events: auto; display: grid; grid-template-columns: 20px 1fr auto; gap: 8px 12px; align-items: start; background: var(--g90); color: #fff; border-left: 3px solid #4589ff; padding: 12px 8px 12px 14px; box-shadow: 0 4px 16px rgba(0,0,0,.35); animation: tin .2s ease-out; }
+.toast.ok { border-color: #42be65; } .toast.err { border-color: #fa4d56; } .toast.warn { border-color: var(--yellow); }
+.toast.ok .ic { color: #42be65; } .toast.err .ic { color: #fa4d56; } .toast.warn .ic { color: var(--yellow); } .toast .ic { color: #78a9ff; margin-top: 1px; }
+.toast .tt { font-size: 14px; line-height: 18px; padding-top: 1px; }
+.toast .ta { grid-column: 2 / 4; justify-self: start; margin-top: 2px; }
+.toast .ta button { border: 0; background: transparent; color: #78a9ff; padding: 4px 0; font-size: 14px; text-decoration: underline; text-underline-offset: 2px; }
+.toast .ibtn { color: #fff; width: 24px; height: 24px; margin-top: -3px; }
+.toast .ibtn:hover { background: #4c4c4c; }
+@keyframes tin { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 900px) {
+  body { display: block; overflow: auto; height: auto; }
+  html { height: auto; }
+  #hdr .pname span, #hdr .htag { display: none; }
+  #hdr .pname { padding: 0 12px; }
+  .hbtn { padding: 0 10px; gap: 4px; font-size: 13px; }
+  #side { height: 56vh; border-right: 0; }
+  main { height: 80vh; overflow: hidden; }
+  #card { top: 48px; width: 100%; }
+  #legend { display: none; }
+  .mgrid { grid-template-columns: 1fr; padding: 0 16px 20px; }
+  .mh { padding: 16px 56px 12px 16px; }
+  #modal, #confirm { padding: 0; }
+  .mbox { max-height: 100vh; }
+  form .f2 { grid-template-columns: 1fr; }
+  #toast { left: 12px; }
+  #mbar .btn span { display: none; }
+}
+</style>
+</head>
+<body>
+<header id="hdr">
+  <div class="logo" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#fff"><path d="M9 3v22M19 3v22" stroke-width="2"/><path d="M6 8h16M6 14h16M6 20h16" stroke-width="1.5" opacity=".55"/><path d="M2 22C8 20 14 12 26 8" stroke-width="2" stroke-dasharray="3 3"/></svg></div>
+  <div class="pname"><b>Dzika Ścieżka</b><span>Rejestr dzikich przejść · Wrocław</span></div>
+  <span class="tag outline htag">Wersja demonstracyjna</span>
+  <div class="hsp"></div>
+  <div class="hmenu">
+    <button class="hbtn" id="expBtn" aria-haspopup="menu" aria-expanded="false" aria-controls="expMenu"><i data-ico="download"></i>Eksport CSV<i data-ico="chevron--down"></i></button>
+    <div class="hpop" id="expMenu" role="menu" hidden>
+      <button role="menuitem" id="expWykaz"><b>Wykaz miejsc pod szczególną obserwacją</b><span>Plik do wydruku dla pracownika wykonującego obchód (Moduł D2 § 31 ust. 1 pkt 5)</span></button>
+      <button role="menuitem" id="expRej"><b>Rejestr wpisów</b><span>Wady OTDZ, zdarzenia i weryfikacje wykryć AI</span></button>
+    </div>
+  </div>
+  <button class="hbtn" id="howBtn" title="Metoda, źródła danych i zgodność z Id-1"><i data-ico="information"></i>Jak liczymy</button>
+</header>
+
+<aside id="side">
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tabRank" aria-selected="true" aria-controls="paneRank">Ranking <span class="tag gray" id="rankCount">0</span></button>
+    <button role="tab" id="tabAi" aria-selected="false" aria-controls="paneAi">Wykrycia AI <span class="tag red" id="aiCount">0</span></button>
+    <button role="tab" id="tabRep" aria-selected="false" aria-controls="paneRep">Wpisy <span class="tag gray" id="repCount">0</span></button>
+  </div>
+
+  <div class="pane" id="paneRank" role="tabpanel" aria-labelledby="tabRank">
+    <div class="ptool">
+      <div class="prow">
+        <div class="search"><i data-ico="search"></i><input type="search" id="qRank" placeholder="Szukaj ulicy lub linii" aria-label="Szukaj miejsca lub linii" autocomplete="off"><button class="clr" data-clear="qRank" aria-label="Wyczyść wyszukiwanie" hidden><i data-ico="close"></i></button></div>
+        <div class="switch" role="group" aria-label="Zakres rankingu"><button class="on" data-scope="top">Top 20</button><button data-scope="all" id="scopeAll">Wszystkie</button></div>
+      </div>
+      <div class="pinfo"><span id="rankInfo"></span><span>Wynik 0-100 = 100 × ∛(E × D × H)</span></div>
+    </div>
+    <div class="tscroll"><table class="dt" id="rankTbl">
+      <colgroup><col style="width:52px"><col><col style="width:132px"><col style="width:68px"></colgroup>
+      <thead><tr>
+        <th aria-sort="ascending" data-sort-th="place"><button data-sort="place">Nr<i data-ico="chevron--sort"></i></button></th>
+        <th data-sort-th="name"><button data-sort="name">Miejsce<i data-ico="chevron--sort"></i></button></th>
+        <th><span>Zalecenie</span></th>
+        <th class="r" data-sort-th="score"><button data-sort="score">Wynik<i data-ico="chevron--sort"></i></button></th>
+      </tr></thead>
+      <tbody id="rankBody"></tbody></table>
+      <div class="empty" id="rankEmpty" hidden><h3>Brak miejsc do wyświetlenia</h3><p id="rankEmptyTxt"></p><button class="btn ter sm" id="rankEmptyBtn">Szukaj we wszystkich miejscach</button></div>
+    </div>
+  </div>
+
+  <div class="pane" id="paneAi" role="tabpanel" aria-labelledby="tabAi" hidden>
+    <div class="ptool">
+      <div class="prow">
+        <div class="search"><i data-ico="search"></i><input type="search" id="qAi" placeholder="Szukaj wykrycia, np. AI-001" aria-label="Szukaj wykrycia lub linii" autocomplete="off"><button class="clr" data-clear="qAi" aria-label="Wyczyść wyszukiwanie" hidden><i data-ico="close"></i></button></div>
+      </div>
+      <div class="prow"><div class="switch" role="group" aria-label="Status wykryć"><button class="on" data-aistat="open" id="aiOpenBtn">Do weryfikacji</button><button data-aistat="all">Wszystkie</button></div></div>
+      <div class="pinfo"><span id="aiInfo"></span></div>
+    </div>
+    <div class="tscroll"><table class="dt" id="aiTbl">
+      <colgroup><col style="width:132px"><col><col style="width:128px"></colgroup>
+      <thead><tr><th><span>Wykrycie</span></th><th><span>Lokalizacja</span></th><th><span>Status</span></th></tr></thead>
+      <tbody id="aiBody"></tbody></table>
+      <div class="empty" id="aiEmpty" hidden><h3>Brak wykryć do wyświetlenia</h3><p id="aiEmptyTxt"></p></div>
+    </div>
+  </div>
+
+  <div class="pane" id="paneRep" role="tabpanel" aria-labelledby="tabRep" hidden>
+    <div class="tscroll" style="border-top:0">
+      <table class="dt" id="repTbl" hidden>
+        <colgroup><col style="width:92px"><col><col style="width:110px"></colgroup>
+        <thead><tr><th><span>Wpis</span></th><th><span>Lokalizacja</span></th><th><span>Rodzaj</span></th></tr></thead>
+        <tbody id="repBody"></tbody></table>
+      <div class="empty" id="repEmpty"><h3>Brak wpisów w rejestrze</h3>
+        <p>Wpisy dodajesz na torze (wada OTDZ w Arkuszu Dozorowania, zdarzenie) albo potwierdzając wykrycie AI. Tutaj pojawi się lista Twoich wpisów.</p>
+        <button class="btn sm" id="repEmptyBtn"><i data-ico="add"></i>Dodaj wpis na torze</button></div>
+    </div>
+  </div>
+
+  <div class="lfoot"><span>Demo: wpisy zapisują się tylko w tej przeglądarce.</span><button class="link" id="resetBtn">Wyczyść dane demo</button></div>
+</aside>
+
+<main>
+  <div id="mbar">
+    <div class="switch" role="group" aria-label="Podkład mapy"><button class="on" data-base="osm">Mapa</button><button data-base="ortho">Ortofoto</button></div>
+    <div class="lwrap">
+      <button class="tbtn" id="layBtn" aria-expanded="false" aria-controls="layPop"><i data-ico="layers"></i>Warstwy<i data-ico="chevron--down"></i></button>
+      <div id="layPop" hidden>
+        <h3>Dane na mapie</h3>
+        <label class="layer"><input type="checkbox" data-layer="sites" checked><span class="lt">Miejsca rankingu</span><span class="ld">Top 20 z numerem, pozostałe jako szare punkty</span></label>
+        <label class="layer"><input type="checkbox" data-layer="ai" checked><span class="lt"><i class="glyph sq"></i>Wykrycia AI</span><span class="ld">Ścieżki znalezione na zdjęciach lotniczych</span></label>
+        <label class="layer"><input type="checkbox" data-layer="reports" checked><span class="lt"><i class="glyph drop"></i>Wpisy pracowników</span><span class="ld">Wady OTDZ i zdarzenia dodane w rejestrze</span></label>
+        <h3>Tło kolejowe</h3>
+        <label class="layer"><input type="checkbox" data-layer="rails" checked><span class="lt"><i class="glyph line"></i>Linie kolejowe</span><span class="ld">Oś torów; potrzebna do dodawania wpisów</span></label>
+        <label class="layer"><input type="checkbox" data-layer="traffic"><span class="lt">Natężenie ruchu (zagrożenie)</span><span class="ld">Kolor i grubość linii wg liczby pociągów na dobę</span><span class="bars" id="railRamp" hidden></span></label>
+        <label class="layer"><input type="checkbox" data-layer="xing"><span class="lt"><i class="glyph xing"></i>Legalne przejścia i przejazdy</span><span class="ld" id="xingHint">Widoczne po przybliżeniu mapy</span></label>
+        <label class="layer"><input type="checkbox" data-layer="accidents"><span class="lt"><i class="glyph acc"></i>Zdarzenia (potrącenia)</span><span class="ld">Dane z prasy: rok, przybliżone miejsce, skutek</span></label>
+      </div>
+    </div>
+    <span class="grow"></span>
+    <button class="btn" id="addBtn"><span>Dodaj wpis na torze</span><i data-ico="add"></i></button>
+  </div>
+  <div id="modeBar" hidden role="status"><i data-ico="information"></i><span><b>Tryb dodawania wpisu:</b> kliknij tor na mapie. <kbd>Esc</kbd> - anuluj.</span><button class="btn ghost sm" id="modeCancel">Anuluj</button></div>
+  <div id="map" style="position:absolute;inset:48px 0 0 0;z-index:0"></div>
+  <div id="tileNote" role="status" hidden>Brak połączenia z internetem - podkład mapy niedostępny, dane działają.</div>
+  <div id="legend">
+    <div class="lh">Miejsca rankingu<span>wynik 0-100</span></div>
+    <div class="ramp" id="scoreRamp"></div>
+    <div class="lk"><span><i class="glyph dot"></i>poza top 20</span><span><i class="glyph sq"></i>wykrycie AI</span><span><i class="glyph drop"></i>wpis</span></div>
+  </div>
+  <section id="card" aria-live="polite" aria-label="Szczegóły"></section>
+</main>
+
+<div id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle"><div class="mbox" id="mbox"></div></div>
+<div id="confirm" role="alertdialog" aria-modal="true" aria-labelledby="cTitle"><div class="mbox sm" id="cbox"></div></div>
+<div id="toast" role="status"></div>
+
+<script>
+/*__LEAFLET_JS__*/
+</script>
+<script>
+const DATA = /*__DATA__*/null;
+const M = DATA.meta;
+const SCORE_BINS = [[60, '#002d57', '60+'], [50, '#0b5394', '50-60'], [40, '#4a86c7', '40-50'], [25, '#92b9e0', '25-40'], [0.01, '#cfe0f1', '<25']];
+const RAIL_BINS = [[301, '#170f4d', '301+'], [151, '#22377a', '151-300'], [81, '#1f5fa0', '81-150'], [31, '#3f8cc4', '31-80'], [1, '#93c4e0', '1-30'], [0, '#9aa1aa', '0']];
+const NEAR_EVENTS_M = 300, DUP_M = 50, ON_TRACK_M = 30;
+// names as in Id-1 Modul D3, par. 3, tabela 1 (nazwa oceny, prog dzialania)
+const U_DESC = { U1: 'U1 - dobra (próg czujności)', U2: 'U2 - dostateczna (próg prewencyjny)', U3: 'U3 - dopuszczalny (próg interwencyjny)', U4: 'U4 - zła (próg graniczny)' };
+const MODES = ['obchód', 'obchód specjalny', 'objazd', 'zgłoszenie zewnętrzne (SOK, gmina, mieszkańcy)'];
+const RM_REASONS = ['droga lub ścieżka wzdłuż toru, nie przez tor', 'legalne przejście lub przejazd', 'ślad po pracach torowych / drodze technologicznej', 'brak śladów w terenie', 'inne (opis w uwagach)'];
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+const href = u => /^https:\/\//.test(u || '') ? esc(u) : '#';
+const imgSrc = u => /^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(u || '') ? u : '';
+const plural = (n, one, few, many) => n === 1 ? one : ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) ? few : many;
+const fmt = (v, d = 1) => Number(v).toFixed(d).replace('.', ',');
+// rail km: [km, km] from anchors (OSM milestones + PLK stations) or a PLK segment [from, to] as a fallback
+const KM_POINT_M = 150;
+const kmPoint = k => !!k && (k[1] - k[0]) * 500 <= KM_POINT_M;
+const kmTxt = k => k == null ? '' : kmPoint(k) ? fmt((k[0] + k[1]) / 2, 1) : `${fmt(k[0], 1)}-${fmt(k[1], 1)}`;
+const kmLabel = k => k == null ? '' : `km ${kmPoint(k) ? 'ok. ' : ''}${kmTxt(k)}`;
+const trainsTxt = n => `${n} ${plural(n, 'pociąg pasażerski', 'pociągi pasażerskie', 'pociągów pasażerskich')} na dobę`;
+const fmtF = v => v > 0 && v < 0.005 ? '<0,01' : fmt(v, 2);
+const ll = (lat, lon) => `${Number(lat).toFixed(5)}, ${Number(lon).toFixed(5)}`;
+const scoreHex = s => { for (const [t, hex] of SCORE_BINS) if (s >= t) return hex; return '#a3a8b0'; };
+const darkText = s => s >= 40;
+const railBin = t => { if (t == null) return null; for (const b of RAIL_BINS) if (t >= b[0]) return b; return RAIL_BINS[RAIL_BINS.length - 1]; };
+const today = () => new Date().toISOString().slice(0, 10);
+const nowTxt = () => { const d = new Date(); return `${d.toISOString().slice(0, 10)} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
+
+
+/* ---------- geometry ---------- */
+const LAT0 = 51.1, LON0 = 17.0, KY = 111320, KX = 111320 * Math.cos(LAT0 * Math.PI / 180);
+const xy = (lat, lon) => [(lon - LON0) * KX, (lat - LAT0) * KY];
+const distM = (a, b, c, d) => { const p = xy(a, b), q = xy(c, d); return Math.hypot(p[0] - q[0], p[1] - q[1]); };
+for (const r of DATA.rails) r.xy = r.c.map(([la, lo]) => xy(la, lo));
+function segProj(p, a, b) {
+  const dx = b[0] - a[0], dy = b[1] - a[1], L2 = dx * dx + dy * dy;
+  const t = L2 ? Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / L2)) : 0;
+  return [a[0] + t * dx, a[1] + t * dy];
+}
+const segDist = (p, a, b) => { const q = segProj(p, a, b); return Math.hypot(p[0] - q[0], p[1] - q[1]); };
+const unxy = (x, y) => L.latLng(LAT0 + y / KY, LON0 + x / KX);
+// nearest point on any track axis, or null if further than ON_TRACK_M
+function snapToTrack(latlng) {
+  const p = xy(latlng.lat, latlng.lng);
+  let best = null;
+  for (const r of DATA.rails) for (let i = 1; i < r.xy.length; i++) {
+    const q = segProj(p, r.xy[i - 1], r.xy[i]), d = Math.hypot(p[0] - q[0], p[1] - q[1]);
+    if (!best || d < best.d) best = { d, q };
+  }
+  return best && best.d <= ON_TRACK_M ? unxy(best.q[0], best.q[1]) : null;
+}
+const offTrackMsg = () => toast(`Wpis można dodać tylko na torach (do ${ON_TRACK_M} m od osi toru). Przybliż mapę i kliknij w linię kolejową.`, 'warn');
+// point km from the line's anchors; null when the point is far from them
+const KM_TOL = 0.3, KM_GAP_M = 1500;
+function kmAt(line, lat, lon) {
+  const anc = (DATA.kmAnchors || {})[String(line)] || [];
+  const p = xy(lat, lon);
+  let best = null;
+  for (let i = 1; i < anc.length; i++) {
+    const a = anc[i - 1], b = anc[i];
+    if (a[0] === b[0]) continue;
+    const A = xy(a[1], a[2]), B = xy(b[1], b[2]), dx = B[0] - A[0], dy = B[1] - A[1];
+    if (!dx && !dy) continue;
+    let t = ((p[0] - A[0]) * dx + (p[1] - A[1]) * dy) / (dx * dx + dy * dy);
+    const tc = Math.max(0, Math.min(1, t)), d = Math.hypot(A[0] + tc * dx - p[0], A[1] + tc * dy - p[1]);
+    if (!best || d < best.d) {
+      if ((t < 0 && i > 1) || (t > 1 && i < anc.length - 1)) t = tc;
+      best = { d, k: a[0] + t * (b[0] - a[0]) };
+    }
+  }
+  return best && best.d <= KM_GAP_M ? best.k : null;
+}
+function nearestRail(lat, lon, prefer) {
+  const p = xy(lat, lon);
+  let best = null, bestPref = null;
+  for (const r of DATA.rails) {
+    for (let i = 1; i < r.xy.length; i++) {
+      const d = segDist(p, r.xy[i - 1], r.xy[i]);
+      if (!best || d < best.d) best = { r, d };
+      if (prefer && r.l === prefer && (!bestPref || d < bestPref.d)) bestPref = { r, d };
+    }
+  }
+  const pick = bestPref && bestPref.d < 150 ? bestPref : best;
+  if (!pick) return null;
+  const r = pick.r, k = r.k ? kmAt(r.l, lat, lon) : null;
+  const km = k != null && k >= r.k[0] - KM_TOL && k <= r.k[1] + KM_TOL ? [k, k] : r.k;
+  return { d: pick.d, line: r.l, name: r.n, km, trains: r.t, vmax: r.v, tracks: r.tr, track: /^N/.test(r.tk || '') ? '1' : /^P/.test(r.tk || '') ? '2' : '' };
+}
+
+/* ---------- local store (demo) ---------- */
+const KEY = 'dzika-sciezka-rejestr-v2';
+const emptyState = () => ({ reports: [], events: [], ai: {}, seq: 1, eseq: 1 });
+const isObj = x => x && typeof x === 'object' && !Array.isArray(x);
+const okPos = x => isObj(x) && Number.isFinite(x.lat) && Number.isFinite(x.lon) && typeof x.id === 'string';
+const strs = (o, ks) => { for (const k of ks) o[k] = typeof o[k] === 'string' ? o[k] : ''; return o; };
+function sanitize(raw) {
+  if (!isObj(raw) || !Array.isArray(raw.reports) || !Array.isArray(raw.events) || !isObj(raw.ai)) return emptyState();
+  const st = emptyState();
+  st.reports = raw.reports.filter(okPos).map(r => strs({ ...r, files: Array.isArray(r.files) ? r.files.map(String) : [], dr: !!r.dr, otw: !!r.otw, relatesTo: typeof r.relatesTo === 'string' ? r.relatesTo : null },
+    ['line', 'lineName', 'km', 'track', 'loc', 'U', 'mode', 'desc', 'fix', 'due', 'ad', 'by', 'date']));
+  st.events = raw.events.filter(okPos).map(e => strs({ ...e, files: Array.isArray(e.files) ? e.files.map(String) : [] }, ['line', 'km', 'date', 'outcome', 'caseNo', 'desc']));
+  for (const [id, s] of Object.entries(raw.ai)) {
+    if (!aiKnown(id) || !isObj(s) || !['nowe', 'zaplanowane', 'potwierdzone', 'usuniete'].includes(s.status)) continue;
+    st.ai[id] = { ...s, history: Array.isArray(s.history) ? s.history.filter(h => isObj(h)).map(h => ({ at: String(h.at ?? ''), txt: String(h.txt ?? '') })) : [],
+      lat: Number.isFinite(s.lat) ? s.lat : undefined, lon: Number.isFinite(s.lon) ? s.lon : undefined };
+  }
+  const maxId = (a, p) => a.reduce((m, x) => Math.max(m, parseInt(String(x.id).slice(p.length), 10) || 0), 0);
+  st.seq = Math.max(Number.isFinite(raw.seq) ? raw.seq : 1, maxId(st.reports, 'Z-') + 1);
+  st.eseq = Math.max(Number.isFinite(raw.eseq) ? raw.eseq : 1, maxId(st.events, 'H-') + 1);
+  return st;
+}
+const aiKnown = id => DATA.ai.some(a => a.id === id);
+let ST = emptyState();
+try { const raw = localStorage.getItem(KEY); if (raw) ST = sanitize(JSON.parse(raw)); } catch (e) { ST = emptyState(); }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(ST)); } catch (e) { toast('Nie udało się zapisać w przeglądarce (tryb prywatny?). Wpis działa do odświeżenia strony.', 'warn'); } }
+const aiSt = id => ST.ai[id] || { status: 'nowe', history: [] };
+function aiPos(a) { const s = ST.ai[a.id]; return s && s.lat != null ? [s.lat, s.lon] : [a.lat, a.lon]; }
+
+const ICONS = /*__ICONS__*/null;
+const ico = (n, s = 16) => { const i = ICONS[n]; return i ? `<svg class="ic" width="${s}" height="${s}" viewBox="${i.v}" aria-hidden="true">${i.s}</svg>` : ''; };
+document.querySelectorAll('[data-ico]').forEach(el => { el.outerHTML = ico(el.dataset.ico); });
+const $ = id => document.getElementById(id);
+const norm = s => String(s ?? '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/ł/g, 'l');
+
+function toast(t, kind = 'info', action) {
+  const box = $('toast');
+  const el = document.createElement('div');
+  el.className = `toast ${kind}`;
+  el.innerHTML = `${ico({ ok: 'checkmark--filled', err: 'error--filled', warn: 'warning--filled' }[kind] || 'information', 20)}<div class="tt">${esc(t)}</div>
+    <button class="ibtn" aria-label="Zamknij powiadomienie">${ico('close')}</button>${action ? `<div class="ta"><button>${esc(action.label)}</button></div>` : ''}`;
+  const drop = () => el.remove();
+  el.querySelector('.ibtn').addEventListener('click', drop);
+  if (action) el.querySelector('.ta button').addEventListener('click', () => { drop(); action.fn(); });
+  while (box.children.length >= 3) box.firstElementChild.remove();
+  box.appendChild(el);
+  setTimeout(drop, action ? 8000 : 5500);
+}
+
+/* ---------- map ---------- */
+const map = L.map('map', { zoomControl: false, minZoom: 9, maxZoom: 19 });
+L.control.zoom({ position: 'topleft', zoomInTitle: 'Przybliż', zoomOutTitle: 'Oddal' }).addTo(map);
+const siteBounds = L.latLngBounds(DATA.sites.map(s => [s.lat, s.lon]));
+const fitAll = animate => map.fitBounds(siteBounds, { padding: [40, 40], animate });
+const FitCtl = L.Control.extend({
+  onAdd() {
+    const d = L.DomUtil.create('div', 'leaflet-bar'), a = L.DomUtil.create('a', '', d);
+    a.href = '#'; a.setAttribute('role', 'button'); a.title = 'Pokaż cały obszar'; a.setAttribute('aria-label', 'Pokaż cały obszar'); a.innerHTML = ico('fit-to-screen', 18);
+    L.DomEvent.on(a, 'click', e => { L.DomEvent.stop(e); fitAll(true); });
+    return d;
+  }
+});
+new FitCtl({ position: 'topleft' }).addTo(map);
+fitAll(false);
+L.control.scale({ imperial: false, position: 'bottomright' }).addTo(map);
+const bases = {
+  osm: L.layerGroup([
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, maxNativeZoom: 16,
+      attribution: 'Podkład: Esri, HERE, Garmin, &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors (ODbL)' }),
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, maxNativeZoom: 16 })
+  ]),
+  ortho: L.tileLayer.wms('https://mapy.geoportal.gov.pl/wss/service/PZGIK/ORTO/WMS/StandardResolution', {
+    layers: 'Raster', format: 'image/jpeg', version: '1.3.0', maxZoom: 19,
+    attribution: 'Ortofotomapa &copy; <a href="https://www.geoportal.gov.pl" target="_blank" rel="noopener">GUGiK, Geoportal</a>' })
+};
+map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank" rel="noopener">Leaflet</a>');
+const tileFails = new Set();
+function syncTileNote() {
+  const el = $('tileNote');
+  if (!tileFails.size) { el.hidden = true; return; }
+  el.textContent = tileFails.has('ortho') ? 'Brak połączenia z internetem - podkład Ortofoto niedostępny, dane działają.' : 'Brak połączenia z internetem - podkład mapy niedostępny, dane działają.';
+  el.hidden = false;
+}
+for (const [name, layer] of Object.entries(bases)) {
+  for (const t of layer.getLayers ? layer.getLayers() : [layer]) {
+    t.on('tileerror', () => { tileFails.add(name); syncTileNote(); });
+    t.on('tileload', () => { if (tileFails.delete(name)) syncTileNote(); });
+  }
+}
+bases.osm.addTo(map);
+function setBase(name) {
+  document.querySelectorAll('[data-base]').forEach(x => x.classList.toggle('on', x.dataset.base === name));
+  Object.entries(bases).forEach(([k, l]) => k === name ? l.addTo(map) : map.removeLayer(l));
+  tileFails.delete(name === 'ortho' ? 'osm' : 'ortho'); syncTileNote();
+  map.getPane('rails').style.opacity = name === 'ortho' ? 0.6 : 1;
+}
+document.querySelectorAll('[data-base]').forEach(b => b.addEventListener('click', () => setBase(b.dataset.base)));
+
+map.createPane('rails').style.zIndex = 350;
+map.createPane('acc').style.zIndex = 620;
+map.createPane('xing').style.zIndex = 345;
+const xingRenderer = L.canvas({ pane: 'xing', padding: 0.3 });
+const railRenderer = L.canvas({ pane: 'rails', padding: 0.3 });
+const layers = { xing: L.layerGroup(), rails: L.layerGroup(), sites: L.layerGroup(), accidents: L.layerGroup(), ai: L.layerGroup(), reports: L.layerGroup() };
+
+const railLines = [];
+for (const r of [...DATA.rails].sort((a, b) => (a.t ?? -1) - (b.t ?? -1))) {
+  L.polyline(r.c, { renderer: railRenderer, color: '#ffffff', weight: 5, opacity: 0.8, interactive: false }).addTo(layers.rails);
+  const line = L.polyline(r.c, { renderer: railRenderer, color: '#6f6f6f', weight: 1.8, opacity: 0.95 });
+  const trains = r.t == null ? 'brak danych o ruchu' : r.t === 0 ? '0 pociągów pasażerskich (ruch towarowy nieznany)' : trainsTxt(r.t);
+  line.bindTooltip(`<b>Linia ${esc(r.l ?? 'bez numeru')}</b>${r.k != null ? `, ${kmLabel(r.k)}` : ''}${r.n ? '<br>' + esc(r.n) : ''}<br>${trains}${r.v ? `, vmax ${r.v} km/h` : ''}`, { className: 'tip', sticky: true });
+  line.addTo(layers.rails);
+  railLines.push({ line, r });
+}
+function styleRails() {
+  const on = document.querySelector('[data-layer="traffic"]').checked;
+  $('railRamp').hidden = !on;
+  for (const { line, r } of railLines) {
+    if (!on) { line.setStyle({ color: '#6f6f6f', weight: 1.8, dashArray: null }); continue; }
+    const bin = railBin(r.t);
+    line.setStyle({ color: bin ? bin[1] : '#9aa1aa', weight: !r.t ? 2 : 2 + Math.min(3, Math.sqrt(r.t) / 6), dashArray: r.t ? null : '4 4' });
+  }
+}
+
+const XING_PL = { p: 'Legalny przejazd kolejowo-drogowy', c: 'Legalne przejście dla pieszych przez tory' };
+for (const x of DATA.crossings || []) {
+  for (const s of x.s) L.polyline(s, { renderer: xingRenderer, color: '#016db7', weight: 14, opacity: 0.4, lineCap: 'round', bubblingMouseEvents: true })
+    .bindTooltip(`<b>${XING_PL[x.k]}</b><br>dane OpenStreetMap`, { className: 'tip', sticky: true }).addTo(layers.xing);
+}
+
+const markers = {};
+const pinIcon = (s, selected) => L.divIcon({ className: '', iconSize: [26, 26], iconAnchor: [13, 13],
+  html: `<div class="pin${darkText(s.score) ? '' : ' light'}${selected ? ' sel' : ''}" style="background:${scoreHex(s.score)}">${Number(s.top)}</div>` });
+const PLAIN = { color: '#fff', weight: 1.5 }, PICKED = { color: '#161616', weight: 3 };
+for (const s of DATA.sites.filter(s => !s.top).sort((a, b) => a.score - b.score)) {
+  const m = L.circleMarker([s.lat, s.lon], { radius: s.leader ? 5 : 3.5, ...PLAIN, bubblingMouseEvents: false, fillColor: s.leader ? '#8d8d8d' : '#c6c6c6', fillOpacity: 1 });
+  m.bindTooltip(`<b>${esc(s.title)}</b> · wynik ${fmt(s.score)}${s.leader ? ` · miejsce ${s.place}` : ''}`, { className: 'tip', direction: 'top', offset: [0, -6] });
+  m.on('click', () => openSite(s.id, true));
+  m.on('mouseover', () => hover('site:' + s.id, true));
+  m.on('mouseout', () => hover('site:' + s.id, false));
+  m.addTo(layers.sites);
+  markers[s.id] = m;
+}
+for (const s of DATA.sites.filter(s => s.top).sort((a, b) => b.top - a.top)) {
+  const m = L.marker([s.lat, s.lon], { icon: pinIcon(s, false), riseOnHover: true, zIndexOffset: (21 - s.top) * 1000, keyboard: true, title: `${s.top}. ${s.title}` });
+  m.bindTooltip(`<b>${Number(s.top)}. ${esc(s.title)}</b> · wynik ${fmt(s.score)}`, { className: 'tip', direction: 'top', offset: [0, -16] });
+  m.on('click', () => openSite(s.id, true));
+  m.on('mouseover', () => hover('site:' + s.id, true));
+  m.on('mouseout', () => hover('site:' + s.id, false));
+  m.addTo(layers.sites);
+  markers[s.id] = m;
+}
+
+for (const a of DATA.accidents) {
+  if (a.r) L.circle([a.lat, a.lon], { radius: a.r, pane: 'acc', color: '#0d0f12', weight: 1, opacity: 0.45, dashArray: '3 4', fill: false, interactive: false }).addTo(layers.accidents);
+  const m = L.marker([a.lat, a.lon], { pane: 'acc', icon: L.divIcon({ className: '', iconSize: [16, 16], iconAnchor: [8, 8], html: `<div class="acc-pin${a.killed ? '' : ' inj'}"></div>` }) });
+  m.bindTooltip(`Potrącenie ${esc(a.year)} · ${esc(a.outcome)}`, { className: 'tip', direction: 'top', offset: [0, -8] });
+  m.bindPopup(`<div class="pop"><div class="k">Potrącenie poza przejazdem · prasa</div><h3>${esc(a.year)} · ${esc(a.outcome)}</h3>
+    <div>Przybliżone miejsce${a.r ? ` (±${Number(a.r)} m)` : ''}${a.lines.length ? `, linia ${esc(a.lines.join(', '))}` : ''}.</div>
+    ${a.near ? `<div class="sm" style="margin-top:4px">${esc(a.near)}</div>` : ''}
+    <div class="sm" style="margin-top:6px">Źródło: prasa, ${esc(a.year)}.</div></div>`, { maxWidth: 300 });
+  m.addTo(layers.accidents);
+}
+const userEventLayer = L.layerGroup().addTo(layers.accidents);
+
+/* AI markers */
+const aiById = Object.fromEntries(DATA.ai.map(a => [a.id, a]));
+const aiMarkers = {};
+function aiClass(a, sel) {
+  const s = aiSt(a.id);
+  const c = s.status === 'potwierdzone' ? 'ok' : s.status === 'usuniete' ? 'rm' : a.real ? '' : 'u';
+  return `ai-mk ${c}${s.status === 'zaplanowane' ? ' plan' : ''}${s.moved && s.status !== 'usuniete' ? ' fix' : ''}${sel ? ' sel' : ''}`;
+}
+function aiIcon(a, sel) {
+  const ok = aiSt(a.id).status === 'potwierdzone';
+  const d = ok ? 20 : 18;
+  return L.divIcon({ className: '', iconSize: [d, d], iconAnchor: [d / 2, d / 2], html: `<div class="${aiClass(a, sel)}">${ok ? '✓' : ''}</div>` });
+}
+function drawAI() {
+  layers.ai.clearLayers();
+  for (const a of DATA.ai) {
+    const m = L.marker(aiPos(a), { icon: aiIcon(a, selected === 'ai:' + a.id), zIndexOffset: 500, keyboard: true, title: `Wykrycie AI ${a.id}` });
+    m.bindTooltip(`<b>${esc(a.id)}</b> · ${esc(statusTxt(aiSt(a.id)))}`, { className: 'tip', direction: 'top', offset: [0, -9] });
+    m.on('click', () => openAI(a.id, true));
+    m.on('mouseover', () => hover('ai:' + a.id, true));
+    m.on('mouseout', () => hover('ai:' + a.id, false));
+    m.on('drag', e => onAIDrag(a.id, e.target.getLatLng()));
+    m.on('dragstart', e => { drag && (drag.ok = drag.ok || e.target.getLatLng()); });
+    m.on('dragend', e => {
+      if (!drag) return;
+      const on = snapToTrack(e.target.getLatLng());
+      const pos = on || drag.ok || drag.orig;
+      if (!on) offTrackMsg();
+      e.target.setLatLng(pos); drag.ok = pos; onAIDrag(a.id, pos);
+    });
+    m.addTo(layers.ai);
+    aiMarkers[a.id] = m;
+  }
+}
+function statusTxt(s) {
+  return { nowe: 'do weryfikacji', zaplanowane: `zaplanowane: ${s.plan || 'obchód'}`, potwierdzone: 'potwierdzone w terenie', usuniete: 'usunięte' }[s.status] + (s.moved && s.status !== 'usuniete' ? ' · położenie skorygowane' : '');
+}
+function statusTags(s) {
+  const t = { nowe: ['red', 'Do weryfikacji'], zaplanowane: ['yellow', s.plan === 'obchód specjalny' ? 'Obchód specjalny' : 'Przy obchodzie'], potwierdzone: ['green', 'Potwierdzone'], usuniete: ['gray', 'Usunięte'] }[s.status];
+  return `<span class="tag ${t[0]}">${t[1]}</span>${s.moved && s.status !== 'usuniete' ? '<span class="tag outline dk">Skorygowane</span>' : ''}`;
+}
+
+/* report + event markers */
+const dropIcon = (tmp, sel) => L.divIcon({ className: '', iconSize: [24, 24], iconAnchor: [12, 30], html: `<div class="drop${tmp ? ' tmp' : ''}${sel ? ' sel' : ''}"><i></i></div>` });
+function drawReports() {
+  layers.reports.clearLayers();
+  for (const r of ST.reports) {
+    const m = L.marker([r.lat, r.lon], { icon: dropIcon(false, selected === 'rep:' + r.id), zIndexOffset: 800, keyboard: true, title: `Wpis ${r.id}` });
+    m.bindTooltip(`<b>${esc(r.id)}</b> · OTDZ ${esc(r.U)}${r.line ? ` · linia ${esc(r.line)}` : ''}`, { className: 'tip', direction: 'top', offset: [0, -28] });
+    m.on('click', () => openReport(r.id, true));
+    m.addTo(layers.reports);
+  }
+  userEventLayer.clearLayers();
+  for (const ev of ST.events) {
+    const m = L.marker([ev.lat, ev.lon], { pane: 'acc', icon: L.divIcon({ className: '', iconSize: [16, 16], iconAnchor: [8, 8], html: `<div class="acc-pin user${ev.outcome === 'zabity' ? '' : ' inj'}"></div>` }) });
+    m.bindTooltip(`Zdarzenie ${esc(ev.date)} · ${esc(ev.outcome)} (wpis ${esc(ev.id)})`, { className: 'tip', direction: 'top', offset: [0, -8] });
+    m.on('click', () => openEvent(ev.id));
+    m.addTo(userEventLayer);
+  }
+}
+
+const XING_MIN_ZOOM = 15;
+const layerOn = name => document.querySelector(`[data-layer="${name}"]`).checked && (name !== 'xing' || map.getZoom() >= XING_MIN_ZOOM);
+function syncLayer(name) { layerOn(name) ? layers[name].addTo(map) : map.removeLayer(layers[name]); }
+function syncXing() {
+  syncLayer('xing');
+  $('xingHint').textContent = map.getZoom() >= XING_MIN_ZOOM ? 'Przejścia i przejazdy z OpenStreetMap' : 'Widoczne po przybliżeniu mapy';
+}
+Object.keys(layers).forEach(syncLayer);
+document.querySelectorAll('[data-layer]').forEach(cb => cb.addEventListener('change', () => cb.dataset.layer === 'traffic' ? styleRails() : syncLayer(cb.dataset.layer)));
+map.on('zoomend', syncXing);
+syncXing();
+
+/* legend + layer popover */
+$('scoreRamp').innerHTML = [...SCORE_BINS].reverse().map(([, hex, lab]) => `<div><i style="background:${hex}"></i>${esc(lab)}</div>`).join('');
+$('railRamp').innerHTML = [...RAIL_BINS].reverse().map(([, c, lab]) =>
+  `<div><i style="background:${lab === '0' ? 'repeating-linear-gradient(90deg,#9aa1aa 0 4px,transparent 4px 7px)' : c}"></i>${esc(lab)}</div>`).join('');
+function setPop(btnId, popId, open) {
+  $(popId).hidden = !open;
+  $(btnId).setAttribute('aria-expanded', open);
+}
+const closePops = except => { for (const [b, p] of [['layBtn', 'layPop'], ['expBtn', 'expMenu']]) if (p !== except) setPop(b, p, false); };
+for (const [b, p] of [['layBtn', 'layPop'], ['expBtn', 'expMenu']]) $(b).addEventListener('click', e => { e.stopPropagation(); const open = $(p).hidden; closePops(p); setPop(b, p, open); });
+document.addEventListener('click', e => { if (!e.target.closest('#layPop, #expMenu')) closePops(); });
+
+/* hover linkage between table and map */
+function hover(key, on) {
+  const [kind, id] = key.split(/:(.*)/s);
+  if (kind === 'site' && byId[id]) {
+    const s = byId[id];
+    if (s.top) markers[id].getElement()?.querySelector('.pin')?.classList.toggle('hov', on);
+    else if (selected !== key) markers[id].setStyle(on ? PICKED : PLAIN);
+    document.querySelector(`#rankBody tr[data-open="${key}"]`)?.classList.toggle('hov', on);
+  } else if (kind === 'ai' && aiMarkers[id]) {
+    aiMarkers[id].getElement()?.querySelector('.ai-mk')?.classList.toggle('hov', on);
+    document.querySelector(`#aiBody tr[data-open="${key}"]`)?.classList.toggle('hov', on);
+  }
+}
+
+/* ---------- left panel: tables ---------- */
+const byId = Object.fromEntries(DATA.sites.map(s => [s.id, s]));
+const places = DATA.sites.filter(s => s.leader);
+const RK = { sort: 'place', dir: 1, scope: 'top', q: '' };
+const AIV = { status: 'open', q: '' };
+const aiLoc = a => { const p = aiPos(a); const nr = nearestRail(p[0], p[1], a.line); return nr ? [`linia ${nr.line}`, nr.km != null ? kmLabel(nr.km) : ''] : ['poza linią', '']; };
+const aiIsOpen = a => ['nowe', 'zaplanowane'].includes(aiSt(a.id).status);
+
+function rankRows() {
+  const q = norm(RK.q.trim());
+  let rows = places.filter(s => q ? norm(`${s.title} ${s.lines} ${s.km} ${s.short} ${s.station || ''}`).includes(q) : RK.scope === 'all' || s.top);
+  const cmp = { place: (a, b) => a.place - b.place, name: (a, b) => a.title.localeCompare(b.title, 'pl'), score: (a, b) => a.score - b.score }[RK.sort];
+  return rows.sort((a, b) => cmp(a, b) * RK.dir || a.place - b.place);
+}
+function rankRow(s) {
+  return `<tr tabindex="0" data-open="site:${esc(s.id)}" aria-label="${esc(s.title)}, wynik ${fmt(s.score)}">
+    <td><span class="rk${s.top ? '' : ' plain'}"${s.top ? ` style="background:${scoreHex(s.score)};${darkText(s.score) ? '' : 'color:#161616'}"` : ''}>${s.place}</span></td>
+    <td><div class="c1">${esc(s.title)}</div><div class="c2">${esc(s.lines)}${s.km ? ' · ' + esc(s.km) : ''}</div></td>
+    <td><div class="rec">${esc(s.short)}</div></td>
+    <td class="r"><div class="sc">${fmt(s.score)}</div><div class="scbar"><i style="width:${Math.min(100, s.score)}%;background:${scoreHex(s.score)}"></i></div></td></tr>`;
+}
+function aiRows() {
+  const q = norm(AIV.q.trim());
+  const flat = t => t.replace(/[\s-]/g, '');
+  return DATA.ai.filter(a => q ? flat(norm(`${a.id} ${aiLoc(a).join(' ')} ${statusTxt(aiSt(a.id))}`)).includes(flat(q)) : (AIV.status === 'all' || aiIsOpen(a)))
+    .sort((a, b) => aiIsOpen(b) - aiIsOpen(a) || (aiSt(b.id).status === 'zaplanowane') - (aiSt(a.id).status === 'zaplanowane') || b.real - a.real || (b.s ?? 0) - (a.s ?? 0));
+}
+function aiRow(a) {
+  const st = aiSt(a.id), loc = aiLoc(a), done = !aiIsOpen(a);
+  return `<tr tabindex="0" data-open="ai:${esc(a.id)}" class="${done ? 'done' : ''}" aria-label="${esc(a.id)}, ${esc(statusTxt(st))}">
+    <td><div class="c1"><i class="gsq${a.real ? '' : ' u2'}${st.status === 'usuniete' ? ' rm' : ''}"></i>${esc(a.id)}</div><div class="c2">${a.real ? 'ścieżka na zdjęciu' : 'niepewne'}</div></td>
+    <td><div class="c1" style="font-weight:400">${esc(loc[0])}</div><div class="c2">${esc(loc[1])}</div></td>
+    <td><div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start">${statusTags(st)}</div></td></tr>`;
+}
+function evRow(e) {
+  return `<tr tabindex="0" data-open="ev:${esc(e.id)}" aria-label="Zdarzenie ${esc(e.id)}">
+    <td><div class="c1 mono" style="font-weight:400">${esc(e.id)}</div><div class="c2">${esc(e.date)}</div></td>
+    <td><div class="c1" style="font-weight:400">${e.line ? `linia ${esc(e.line)}` : 'bez linii'}</div><div class="c2">${e.km ? `km ${esc(e.km)}` : ''}</div></td>
+    <td><div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start"><span class="tag gray">Zdarzenie</span><span class="c2" style="margin:0">${esc(e.outcome)}</span></div></td></tr>`;
+}
+const entryItems = () => [...ST.reports.map(r => ({ k: 'rep', at: r.created || r.date, r })), ...ST.events.map(e => ({ k: 'ev', at: e.created || e.date, r: e }))].sort((a, b) => String(b.at).localeCompare(String(a.at)));
+function repRow(r) {
+  return `<tr tabindex="0" data-open="rep:${esc(r.id)}" aria-label="Wpis ${esc(r.id)}">
+    <td><div class="c1 mono" style="font-weight:400">${esc(r.id)}</div><div class="c2">${esc(r.date)}</div></td>
+    <td><div class="c1" style="font-weight:400">${r.line ? `linia ${esc(r.line)}` : 'bez linii'}</div><div class="c2">${r.km ? `km ${esc(r.km)}` : ''}</div></td>
+    <td><div style="display:flex;flex-direction:column;gap:4px;align-items:flex-start"><span class="tag ${r.relatesTo ? 'blue' : 'red'}">OTDZ ${esc(r.U)}</span><span class="c2" style="margin:0">${r.relatesTo ? 'aktualizacja' : 'nowy wpis'}</span></div></td></tr>`;
+}
+function renderSortHeads() {
+  for (const th of document.querySelectorAll('[data-sort-th]')) {
+    const k = th.dataset.sortTh, on = RK.sort === k;
+    th.setAttribute('aria-sort', on ? (RK.dir > 0 ? 'ascending' : 'descending') : 'none');
+    th.querySelector('button svg').outerHTML = ico(on ? (RK.dir > 0 ? 'chevron--sort--up' : 'chevron--sort--down') : 'chevron--sort');
+  }
+}
+function renderLists() {
+  const rows = rankRows();
+  $('rankBody').innerHTML = rows.map(rankRow).join('');
+  $('rankEmpty').hidden = rows.length > 0;
+  $('rankTbl').hidden = rows.length === 0;
+  const q = RK.q.trim();
+  $('rankInfo').textContent = q ? `Znaleziono ${rows.length} z ${places.length} miejsc` : `Wyświetlono ${rows.length} z ${places.length} miejsc`;
+  $('rankEmptyTxt').textContent = `Nic nie pasuje do "${q}". Szukamy po nazwie ulicy, numerze linii i rekomendacji.`;
+  $('rankCount').textContent = places.length;
+  document.querySelectorAll('[data-scope]').forEach(b => b.classList.toggle('on', b.dataset.scope === RK.scope && !q));
+  renderSortHeads();
+
+  const air = aiRows(), nOpen = DATA.ai.filter(aiIsOpen).length;
+  $('aiBody').innerHTML = air.map(aiRow).join('');
+  $('aiEmpty').hidden = air.length > 0;
+  $('aiTbl').hidden = air.length === 0;
+  $('aiInfo').textContent = AIV.q.trim() ? `Znaleziono ${air.length} z ${DATA.ai.length}` : AIV.status === 'open' ? `${nOpen} z ${DATA.ai.length} czeka na sprawdzenie w terenie` : `${air.length} wykryć, w tym ${DATA.ai.length - nOpen} zamkniętych`;
+  $('aiEmptyTxt').textContent = AIV.q.trim() ? `Nic nie pasuje do "${AIV.q.trim()}".` : 'Wszystkie wykrycia AI są zweryfikowane. Przełącz na "Wszystkie", aby zobaczyć historię.';
+  const c = $('aiCount'); c.textContent = nOpen; c.className = `tag ${nOpen ? 'red' : 'gray'}`;
+  $('aiOpenBtn').textContent = `Do weryfikacji (${nOpen})`;
+  document.querySelectorAll('[data-aistat]').forEach(b => b.classList.toggle('on', b.dataset.aistat === AIV.status));
+
+  const reps = entryItems();
+  $('repBody').innerHTML = reps.map(x => x.k === 'rep' ? repRow(x.r) : evRow(x.r)).join('');
+  $('repTbl').hidden = !reps.length;
+  $('repEmpty').hidden = reps.length > 0;
+  $('repCount').textContent = reps.length;
+  for (const tr of document.querySelectorAll('[data-open]')) {
+    const on = tr.dataset.open === selected;
+    tr.classList.toggle('on', on);
+    tr.setAttribute('aria-selected', on);
+    if (on) tr.scrollIntoView({ block: 'nearest' });
+  }
+}
+$('side').addEventListener('click', e => {
+  const b = e.target.closest('[data-open]');
+  if (!b) return;
+  const [kind, id] = b.dataset.open.split(/:(.*)/s);
+  ({ site: openSite, ai: openAI, rep: openReport, ev: openEvent })[kind](id, true);
+});
+$('side').addEventListener('mouseover', e => { const r = e.target.closest('tr[data-open]'); if (r && !r.contains(e.relatedTarget)) hover(r.dataset.open, true); });
+$('side').addEventListener('mouseout', e => { const r = e.target.closest('tr[data-open]'); if (r && !r.contains(e.relatedTarget)) hover(r.dataset.open, false); });
+$('side').addEventListener('keydown', e => {
+  const tr = e.target.closest('tr[data-open]');
+  if (!tr) return;
+  const rows = [...tr.parentElement.children];
+  const i = rows.indexOf(tr);
+  const go = { ArrowDown: i + 1, ArrowUp: i - 1, Home: 0, End: rows.length - 1 }[e.key];
+  if (go != null) { e.preventDefault(); rows[Math.max(0, Math.min(rows.length - 1, go))].focus(); }
+  else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tr.click(); }
+});
+document.querySelectorAll('[data-sort]').forEach(b => b.addEventListener('click', () => {
+  const k = b.dataset.sort;
+  if (RK.sort === k) RK.dir = -RK.dir; else { RK.sort = k; RK.dir = k === 'score' ? -1 : 1; }
+  renderLists();
+}));
+document.querySelectorAll('[data-scope]').forEach(b => b.addEventListener('click', () => { RK.scope = b.dataset.scope; $('qRank').value = ''; RK.q = ''; syncClear(); renderLists(); }));
+document.querySelectorAll('[data-aistat]').forEach(b => b.addEventListener('click', () => { AIV.status = b.dataset.aistat; renderLists(); }));
+function syncClear() { document.querySelectorAll('[data-clear]').forEach(b => { b.hidden = !$(b.dataset.clear).value; }); }
+$('qRank').addEventListener('input', e => { RK.q = e.target.value; syncClear(); renderLists(); });
+$('qAi').addEventListener('input', e => { AIV.q = e.target.value; syncClear(); renderLists(); });
+document.querySelectorAll('[data-clear]').forEach(b => b.addEventListener('click', () => { const i = $(b.dataset.clear); i.value = ''; i.dispatchEvent(new Event('input')); i.focus(); }));
+
+const TABS = { rank: ['tabRank', 'paneRank'], ai: ['tabAi', 'paneAi'], rep: ['tabRep', 'paneRep'] };
+function setTab(name) {
+  for (const [k, [t, p]] of Object.entries(TABS)) {
+    $(t).setAttribute('aria-selected', k === name);
+    $(t).tabIndex = k === name ? 0 : -1;
+    $(p).hidden = k !== name;
+  }
+}
+for (const [k, [t]] of Object.entries(TABS)) $(t).addEventListener('click', () => setTab(k));
+document.querySelector('.tabs').addEventListener('keydown', e => {
+  const ks = Object.keys(TABS), cur = ks.findIndex(k => $(TABS[k][0]).getAttribute('aria-selected') === 'true');
+  const n = { ArrowRight: cur + 1, ArrowLeft: cur - 1 }[e.key];
+  if (n == null) return;
+  const k = ks[(n + ks.length) % ks.length];
+  setTab(k); $(TABS[k][0]).focus();
+});
+$('repEmptyBtn').addEventListener('click', () => setAddMode(true));
+$('rankEmptyBtn').addEventListener('click', () => { RK.scope = 'all'; RK.q = ''; $('qRank').value = ''; syncClear(); renderLists(); });
+
+/* ---------- selection + panel ---------- */
+let selected = null, addCtx = null, tmp = null, drag = null, aiMode = null, addMode = false;
+function setSelected(key) {
+  const prev = selected;
+  selected = key;
+  for (const k of [prev, key]) {
+    if (!k) continue;
+    const [kind, id] = k.split(/:(.*)/s);
+    if (kind === 'site' && byId[id]) byId[id].top ? markers[id].setIcon(pinIcon(byId[id], k === selected)) : markers[id].setStyle(k === selected ? PICKED : PLAIN);
+    if (kind === 'site' && k === selected && !byId[id].top) markers[id].bringToFront();
+    if (kind === 'ai' && aiMarkers[id]) aiMarkers[id].setIcon(aiIcon(aiById[id], k === selected));
+  }
+  if (key) {
+    const [kind, id] = key.split(/:(.*)/s);
+    setTab({ site: 'rank', ai: 'ai', rep: 'rep', ev: 'rep' }[kind]);
+    if (kind === 'site' && byId[id].leader && !byId[id].top && !RK.q) RK.scope = 'all';
+    if (kind === 'ai' && !aiIsOpen(aiById[id]) && !AIV.q) AIV.status = 'all';
+  }
+  drawReports();
+  renderLists();
+}
+const card = $('card');
+function showPanel(html, lat, lon, fly) {
+  stopDrag();
+  if (!/data-form="add-/.test(html)) addCtx = null;
+  setAddMode(false);
+  closePops();
+  card.innerHTML = html;
+  card.classList.add('open');
+  card.querySelector('.cb').scrollTop = 0;
+  if (lat == null) return;
+  const cardW = card.offsetWidth < map.getSize().x - 120 ? card.offsetWidth : 0;
+  if (fly) {
+    const z = Math.max(map.getZoom(), 16);
+    map.flyTo(map.unproject(map.project([lat, lon], z).add([cardW / 2, 24]), z), z, { duration: 0.8 });
+  } else {
+    map.panInside([lat, lon], { paddingTopLeft: [60, 100], paddingBottomRight: [cardW + 40, 60] });
+  }
+}
+function head(kicker, title, sub, { tags = '', stat = '' } = {}) {
+  return `<div class="ch"><div class="top"><span class="kicker">${kicker}</span><button class="ibtn" aria-label="Zamknij panel" title="Zamknij (Esc)" data-close>${ico('close', 20)}</button></div>
+    <h2>${title}</h2>${sub ? `<div class="sub">${sub}</div>` : ''}${tags ? `<div class="tags">${tags}</div>` : ''}${stat}</div>`;
+}
+const sec = (title, body) => `<section class="sec"><h3>${title}</h3><div class="sbody">${body}</div></section>`;
+const fold = (title, body, open = false, count = null) => `<details class="sec"${open ? ' open' : ''}><summary><span>${title}${count != null ? `<span class="tag gray cnt">${count}</span>` : ''}</span>${ico('chevron--down')}</summary><div class="sbody">${body}</div></details>`;
+const noteBox = (kind, html) => `<div class="note ${kind}">${ico({ info: 'information', warn: 'warning--filled', err: 'error--filled' }[kind], 16)}<div>${html}</div></div>`;
+const statCell = (l, v) => `<div><div class="l">${l}</div>${v}</div>`;
+function setUrl(u) { try { history.replaceState(null, '', u); } catch (e) { } }
+function closePanel() {
+  stopDrag(true);
+  addCtx = null;
+  card.classList.remove('open');
+  removeTmp();
+  setSelected(null);
+  setUrl(location.pathname + location.search);
+}
+function setAddMode(on) {
+  if (addMode === on) return;
+  if (on) closePanel();
+  addMode = on;
+  document.body.classList.toggle('adding', on);
+  $('modeBar').hidden = !on;
+  $('addBtn').setAttribute('aria-pressed', on);
+  if (on) closePops();
+}
+$('addBtn').addEventListener('click', () => setAddMode(!addMode));
+$('modeCancel').addEventListener('click', () => setAddMode(false));
+
+function askConfirm(title, text, okLabel, onOk) {
+  $('cbox').innerHTML = `<div class="mh"><h2 id="cTitle" style="font-size:20px;line-height:28px">${esc(title)}</h2><p>${esc(text)}</p></div>
+    <div class="mfoot"><button class="btn sec" data-cancel>Anuluj</button><button class="btn danger" id="cOk">${esc(okLabel)}</button></div>`;
+  $('confirm').classList.add('open');
+  $('cOk').focus();
+  $('cOk').onclick = () => { $('confirm').classList.remove('open'); onOk(); };
+}
+$('confirm').addEventListener('click', e => { if (e.target === $('confirm') || e.target.closest('[data-cancel]')) $('confirm').classList.remove('open'); });
+
+/* nearby events for a point */
+function eventsNear(lat, lon) {
+  const out = [];
+  for (const a of DATA.accidents) { const d = distM(lat, lon, a.lat, a.lon); if (d <= NEAR_EVENTS_M) out.push({ d, year: a.year, outcome: a.outcome, killed: a.killed, src: 'prasa', lines: a.lines.join(', ') }); }
+  for (const e of ST.events) { const d = distM(lat, lon, e.lat, e.lon); if (d <= NEAR_EVENTS_M) out.push({ d, year: e.date, outcome: e.outcome, killed: e.outcome === 'zabity', src: `wpis ${e.id}`, lines: e.line || '' }); }
+  return out.sort((a, b) => a.d - b.d);
+}
+function eventsHtml(lat, lon) {
+  const ev = eventsNear(lat, lon);
+  if (!ev.length) return `<p class="mute">Brak zdarzeń w promieniu ${NEAR_EVENTS_M} m.</p>`;
+  return `<ul class="evs">${ev.map(e => `<li><i class="glyph acc" style="${e.killed ? '' : 'background:#6f6f6f'}"></i>
+    <span><b>${esc(e.year)}</b> · ${esc(e.outcome)}${e.lines ? ` · linia ${esc(e.lines)}` : ''} <span class="d">(${esc(e.src)})</span></span><span class="d">${Math.round(e.d)} m</span></li>`).join('')}</ul>`;
+}
+function hazardHtml(nr) {
+  if (!nr || nr.d > 150) return '<p class="mute">Brak linii kolejowej w promieniu 150 m.</p>';
+  const tr = nr.trains == null ? 'brak danych o ruchu' : nr.trains === 0 ? '0 pociągów pasażerskich (ruch towarowy nieznany)' : trainsTxt(nr.trains);
+  return `<dl class="dl"><dt>Linia</dt><dd>${esc(nr.line ?? 'bez numeru')}${nr.name ? ` · ${esc(nr.name)}` : ''}</dd>
+    <dt>Kilometr</dt><dd class="num">${nr.km == null ? 'nieznany' : kmPoint(nr.km) ? `ok. ${kmTxt(nr.km)}` : `odcinek km ${kmTxt(nr.km)}, dokładny km ze słupka`} <span class="mute">(${Math.round(nr.d)} m od osi toru)</span></dd>
+    <dt>Ruch</dt><dd>${tr}</dd>
+    <dt>Prędkość</dt><dd>${nr.vmax ? `vmax ${nr.vmax} km/h` : 'nieznana'}${nr.tracks ? ` · ${nr.tracks} ${plural(nr.tracks, 'tor', 'tory', 'torów')} na linii` : ''}</dd></dl>`;
+}
+
+/* ---------- site panel ---------- */
+function crit(k, label, hint, v, main) {
+  return `<div class="crit"><span class="k">${k}</span><div><div class="n">${label}</div><div class="t">${esc(main)}</div></div><div class="val">${fmtF(v)}</div>
+    <div class="meter"><i style="width:${Math.max(1, Number(v) * 100)}%"></i></div><div class="det">${hint}</div></div>`;
+}
+function openSite(id, fly) {
+  const s = byId[id];
+  if (!s) return;
+  removeTmp();
+  const img = imgSrc(s.img);
+  const entries = ST.reports.filter(r => r.relatesTo === 'site:' + s.id || distM(s.lat, s.lon, r.lat, r.lon) <= DUP_M);
+  const ev = eventsNear(s.lat, s.lon);
+  const tags = `${s.top ? '<span class="tag navy">Top 20</span>' : ''}${entries.length ? `<span class="tag red">Wpisy w rejestrze: ${entries.length}</span>` : '<span class="tag gray">Brak wpisów w rejestrze</span>'}`;
+  const stat = `<div class="stat">
+    ${statCell('Wynik', `<div class="v">${fmt(s.score)}<small>/ 100</small></div><div class="bar"><i style="width:${Math.min(100, s.score)}%;background:${scoreHex(s.score)}"></i></div>`)}
+    ${statCell(s.leader ? 'Miejsce w rankingu' : 'Pozycja punktu', `<div class="v">${s.leader ? s.place : s.rank}<small>z ${s.leader ? M.places : s.n}</small></div>`)}
+    ${statCell('Zdarzenia w 300 m', `<div class="v">${ev.length}<small>${plural(ev.length, 'zdarzenie', 'zdarzenia', 'zdarzeń')}</small></div>`)}</div>`;
+  showPanel(head('Miejsce w rankingu', esc(s.title), `${esc(s.lines)}${s.km ? ' · ' + esc(s.km) : ''}${s.station ? ' · stacja ' + esc(s.station) : ''}`, { tags, stat }) + `
+    <div class="cb">
+      <div class="reco"><div class="l">Zalecany środek</div>
+        <div class="main"><b>${esc(s.primary.name)}</b><span class="cost">${esc(s.primary.cost)}</span>${s.primary.costNote ? `<span class="cnote">${esc(s.primary.costNote)}</span>` : ''}</div>
+        <ul class="steps">
+          <li><span class="tg">Od zaraz</span><span>${esc(s.etap0.replace(/^Etap 0 \(od zaraz\):\s*/, ''))}</span></li>
+          ${s.support ? `<li><span class="tg">Wsparcie</span><span>${esc(s.support.name)}<span class="cost">${esc(s.support.cost)}</span>${s.support.costNote ? `<span class="cnote">${esc(s.support.costNote)}</span>` : ''}</span></li>` : ''}
+          ${s.r0 ? `<li><span class="tg">Zawsze</span><span>${esc(s.r0.name)}<span class="cost">${esc(s.r0.cost)}</span></span></li>` : ''}
+        </ul></div>
+      ${fold('Powód wyniku: trzy czynniki', `
+        ${crit('E', 'Ekspozycja', 'ilu ludzi ma powód przejść', s.E, s.e)}
+        ${crit('D', 'Objazd', 'jak daleko do legalnej drogi', s.D, s.d)}
+        ${crit('H', 'Zagrożenie', 'pociągi, prędkość, tory', s.H, s.h)}`, true)}
+      ${s.note ? fold('Warunki i podstawa środka', `<p class="mute" style="color:var(--g70)">${esc(s.note)}</p>`, true) : ''}
+      ${fold('Zdarzenia w pobliżu', eventsHtml(s.lat, s.lon), ev.length > 0, ev.length)}
+      ${fold('Wpisy w rejestrze', entries.length ? `<ul class="hist">${entries.map(r => `<li><time>${esc(r.date)}</time><b class="mono">${esc(r.id)}</b> · OTDZ ${esc(r.U)} · ${esc(r.desc)} <button class="link" data-open-rep="${esc(r.id)}">otwórz</button></li>`).join('')}</ul>`
+        : '<p class="mute">Brak wpisów AD dla tego miejsca.</p>', entries.length > 0, entries.length)}
+      ${img ? fold('Zdjęcie lotnicze', `<figure class="crop"><img src="${img}" alt="Ortofotomapa: ${esc(s.title)}"><figcaption>Ortofotomapa GUGiK, wycinek 300 x 300 m; czerwone kółko = miejsce przejścia.</figcaption></figure>`) : ''}
+      <div class="meta">${esc(s.id)}${s.members.length ? ' + ' + esc(s.members.join(', ')) : ''} · ${ll(s.lat, s.lon)}</div>
+    </div>
+    <div class="abar"><button class="btn" data-add-here="site:${esc(s.id)}"><span>Dodaj wpis AD w tym miejscu</span>${ico('add')}</button>
+      ${s.geoportal ? `<a class="btn sec" href="${href(s.geoportal)}" target="_blank" rel="noopener"><span>Geoportal</span>${ico('launch')}</a>` : ''}</div>`, s.lat, s.lon, fly);
+  setSelected('site:' + id);
+  setUrl('#' + id);
+}
+
+/* ---------- AI verification panel ---------- */
+function adFields(prefix, required) {
+  return `<div class="f2">
+      <div class="f"><label for="${prefix}Ad">Nr Arkusza Dozorowania (AD)${required ? ' <span class="req">(wymagane)</span>' : ''}</label><input type="text" id="${prefix}Ad" name="ad" class="adno" placeholder="np. numer z Arkusza Dozorowania"></div>
+      <div class="f"><label for="${prefix}Date">Data stwierdzenia</label><input type="date" id="${prefix}Date" name="date" value="${today()}"></div>
+    </div>
+    <div class="f"><label for="${prefix}File">Załącz AD / wpis D803 / zdjęcia z terenu</label>
+      <small class="h" id="${prefix}FileH">${required ? 'Wymagany nr AD albo załącznik. ' : ''}W demo zapisuje się tylko nazwa pliku.</small><input type="file" id="${prefix}File" name="files" multiple accept=".pdf,.xlsx,.xlsm,image/*" aria-describedby="${prefix}FileH"></div>
+    <div class="f"><label for="${prefix}By">Ocenę dokonał (imię, nazwisko, stanowisko)</label><input type="text" id="${prefix}By" name="by" placeholder="np. J. Kowalski, toromistrz"></div>`;
+}
+const cancelBtn = '<button class="btn sec" type="button" data-ai-cancel>Anuluj</button>';
+function aiForm(a, kind) {
+  if (kind === 'confirm') return `<form data-form="ai-confirm" novalidate><div class="err" role="alert"></div>
+    ${noteBox('info', 'Potwierdzenie trafia do arkusza dozorowania jako wada „dzikie przejście” (<b>OTDZ</b>) po sprawdzeniu w terenie (Moduł D2 § 8).')}
+    <div class="f"><label for="cU">Stopień wadliwości (Moduł D3)</label><select id="cU" name="U">${Object.entries(U_DESC).map(([k, v]) => `<option value="${k}"${k === 'U3' ? ' selected' : ''}>${v}</option>`).join('')}</select></div>
+    ${adFields('c', true)}
+    <div class="f"><label for="cNote">Opis sytuacji</label><textarea id="cNote" name="note" placeholder="np. wydeptana ścieżka z obu stron, dziura w ogrodzeniu od strony działek"></textarea></div>
+    <div class="acts">${cancelBtn}<button class="btn" type="submit"><span>Zapisz potwierdzenie</span>${ico('checkmark--filled')}</button></div></form>`;
+  if (kind === 'fix') {
+    const p = aiPos(a);
+    return `<form data-form="ai-fix" novalidate><div class="err" role="alert"></div>
+    ${noteBox('warn', '<b>Przeciągnij kwadrat wzdłuż toru</b> albo kliknij w tor we właściwym miejscu przejścia. Wykrycie pozostaje na liście do potwierdzenia w terenie.')}
+    <div class="f2">
+      <div class="f"><label for="fPos">Nowe współrzędne</label><input type="text" id="fPos" readonly value="${ll(p[0], p[1])}" class="adno"></div>
+      <div class="f"><label for="fMove">Przesunięcie</label><input type="text" id="fMove" readonly value="0 m"></div>
+    </div>
+    <div class="f"><label for="fNote">Uwaga <span class="req">(wymagane)</span></label><textarea id="fNote" name="note" placeholder="np. przejście jest 40 m dalej, przy końcu ogrodzenia"></textarea></div>
+    <div class="acts">${cancelBtn}<button class="btn" type="submit"><span>Zapisz korektę</span>${ico('checkmark--filled')}</button></div></form>`;
+  }
+  return `<form data-form="ai-remove" novalidate><div class="err" role="alert"></div>
+    <div class="f"><label for="rReason">Powód usunięcia <span class="req">(wymagane)</span></label><select id="rReason" name="reason"><option value="">wybierz...</option>${RM_REASONS.map(r => `<option>${esc(r)}</option>`).join('')}</select></div>
+    <div class="f"><label for="rNote">Uwagi</label><textarea id="rNote" name="note"></textarea></div>
+    <div class="f"><label for="rBy">Ocenę dokonał</label><input type="text" id="rBy" name="by" placeholder="np. J. Kowalski, toromistrz"></div>
+    <div class="acts">${cancelBtn}<button class="btn danger" type="submit"><span>Usuń wykrycie</span>${ico('trash-can')}</button></div></form>`;
+}
+function openAI(id, fly, kind) {
+  const a = aiById[id];
+  if (!a) return;
+  removeTmp();
+  const st = aiSt(id), p = aiPos(a);
+  const nr = nearestRail(p[0], p[1], a.line);
+  const closed = ['potwierdzone', 'usuniete'].includes(st.status);
+  aiMode = kind ? { id, kind } : null;
+  const loc = aiLoc(a).filter(Boolean).join(', ');
+  const stat = `<div class="stat" style="grid-template-columns:1fr 1fr 1.2fr">
+    ${statCell('Wynik modelu (nieskalibrowany)', `<div class="v">${a.s != null ? fmt(a.s, 2) : '-'}</div>`)}
+    ${statCell('Oficjalne przejście', `<div class="v">${a.off != null ? Number(a.off) : '-'}<small>${a.off != null ? 'm' : 'brak danych'}</small></div>`)}
+    ${statCell('Zdjęcie lotnicze', `<div class="v s num">${a.date ? esc(a.date) : 'data nieznana'}</div>`)}</div>`;
+  showPanel(head(`Wykrycie AI · ${esc(a.id)}`, a.real ? 'Ścieżka widoczna na zdjęciu' : 'Możliwa ścieżka (niepewne)', esc(loc), { tags: statusTags(st), stat }) + `
+    <div class="cb">
+      ${closed ? '' : sec('1. Zaplanuj sprawdzenie w terenie', `
+      <p class="stepdesc">Wykrycie AI to zgłoszenie, na podstawie którego można zlecić obchód specjalny (Moduł D2 § 9 ust. 1 pkt 2 lit. c).</p>
+      <div class="choice c2">
+        <button class="btn ter sm${st.plan === 'obchód' && st.status === 'zaplanowane' ? ' on' : ''}" data-plan="obchód">Przy najbliższym obchodzie</button>
+        <button class="btn ter sm${st.plan === 'obchód specjalny' ? ' on' : ''}" data-plan="obchód specjalny">Zleć obchód specjalny</button>
+      </div>`)}
+      ${closed ? '' : sec('2. Zapisz wynik weryfikacji', `
+      <div class="choice c3">
+        <button class="btn${kind === 'confirm' ? ' on' : ''}" data-ai-kind="confirm">Potwierdź</button>
+        <button class="btn sec${kind === 'fix' ? ' on' : ''}" data-ai-kind="fix">Skoryguj położenie</button>
+        <button class="btn danger${kind === 'remove' ? ' on' : ''}" data-ai-kind="remove">Usuń</button>
+      </div>
+      <div id="aiFormBox">${kind ? aiForm(a, kind) : '<p class="stepdesc" style="margin:12px 0 0">Wybierz wynik oględzin: potwierdzenie wymaga numeru AD, korekta przesuwa punkt na tor, usunięcie wymaga powodu.</p>'}</div>`)}
+      ${st.history.length ? fold('Historia', `<ul class="hist">${[...st.history].reverse().map(h => `<li><time>${esc(h.at)}</time>${esc(h.txt)}</li>`).join('')}</ul>`, true, st.history.length) : ''}
+      ${fold('Dane wykrycia', `<dl class="dl">
+        <dt>Wynik modelu (nieskalibrowany)</dt><dd class="num">${a.s != null ? fmt(a.s, 2) : 'brak'}</dd>
+        <dt>Przegląd zdjęcia</dt><dd>${esc(a.label)} (analityk, przy biurku)</dd>
+        <dt>Zdjęcie lotnicze</dt><dd>${a.date ? esc(a.date) : 'data nieznana'}</dd>
+        <dt>Oficjalne przejście</dt><dd class="num">${a.off != null ? `${Number(a.off)} m` : 'brak danych'}</dd>
+        <dt>Współrzędne</dt><dd class="num">${ll(p[0], p[1])}${st.moved ? ' (po korekcie)' : ''}</dd>
+      </dl>`)}
+      ${fold('Zagrożenie w tym miejscu', hazardHtml(nr))}
+      ${fold('Zdarzenia w pobliżu', eventsHtml(p[0], p[1]))}
+    </div>
+    ${closed ? `<div class="abar"><button class="btn sec" data-ai-reopen><span>Przywróć do weryfikacji (demo)</span>${ico('restart')}</button></div>` : ''}`, p[0], p[1], fly);
+  setSelected('ai:' + id);
+  setUrl('#' + id);
+  if (kind === 'fix') startDrag(id);
+}
+function aiLog(id, patch, txt) {
+  const s = Object.assign({ status: 'nowe', history: [] }, ST.ai[id], patch);
+  s.history = [...(ST.ai[id]?.history || []), { at: nowTxt(), txt }];
+  ST.ai[id] = s;
+  save();
+}
+function startDrag(id) {
+  const m = aiMarkers[id];
+  drag = { id, orig: m.getLatLng() };
+  m.dragging.enable();
+  m.getElement()?.querySelector('.ai-mk')?.classList.add('drag');
+}
+function stopDrag(revert) {
+  if (!drag) return;
+  const m = aiMarkers[drag.id];
+  if (m) { m.dragging.disable(); if (revert) m.setLatLng(drag.orig); m.getElement()?.querySelector('.ai-mk')?.classList.remove('drag'); }
+  drag = null;
+}
+function onAIDrag(id, latlng) {
+  if (!drag || drag.id !== id) return;
+  const a = aiById[id];
+  const pos = $('fPos'), mv = $('fMove');
+  if (pos) pos.value = ll(latlng.lat, latlng.lng);
+  if (mv) mv.value = `${Math.round(distM(a.lat, a.lon, latlng.lat, latlng.lng))} m od wykrycia AI`;
+}
+function fail(f, msg, field) {
+  f.querySelectorAll('.f.bad').forEach(x => x.classList.remove('bad'));
+  f.querySelector('.err').innerHTML = noteBox('err', esc(msg));
+  const el = typeof field === 'string' ? f.querySelector(field) : field;
+  if (el) { el.closest('.f')?.classList.add('bad'); el.setAttribute('aria-invalid', 'true'); el.focus(); }
+  f.querySelector('.err').scrollIntoView({ block: 'nearest' });
+}
+
+/* ---------- add form (map click) ---------- */
+function removeTmp() { if (tmp) { map.removeLayer(tmp); tmp = null; } }
+function placeTmp(latlng) {
+  if (!tmp) {
+    tmp = L.marker(latlng, { icon: dropIcon(true), draggable: true, zIndexOffset: 2000 }).addTo(map);
+    tmp.on('dragstart', () => { tmp._ok = tmp._ok || tmp.getLatLng(); });
+    tmp.on('dragend', () => {
+      tmp.closePopup();
+      const on = snapToTrack(tmp.getLatLng());
+      if (!on) { tmp.setLatLng(tmp._ok); offTrackMsg(); return; }
+      tmp.setLatLng(on); tmp._ok = on;
+      if (addCtx) refreshAdd(); else openChooser();
+    });
+  } else tmp.setLatLng(latlng);
+  tmp._ok = latlng;
+}
+function openChooser() {
+  const p = tmp.getLatLng();
+  const nr = nearestRail(p.lat, p.lng);
+  const near = nr && nr.d <= 150 ? `Linia ${esc(nr.line ?? 'bez numeru')}${nr.km != null ? `, ${kmLabel(nr.km)}` : ''} · ${Math.round(nr.d)} m od toru` : 'Brak linii kolejowej w promieniu 150 m';
+  tmp.bindPopup(`<div class="pop"><div class="k">Nowy wpis w tym miejscu</div><h3 class="num">${ll(p.lat, p.lng)}</h3><div class="sm">${near}</div>
+    <div class="acts"><button class="btn" data-add="otdz"><span>Dodaj dzikie przejście (OTDZ)</span>${ico('add')}</button><button class="btn sec" data-add="event"><span>Odnotuj zdarzenie</span>${ico('add')}</button></div></div>`, { maxWidth: 300, offset: [0, -24] }).openPopup();
+}
+map.on('click', e => {
+  const on = snapToTrack(e.latlng);
+  if (drag) { if (!on) { offTrackMsg(); return; } aiMarkers[drag.id].setLatLng(on); onAIDrag(drag.id, on); return; }
+  if (!addMode && !addCtx && !tmp) return;
+  if (!on) { offTrackMsg(); return; }
+  placeTmp(on);
+  if (addCtx) { refreshAdd(); return; }
+  setAddMode(false);
+  openChooser();
+});
+map.on('popupclose', e => { if (tmp && e.popup === tmp.getPopup() && !addCtx) removeTmp(); });
+function nearDup(lat, lon) {
+  const out = [];
+  for (const s of DATA.sites) { const d = distM(lat, lon, s.lat, s.lon); if (d <= DUP_M) out.push({ d, key: 'site:' + s.id, txt: `${s.title} (ranking, ${s.id})` }); }
+  for (const a of DATA.ai) { if (aiSt(a.id).status === 'usuniete') continue; const p = aiPos(a); const d = distM(lat, lon, p[0], p[1]); if (d <= DUP_M) out.push({ d, key: 'ai:' + a.id, txt: `wykrycie AI ${a.id}` }); }
+  for (const r of ST.reports) { const d = distM(lat, lon, r.lat, r.lon); if (d <= DUP_M) out.push({ d, key: 'rep:' + r.id, txt: `zgłoszenie ${r.id}` }); }
+  return out.sort((a, b) => a.d - b.d);
+}
+function openAdd(kind, relatesTo) {
+  const p = tmp.getLatLng();
+  addCtx = { kind, relatesTo };
+  tmp.closePopup();
+  tmp.unbindPopup();
+  const otdz = kind === 'otdz';
+  showPanel(head(otdz ? 'Nowy wpis · Arkusz Dozorowania' : 'Historia miejsca', otdz ? 'Dodaj dzikie przejście' : 'Odnotuj zdarzenie',
+    otdz ? 'Kod wady OTDZ - Otoczenie terenu - dzikie przejścia' : 'Potrącenie lub incydent przy torach') + `
+    <div class="cb"><form data-form="${otdz ? 'add-otdz' : 'add-event'}" class="cbody" novalidate>
+      <div class="err" role="alert" style="margin-top:16px"></div>
+      <h3 class="fh first">Lokalizacja</h3>
+      <div class="f2">
+        <div class="f"><label for="aPos">Współrzędne (WGS84)</label><input type="text" id="aPos" readonly class="adno"></div>
+        <div class="f"><label for="aLine">Linia nr</label><input type="text" id="aLine" name="line"></div>
+      </div>
+      <div class="f"><label for="aLineName">Nazwa linii</label><input type="text" id="aLineName" name="lineName" readonly></div>
+      <div class="f2">
+        <div class="f"><label for="aKm">Kilometr</label><input type="text" id="aKm" name="km" class="num" placeholder="XXX,XXX" aria-describedby="aKmHint"><small class="h" id="aKmHint">Szacunek z mapy; popraw wg słupka hektometrowego.</small></div>
+        ${otdz ? `<div class="f"><label for="aTrack">Nr toru</label><select id="aTrack" name="track"><option value="1">1</option><option value="2">2</option><option value="inny">inny / kilka torów</option></select></div>` : '<div></div>'}
+      </div>
+      ${otdz ? `<div class="f"><span class="lbl">Lokalizacja</span><div class="radios">${['szlak', 'stacja', 'szlak i stacja'].map((v, i) => `<label><input type="radio" name="loc" value="${v}"${i ? '' : ' checked'}>${v}</label>`).join('')}</div></div>` : ''}
+      <div id="dupBox" style="margin-top:16px"></div>
+      ${otdz ? `
+      <h3 class="fh">Wada</h3>
+      <div class="f"><label for="aCode">Kod wady</label><input type="text" id="aCode" readonly value="OTDZ - Otoczenie terenu - dzikie przejścia"></div>
+      <label class="chk"><input type="checkbox" name="otw"> Towarzyszy uszkodzenie wygrodzenia (OTW - uszkodzenia / dewastacja)</label>
+      <div class="f2">
+        <div class="f"><label for="aU">Stopień wadliwości (Moduł D3)</label><select id="aU" name="U">${Object.entries(U_DESC).map(([k, v]) => `<option value="${k}"${k === 'U3' ? ' selected' : ''}>${v}</option>`).join('')}</select></div>
+        <div class="f"><label for="aMode">Rodzaj dozorowania</label><select id="aMode" name="mode">${MODES.map(m => `<option>${esc(m)}</option>`).join('')}</select></div>
+      </div>
+      <div class="f"><label for="aDesc">Opis sytuacji <span class="req">(wymagane)</span></label><textarea id="aDesc" name="desc" placeholder="np. wydeptana ścieżka przez 2 tory, ślady z obu stron, dzieci w drodze do szkoły"></textarea></div>
+      <div class="f"><label for="aFix">Sposób naprawy / proponowane działanie</label><textarea id="aFix" name="fix" placeholder="np. odtworzenie wygrodzenia na 40 m, tablice ostrzegawcze, zgłoszenie do SOK"></textarea></div>
+      <div class="f2"><div class="f"><label for="aDue">Zalecany termin</label><input type="date" id="aDue" name="due"></div><div></div></div>
+      <label class="chk"><input type="checkbox" name="dr"> Powiadomiono dyżurnego ruchu (zagrożenie bezpieczeństwa, § 19 / § 26)</label>
+      <h3 class="fh">Arkusz Dozorowania</h3>
+      ${adFields('a', false)}` : `
+      <h3 class="fh">Zdarzenie</h3>
+      <div class="f2">
+        <div class="f"><label for="eDate">Data zdarzenia <span class="req">(wymagane)</span></label><input type="date" id="eDate" name="date" value="${today()}"></div>
+        <div class="f"><label for="eOut">Skutek</label><select id="eOut" name="outcome"><option>zabity</option><option>ranny</option><option>bez obrażeń (incydent)</option></select></div>
+      </div>
+      <div class="f"><label for="eCase">Nr sprawy / zgłoszenia</label><input type="text" id="eCase" name="caseNo" placeholder="np. nr z protokołu komisji kolejowej lub Policji"></div>
+      <div class="f"><label for="eDesc">Opis <span class="req">(wymagane)</span></label><textarea id="eDesc" name="desc" placeholder="bez danych osobowych: co się stało, skąd szła osoba, pora dnia"></textarea></div>
+      <div class="f"><label for="eFile">Załączniki</label><small class="h" id="eFileH">W demo zapisuje się tylko nazwa pliku.</small><input type="file" id="eFile" name="files" multiple accept=".pdf,image/*" aria-describedby="eFileH"></div>
+      <div style="margin-top:16px">${noteBox('info', 'Wpis buduje historię miejsca. <b>Nie zastępuje</b> zgłoszenia zdarzenia trybem instrukcji Ir-8 ani powiadomienia dyżurnego ruchu.')}</div>`}
+      <div class="acts"><button class="btn sec" type="button" data-close>Anuluj</button><button class="btn" type="submit"><span>${otdz ? 'Zapisz wpis OTDZ' : 'Zapisz zdarzenie'}</span>${ico('checkmark--filled')}</button></div>
+    </form></div>`, p.lat, p.lng, false);
+  setSelected(null);
+  refreshAdd();
+}
+function refreshAdd() {
+  if (!addCtx || !tmp) return;
+  const p = tmp.getLatLng();
+  const nr = nearestRail(p.lat, p.lng);
+  const ok = nr && nr.d <= 150;
+  const set = (id, v) => { const el = $(id); if (el) el.value = v; };
+  set('aPos', ll(p.lat, p.lng));
+  set('aLine', ok ? (nr.line ?? '') : '');
+  set('aLineName', ok ? (nr.name ?? '') : 'brak linii w promieniu 150 m');
+  set('aKm', ok && kmPoint(nr.km) ? kmTxt(nr.km) : '');
+  const kh = $('aKmHint');
+  if (kh) kh.textContent = !ok || nr.km == null ? 'Kilometr nieznany: odczytaj ze słupka hektometrowego.'
+    : kmPoint(nr.km) ? `Szacunek z mapy (słupki km z OSM i stacje PLK, zwykle do kilkudziesięciu m); popraw wg słupka hektometrowego.`
+    : `Odcinek km ${kmTxt(nr.km)} jest za długi na szacunek: odczytaj km ze słupka hektometrowego.`;
+  if (ok && nr.track) set('aTrack', nr.track);
+  const dup = $('dupBox');
+  if (dup) {
+    const d = addCtx.kind === 'otdz' ? nearDup(p.lat, p.lng) : [];
+    const rel = addCtx.relatesTo || (d[0] && d[0].key);
+    dup.innerHTML = d.length || addCtx.relatesTo ? `<div class="note warn">${ico('warning--filled')}<div><b>To miejsce jest już w rejestrze:</b> ${esc((d[0] || {}).txt || addCtx.relatesTo)}${d[0] ? `, ${Math.round(d[0].d)} m` : ''}.
+      Wadliwości, która już jest w rejestrze, nie rejestruje się ponownie, chyba że stan się pogorszył (§ 8 ust. 3-4).
+      <label class="chk" style="margin-top:8px"><input type="checkbox" name="worse"> Stan się pogorszył lub wpływa na bezpieczeństwo, rejestruję aktualizację</label>
+      <input type="hidden" name="relatesTo" value="${esc(rel)}"></div></div>` : '';
+  }
+}
+
+/* ---------- report + event panels ---------- */
+const repById = id => ST.reports.find(r => r.id === id);
+function openReport(id, fly) {
+  const r = repById(id);
+  if (!r) return;
+  removeTmp();
+  const nr = nearestRail(r.lat, r.lon, r.line);
+  showPanel(head(`Arkusz Dozorowania · ${esc(r.id)}`, 'Dzikie przejście (OTDZ)', `${r.line ? `linia ${esc(r.line)}` : 'bez linii'}${r.km ? `, km ${esc(r.km)}` : ''}${r.track ? `, tor ${esc(r.track)}` : ''} · ${esc(r.loc || '')}`,
+    { tags: `<span class="tag red">${esc(r.U)}</span><span class="tag ${r.relatesTo ? 'blue' : 'gray'}">${r.relatesTo ? 'Aktualizacja' : 'Nowy wpis'}</span>` }) + `
+    <div class="cb">
+      ${sec('Wada', `<dl class="dl">
+        <dt>Kod wady</dt><dd>OTDZ - Otoczenie terenu - dzikie przejścia${r.otw ? '<br>+ OTW - wygrodzenie: uszkodzenia / dewastacja' : ''}</dd>
+        <dt>Stopień</dt><dd>${esc(U_DESC[r.U] || r.U)}</dd>
+        <dt>Opis</dt><dd>${esc(r.desc)}</dd>
+        <dt>Sposób naprawy</dt><dd>${esc(r.fix || 'nie podano')}</dd>
+        <dt>Zalecany termin</dt><dd>${esc(r.due || 'nie podano')}</dd>
+        <dt>Dyżurny ruchu</dt><dd>${r.dr ? 'powiadomiono' : 'nie powiadamiano'}</dd>
+        <dt>Dozorowanie</dt><dd>${esc(r.mode)}</dd>
+        ${r.relatesTo ? `<dt>Aktualizacja</dt><dd>${esc(r.relatesTo)} (pogorszenie stanu)</dd>` : ''}
+      </dl>`)}
+      ${sec('Dokumentacja', `<dl class="dl">
+        <dt>Nr AD</dt><dd class="num">${esc(r.ad || 'brak')}</dd>
+        <dt>Załączniki</dt><dd>${r.files.length ? r.files.map(f => esc(f)).join('<br>') : 'brak'}</dd>
+        <dt>Ocenę dokonał</dt><dd>${esc(r.by || 'nie podano')}</dd>
+        <dt>Data</dt><dd class="num">${esc(r.date)}</dd>
+        <dt>Współrzędne</dt><dd class="num">${ll(r.lat, r.lon)}</dd>
+      </dl>`)}
+      ${fold('Zagrożenie w tym miejscu', hazardHtml(nr))}
+      ${fold('Zdarzenia w pobliżu', eventsHtml(r.lat, r.lon))}
+    </div>
+    <div class="abar"><button class="btn danger ter" data-del-rep="${esc(r.id)}"><span>Usuń wpis (demo)</span>${ico('trash-can')}</button></div>`, r.lat, r.lon, fly);
+  setSelected('rep:' + id);
+}
+function openEvent(id) {
+  const e = ST.events.find(x => x.id === id);
+  if (!e) return;
+  removeTmp();
+  showPanel(head(`Historia miejsca · ${esc(e.id)}`, `Zdarzenie ${esc(e.date)}`, `${esc(e.outcome)}${e.line ? ` · linia ${esc(e.line)}` : ''}${e.km ? `, km ${esc(e.km)}` : ''}`) + `
+    <div class="cb">${sec('Opis', `<dl class="dl">
+      <dt>Opis</dt><dd>${esc(e.desc)}</dd><dt>Nr sprawy</dt><dd>${esc(e.caseNo || 'brak')}</dd>
+      <dt>Załączniki</dt><dd>${e.files.length ? e.files.map(f => esc(f)).join('<br>') : 'brak'}</dd>
+      <dt>Współrzędne</dt><dd class="num">${ll(e.lat, e.lon)}</dd></dl>`)}</div>
+    <div class="abar"><button class="btn danger ter" data-del-ev="${esc(e.id)}"><span>Usuń wpis (demo)</span>${ico('trash-can')}</button></div>`, e.lat, e.lon, false);
+  setSelected('ev:' + id);
+}
+
+/* ---------- panel events ---------- */
+const fileNames = form => [...(form.querySelector('input[type=file]')?.files || [])].map(f => `${f.name} (${Math.max(1, Math.round(f.size / 1024))} kB)`);
+card.addEventListener('input', e => { const f = e.target.closest('.f.bad'); if (f) { f.classList.remove('bad'); e.target.removeAttribute('aria-invalid'); e.target.closest('form').querySelector('.err').innerHTML = ''; } });
+card.addEventListener('click', e => {
+  const t = e.target;
+  if (t.closest('[data-close]')) return closePanel();
+  const k = t.closest('[data-ai-kind]');
+  if (k && aiMode?.kind !== k.dataset.aiKind) { stopDrag(true); return openAI(selected.split(':')[1], false, k.dataset.aiKind); }
+  if (t.closest('[data-ai-cancel]')) { stopDrag(true); return openAI(selected.split(':')[1], false); }
+  const pl = t.closest('[data-plan]');
+  if (pl) {
+    const id = selected.split(':')[1];
+    aiLog(id, { status: 'zaplanowane', plan: pl.dataset.plan }, pl.dataset.plan === 'obchód specjalny' ? 'Zlecono obchód specjalny (§ 9)' : 'Do sprawdzenia przy najbliższym obchodzie');
+    drawAI(); openAI(id, false); toast(pl.dataset.plan === 'obchód specjalny' ? 'Zlecono obchód specjalny.' : 'Dodano do najbliższego obchodu.', 'ok');
+    return;
+  }
+  if (t.closest('[data-ai-reopen]')) {
+    const id = selected.split(':')[1];
+    aiLog(id, { status: 'nowe', plan: null }, 'Przywrócono do weryfikacji');
+    drawAI(); openAI(id, false); return;
+  }
+  const ah = t.closest('[data-add-here]');
+  if (ah) { const s = byId[ah.dataset.addHere.split(':')[1]]; placeTmp(L.latLng(s.lat, s.lon)); return openAdd('otdz', ah.dataset.addHere); }
+  const or = t.closest('[data-open-rep]');
+  if (or) return openReport(or.dataset.openRep, true);
+  const dr = t.closest('[data-del-rep]');
+  if (dr) return askConfirm(`Usunąć wpis ${dr.dataset.delRep}?`, 'Wpis zostanie usunięty z rejestru demo. Tej operacji nie można cofnąć.', 'Usuń wpis',
+    () => { ST.reports = ST.reports.filter(r => r.id !== dr.dataset.delRep); save(); closePanel(); drawReports(); renderLists(); toast('Wpis usunięty z rejestru demo.', 'ok'); });
+  const de = t.closest('[data-del-ev]');
+  if (de) return askConfirm(`Usunąć wpis ${de.dataset.delEv}?`, 'Wpis zostanie usunięty z rejestru demo. Tej operacji nie można cofnąć.', 'Usuń wpis',
+    () => { ST.events = ST.events.filter(r => r.id !== de.dataset.delEv); save(); closePanel(); drawReports(); toast('Wpis usunięty z rejestru demo.', 'ok'); });
+});
+card.addEventListener('submit', e => {
+  e.preventDefault();
+  const f = e.target, fd = new FormData(f);
+  const v = n => (fd.get(n) || '').toString().trim();
+  const kind = f.dataset.form;
+  if (kind === 'ai-confirm' || kind === 'ai-fix' || kind === 'ai-remove') {
+    const id = selected.split(':')[1];
+    if (kind === 'ai-confirm') {
+      const files = fileNames(f);
+      if (!v('ad') && !files.length) return fail(f, 'Podaj nr Arkusza Dozorowania albo załącz dokument.', '#cAd');
+      aiLog(id, { status: 'potwierdzone', U: v('U'), ad: v('ad'), files, by: v('by'), note: v('note'), date: v('date') },
+        `Potwierdzone w terenie: OTDZ ${v('U')}${v('ad') ? `, AD ${v('ad')}` : ''}${files.length ? `, załączniki: ${files.length}` : ''}${v('by') ? `, ${v('by')}` : ''}`);
+      toast('Potwierdzono. Wykrycie przeniesione do zamkniętych.', 'ok');
+    } else if (kind === 'ai-fix') {
+      const ll2 = aiMarkers[id].getLatLng(), a = aiById[id];
+      const moved = Math.round(distM(a.lat, a.lon, ll2.lat, ll2.lng));
+      if (!moved) return fail(f, 'Położenie nie zostało zmienione. Przeciągnij kwadrat albo kliknij w tor.', '#fMove');
+      if (!v('note')) return fail(f, 'Dodaj uwagę do korekty.', '#fNote');
+      drag = null; aiMarkers[id].dragging.disable();
+      aiLog(id, { lat: ll2.lat, lon: ll2.lng, moved: true, note: v('note') }, `Skorygowano położenie (${moved} m): ${v('note')}`);
+      toast('Korekta zapisana. Wykrycie czeka na potwierdzenie w terenie.', 'ok');
+    } else {
+      if (!v('reason')) return fail(f, 'Wybierz powód.', '#rReason');
+      const prev = ST.ai[id] ? JSON.parse(JSON.stringify(ST.ai[id])) : null;
+      aiLog(id, { status: 'usuniete', reason: v('reason'), by: v('by') }, `Usunięte: ${v('reason')}${v('note') ? ` (${v('note')})` : ''}${v('by') ? `, ${v('by')}` : ''}`);
+      toast(`Wykrycie ${id} usunięte z listy.`, 'ok', { label: 'Cofnij', fn: () => {
+        if (prev) ST.ai[id] = prev; else delete ST.ai[id];
+        save(); drawAI(); renderLists();
+        if (selected === 'ai:' + id) openAI(id, false);
+        toast('Przywrócono wykrycie.', 'ok');
+      } });
+    }
+    drawAI(); openAI(id, false); renderLists();
+    return;
+  }
+  const p = tmp.getLatLng();
+  if (kind === 'add-otdz') {
+    if (v('km') && !/^\d{1,3}([.,]\d{1,3})?$/.test(v('km'))) return fail(f, 'Kilometr podaj jako liczbę, np. 12,345.', f.elements.km);
+    if (!v('desc')) return fail(f, 'Opisz sytuację.', f.elements.desc);
+    if (f.querySelector('[name=worse]') && !f.querySelector('[name=worse]').checked) return fail(f, 'To miejsce jest już w rejestrze. Zaznacz pogorszenie stanu albo wybierz inne miejsce.', '[name=worse]');
+    const r = { id: `Z-${String(ST.seq++).padStart(4, '0')}`, lat: p.lat, lon: p.lng, line: v('line'), lineName: v('lineName'), km: v('km'), track: v('track'), loc: v('loc'),
+      U: v('U'), otw: !!fd.get('otw'), mode: v('mode'), desc: v('desc'), fix: v('fix'), due: v('due'), dr: !!fd.get('dr'),
+      ad: v('ad'), files: fileNames(f), by: v('by'), date: v('date') || today(), relatesTo: v('relatesTo') || null, created: nowTxt() };
+    ST.reports.push(r);
+    save(); addCtx = null; removeTmp(); drawReports(); renderLists();
+    openReport(r.id, false);
+    toast(`Zapisano wpis ${r.id}.`, 'ok');
+  } else if (kind === 'add-event') {
+    if (v('km') && !/^\d{1,3}([.,]\d{1,3})?$/.test(v('km'))) return fail(f, 'Kilometr podaj jako liczbę, np. 12,345.', f.elements.km);
+    if (!v('desc')) return fail(f, 'Podaj datę i opis.', f.elements.desc);
+    if (!v('date')) return fail(f, 'Podaj datę i opis.', f.elements.date);
+    const ev = { id: `H-${String(ST.eseq++).padStart(4, '0')}`, lat: p.lat, lon: p.lng, line: v('line'), km: v('km'), date: v('date'), outcome: v('outcome'), caseNo: v('caseNo'), desc: v('desc'), files: fileNames(f), created: nowTxt() };
+    ST.events.push(ev);
+    save(); addCtx = null; removeTmp(); drawReports();
+    openEvent(ev.id);
+    toast(`Zapisano zdarzenie ${ev.id}.`, 'ok');
+  }
+});
+map.on('popupopen', e => {
+  const el = e.popup.getElement();
+  el.querySelectorAll('[data-add]').forEach(b => b.addEventListener('click', () => openAdd(b.dataset.add)));
+});
+
+/* ---------- CSV ---------- */
+const csvCell = c => { const s = String(c ?? ''); const t = /^[=+\-@\t\r]/.test(s) ? "'" + s : s; return /[;"\n\r]/.test(t) ? `"${t.replace(/"/g, '""')}"` : t; };
+function csv(rows) { return '﻿' + rows.map(r => r.map(csvCell).join(';')).join('\r\n'); }
+const cc = v => v == null || v === '' ? '' : Number(v).toFixed(6).replace('.', ',');
+function download(name, text) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], { type: 'text/csv;charset=utf-8' }));
+  a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+document.getElementById('expWykaz').addEventListener('click', () => {
+  const rows = [['Lp.', 'Źródło', 'Id', 'Linia', 'km', 'Szerokość', 'Długość', 'Kod wady', 'Stopień U', 'Opis', 'Zalecane działanie', 'Status']];
+  let n = 1;
+  for (const s of DATA.sites.filter(s => s.top).sort((a, b) => a.top - b.top)) {
+    const nr = nearestRail(s.lat, s.lon);
+    rows.push([n++, `ranking, miejsce ${s.top}`, s.id, nr?.line, kmTxt(nr?.km), cc(s.lat), cc(s.lon), 'do weryfikacji', '', `${s.title}; wynik ${fmt(s.score)}`, s.primary.name, 'pod obserwacją']);
+  }
+  for (const a of DATA.ai) {
+    const st = aiSt(a.id); if (st.status === 'usuniete') continue;
+    const p = aiPos(a), nr = nearestRail(p[0], p[1], a.line), ok = st.status === 'potwierdzone';
+    rows.push([n++, 'wykrycie AI', a.id, nr?.line, kmTxt(nr?.km), cc(p[0]), cc(p[1]), ok ? 'OTDZ' : 'do weryfikacji', ok ? st.U || '' : '', a.real ? 'ścieżka widoczna na zdjęciu' : 'możliwa ścieżka', 'sprawdzić przy obchodzie', statusTxt(st)]);
+  }
+  for (const r of ST.reports) rows.push([n++, 'zgłoszenie', r.id, r.line, r.km, cc(r.lat), cc(r.lon), r.otw ? 'OTDZ + OTW' : 'OTDZ', r.U, r.desc, r.fix, r.relatesTo ? 'aktualizacja' : 'nowe']);
+  download(`wykaz_miejsc_pod_obserwacja_${today()}.csv`, csv(rows));
+});
+document.getElementById('expRej').addEventListener('click', () => {
+  const rows = [['Id', 'Typ', 'Data', 'Linia', 'km', 'Tor', 'Lokalizacja', 'Szerokość', 'Długość', 'Kod wady', 'U', 'Opis', 'Sposób naprawy', 'Termin', 'Dyżurny ruchu', 'Rodzaj dozorowania', 'Nr AD', 'Załączniki', 'Ocenę dokonał', 'Aktualizacja wpisu']];
+  for (const r of ST.reports) rows.push([r.id, 'wada OTDZ', r.date, r.line, r.km, r.track, r.loc, cc(r.lat), cc(r.lon), r.otw ? 'OTDZ + OTW' : 'OTDZ', r.U, r.desc, r.fix, r.due, r.dr ? 'tak' : 'nie', r.mode, r.ad, r.files.join(', '), r.by, r.relatesTo || '']);
+  for (const e of ST.events) rows.push([e.id, `zdarzenie: ${e.outcome}`, e.date, e.line, e.km, '', '', cc(e.lat), cc(e.lon), '', '', e.desc, '', '', '', '', '', e.caseNo, e.files.join(', '), '', '']);
+  for (const [id, s] of Object.entries(ST.ai)) {
+    const a = aiById[id]; if (!a) continue;
+    const p = aiPos(a), nr = nearestRail(p[0], p[1], a.line), ok = s.status === 'potwierdzone';
+    for (const h of s.history) rows.push([id, 'weryfikacja AI', h.at, nr?.line, kmTxt(nr?.km), '', '', cc(p[0]), cc(p[1]), ok ? 'OTDZ' : 'do weryfikacji', ok ? s.U || '' : '', h.txt, '', '', '', '', s.ad || '', (s.files || []).join(', '), s.by || '', '']);
+  }
+  if (rows.length === 1) { toast('Rejestr jest pusty: dodaj wpis albo zweryfikuj wykrycie AI.', 'warn'); return; }
+  download(`rejestr_wpisow_${today()}.csv`, csv(rows));
+});
+
+document.querySelectorAll('#expMenu button').forEach(b => b.addEventListener('click', () => closePops()));
+$('resetBtn').addEventListener('click', () => askConfirm('Wyczyścić dane demo?', 'Usuniemy wszystkie wpisy i weryfikacje zapisane w tej przeglądarce. Tej operacji nie można cofnąć.', 'Wyczyść dane',
+  () => { ST = emptyState(); save(); closePanel(); drawAI(); drawReports(); renderLists(); toast('Dane demo wyczyszczone.', 'ok'); }));
+
+/* ---------- modal ---------- */
+const modal = $('modal');
+const aiCount = { all: DATA.ai.length, real: DATA.ai.filter(a => a.real).length, unsure: DATA.ai.filter(a => !a.real).length };
+function openModal() {
+  closePops();
+  $('mbox').innerHTML = `<div class="mh"><div class="k">Metoda, dane i zgodność z przepisami PLK</div><h2 id="mTitle">Jak liczymy</h2>
+      <p>Wzór jest jawny i punktowy: każdy może sprawdzić, skąd wzięła się pozycja miejsca.</p>
+      <button class="ibtn" aria-label="Zamknij" data-close>${ico('close', 20)}</button></div>
+    <div class="mbody">    <div class="mgrid">
+      <div class="formula"><div class="fx">Wynik = 100 × ∛(E × D × H)</div>
+        <p>Średnia geometryczna trzech czynników, każdy w skali 0-1. Jeśli któryś jest zerem, wynik jest zerem: nikt tu nie mieszka albo legalne przejście jest tuż obok.</p></div>
+      <div>
+        <h3>E - Ekspozycja: ilu ludzi ma powód przejść</h3>
+        <p>Mieszkańcy w promieniu 500 m po jednej stronie torów (GUS, NSP 2021, siatka 250 m) razy liczba rodzajów celów po drugiej stronie (przystanek, szkoła, sklep, praca, działki, park, sport, osiedle), i odwrotnie. Z wyniku bierzemy pierwiastek kwadratowy, a 5% największych wartości (powyżej ${esc(M.expRef)}) liczy się jako 1.</p>
+        <h3>D - Objazd: brak legalnej drogi</h3>
+        <p>Ile metrów więcej trzeba przejść legalną drogą (sieć piesza OSM) niż na skróty. Do ${esc(M.detourLo)} m czynnik wynosi 0, od ${esc(M.detourHi)} m (około 18 minut marszu) wynosi 1. Na stacjach i w grupach od ${esc(M.yardTracks)} torów ograniczamy go do ${esc(M.yardCap)}.</p>
+        <h3>H - Zagrożenie: co się dzieje, gdy ktoś przechodzi</h3>
+        <p>${esc(M.hz[0])} × prędkość (do ${esc(M.vmaxRef)} km/h) + ${esc(M.hz[1])} × liczba pociągów pasażerskich na dobę (pierwiastek, punkt odniesienia ${esc(M.trainsRef)}) + ${esc(M.hz[2])} × liczba torów do przejścia (do 3). Dane: Regulamin sieci PKP PLK i rozkład jazdy. Ruchu towarowego nie znamy, więc na liniach towarowych zagrożenie jest zaniżone.</p>
+        <h3>Od wyniku do interwencji</h3>
+        <ul>
+          <li><b>Od zaraz:</b> patrol SOK w godz. 18-23 i pomiar ruchu przed i po. UTK: 39,4% wypadków tej kategorii zdarza się w godz. 18-23 (2021-2025).</li>
+        </ul>
+        <p>Rozwiązanie główne wybieramy po kolei, pierwsza pasująca reguła wygrywa:</p>
+        <ol>
+          <li><b>Objazd do 300 m:</b> domknięcie końców ścieżki ogrodzeniem (badanie fińskie: o 94,6% mniej przejść na dobę, 1 miejsce, 11 dni).</li>
+          <li><b>Do 150 m od peronu:</b> nowe dojście do peronu i wygrodzenie jego końców.</li>
+          <li><b>Średnia lub wysoka ekspozycja, do 3 torów i 160 km/h:</b> legalne przejście kat. E (z warunkiem widoczności, § 11; Dz.U. 2025 poz. 1105).</li>
+          <li><b>Średnia lub wysoka ekspozycja, więcej torów lub szybciej:</b> ponad 3 tory lub ponad 160 km/h: kat. E z systemem przejazdowym albo kładka/tunel; ponad 160 km/h tylko kładka/tunel. Przyjmujemy kładkę lub przejście podziemne (wybór projektowy).</li>
+          <li><b>Niska ekspozycja (dolna 1/3 kandydatów):</b> patrol SOK; wsparcie: edukacja, gdy szkoła jest do 1 km, w innym razie tablice.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Zgodność z Id-1, Moduł D2 (dozorowanie)</h3>
+        <ul>
+          <li>Sprawdzanie, „czy nie powstały dzikie przejścia”, jest obowiązkiem obchodu (§ 15 ust. 8 pkt 1 lit. d). Aplikacja podpowiada, gdzie patrzeć.</li>
+          <li>Wpis ma pola Arkusza Dozorowania (Zał. 1, D2AD): linia, km, tor, szlak / stacja, kod wady <b>OTDZ</b>, stopień U1-U4, opis i sposób naprawy, zalecony termin, ocenę dokonał (§ 8).</li>
+          <li>Wadliwości, która już jest w rejestrze, nie rejestruje się ponownie, chyba że stan się pogorszył (§ 8 ust. 3-4). Formularz to sprawdza w promieniu ${DUP_M} m.</li>
+          <li>Wykrycie AI jest zgłoszeniem: można je sprawdzić przy najbliższym obchodzie albo zlecić obchód specjalny (§ 9 ust. 1 pkt 2 lit. c). Potwierdzenie wymaga Arkusza Dozorowania.</li>
+          <li>Eksport „Wykaz miejsc pod szczególną obserwacją” odpowiada wyposażeniu pracownika z § 31 ust. 1 pkt 5.</li>
+          <li>Zagrożenie bezpieczeństwa: pole „powiadomiono dyżurnego ruchu” (§ 19, § 26). Zdarzenia z ofiarami zgłasza się trybem Ir-8; wpis w aplikacji to tylko historia miejsca.</li>
+        </ul>
+        <h3>Detektor ścieżek na zdjęciach lotniczych (AI)</h3>
+        <p>Model przegląda 3143 wycinki ortofotomapy wzdłuż torów. Na oznaczonych przykładach odróżnia ścieżki dobrze (ROC-AUC ok. 0,96 w rundzie 1 i 0,93 w rundzie 2), ale w skanie obszaru pilotażu wypada słabo: z 40 najwyżej ocenionych nowych miejsc człowiek uznał za wyraźne 2, a za niepewne 9 (runda 1); w rundzie 2 odpowiednio 0 i 1. Na mapie jest ${aiCount.all} wskazań z obu rund (${aiCount.real} wyraźne, ${aiCount.unsure} niepewnych). Dlatego jest asystentem przesiewowym: każde wskazanie sprawdza pracownik w terenie.</p>
+        <h3>Ograniczenia</h3>
+        <ul>
+          <li>Kandydaci do rankingu pochodzą z OpenStreetMap. Wykrycia AI i wpisy pracowników to osobne warstwy: nie zmieniają rankingu.</li>
+          <li>Ekspozycja to mieszkańcy, nie przechodnie w ciągu dnia. Kilometr liczymy między słupkami kilometrowymi z OSM i stacjami z Regulaminu sieci (zał. 1): w teście na ${DATA.kmCheck ? DATA.kmCheck.n : ''} słupkach mediana błędu ${DATA.kmCheck ? DATA.kmCheck.median_m : ''} m, 9 na 10 do ${DATA.kmCheck ? DATA.kmCheck.p90_m : ''} m. Gdy w pobliżu nie ma słupków, podajemy zakres km odcinka. Dokładny km odczytuje się ze słupka.</li>
+          <li>Demo zapisuje wpisy tylko w tej przeglądarce; wdrożenie wymaga integracji z systemem rejestracji wadliwości PLK.</li>
+        </ul>
+      </div>
+      <div class="full">
+        <h3>Źródła danych i licencje</h3>
+        <div class="tablewrap"><table class="src">
+          <tr><th>Dane</th><th>Źródło</th><th>Licencja / warunki</th></tr>
+          <tr><td>Ścieżki, tory, legalne przejścia i przejazdy, sieć piesza, cele podróży</td><td>OpenStreetMap (Overpass, Geofabrik), stan 13-14.11.2026</td><td><a href="https://opendatacommons.org/licenses/odbl/" target="_blank" rel="noopener">ODbL 1.0</a>, © OpenStreetMap contributors</td></tr>
+          <tr><td>Podkład mapy "Mapa"</td><td>Esri World Light Gray Canvas, dane Esri, HERE, Garmin, OpenStreetMap</td><td>warunki Esri (<a href="https://www.esri.com/en-us/legal/terms/full-master-agreement" target="_blank" rel="noopener">warunki</a>); tylko do demo, przy wdrożeniu podkład PLK lub Geoportal (GUGiK)</td></tr>
+          <tr><td>Ludność w siatce 250 m</td><td>GUS, Narodowy Spis Powszechny 2021</td><td>z podaniem źródła "GUS, NSP 2021"</td></tr>
+          <tr><td>Prędkości, kilometraż, elektryfikacja</td><td>PKP PLK, Regulamin sieci 2025/2026, zał. 1, 2.1, 2.6, 2.12</td><td>warunki ponownego wykorzystania PKP PLK (<a href="https://bip.plk-sa.pl/ponowne-wykorzystywanie" target="_blank" rel="noopener">bip.plk-sa.pl</a>)</td></tr>
+          <tr><td>Rozkład jazdy (środa 18.11.2026)</td><td><a href="https://github.com/MKuranowski/PolishTrainsGTFS" target="_blank" rel="noopener">PolishTrainsGTFS</a>, M. Kuranowski, na danych PKP PLK</td><td>CC0 1.0 (GTFS); dane rozkładowe: warunki PKP PLK</td></tr>
+          <tr><td>Kody wad i pola wpisu</td><td>PKP PLK, Id-1 Moduł D2, Zał. 1 Arkusz Dozorowania (D2AD), Moduł D3</td><td>dokument wewnętrzny PLK, użyty jako wzór pól</td></tr>
+          <tr><td>Ortofotomapa</td><td>Geoportal, GUGiK, WMS ORTO StandardResolution</td><td>bez opłat: art. 40a ust. 2 pkt 1 lit. e Prawa geodezyjnego i kartograficznego (t.j. Dz.U. 2026 poz. 1389)</td></tr>
+          <tr><td>Statystyki wypadków</td><td>UTK, Sprawozdanie ze stanu bezpieczeństwa ruchu kolejowego 2025</td><td>dokument publiczny, cytowany ze źródłem</td></tr>
+          <tr><td>Potrącenia (warstwa zdarzeń)</td><td>artykuły prasowe; lista źródeł na prośbę jury</td><td>tylko rok, przybliżone miejsce i skutek; bez danych osobowych</td></tr>
+          <tr><td>Koszty i skuteczność interwencji</td><td>Silla i Luoma 2011, RESTRAIL, FRA, Clapperton i in. 2023, CUPT 2026, Dz.U. 2025 poz. 1105</td><td>cytowane ze źródłem</td></tr>
+          <tr><td>Detektor AI</td><td>DINOv2 ViT-S/14, PyTorch, Hugging Face Transformers, scikit-learn</td><td>Apache-2.0; BSD-3-Clause; Apache-2.0; BSD-3-Clause</td></tr>
+          <tr><td>Oprogramowanie</td><td>Leaflet 1.9.4; krój IBM Plex; wzorce interfejsu i ikony: IBM Carbon Design System</td><td>BSD-2-Clause; SIL Open Font License 1.1; Apache-2.0</td></tr>
+        </table></div>
+      </div>
+    </div></div>
+    <div class="mfoot"><button class="btn" data-close><span>Zamknij</span></button></div>`;
+  modal.classList.add('open');
+  modal.querySelector('.mfoot [data-close]').focus();
+}
+function closeModal() { modal.classList.remove('open'); }
+$('howBtn').addEventListener('click', openModal);
+modal.addEventListener('click', e => { if (e.target === modal || e.target.closest('[data-close]')) closeModal(); });
+document.addEventListener('keydown', e => {
+  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName);
+  if (e.key === 'Escape') {
+    if ($('confirm').classList.contains('open')) $('confirm').classList.remove('open');
+    else if (modal.classList.contains('open')) closeModal();
+    else if (!$('layPop').hidden || !$('expMenu').hidden) closePops();
+    else if (addMode) setAddMode(false);
+    else closePanel();
+  } else if (e.key === '/' && !typing && !modal.classList.contains('open')) {
+    const q = $(!$('paneAi').hidden ? 'qAi' : 'qRank');
+    if (!q.closest('.pane').hidden) { e.preventDefault(); q.focus(); }
+  }
+});
+
+/* ---------- start ---------- */
+drawAI();
+drawReports();
+renderLists();
+const params = new URLSearchParams(location.search);
+if (params.get('podklad') === 'ortofoto') setBase('ortho');
+const openFromHash = () => {
+  const id = decodeURIComponent(location.hash.slice(1));
+  if (byId[id] && selected !== 'site:' + id) openSite(id, true);
+  else if (aiById[id] && selected !== 'ai:' + id) openAI(id, true);
+};
+window.addEventListener('hashchange', openFromHash);
+window.addEventListener('load', () => {
+  map.invalidateSize();
+  fitAll(false);
+  openFromHash();
+});
+if (params.has('jak')) openModal();
+</script>
+</body>
+</html>
